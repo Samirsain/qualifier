@@ -1,0 +1,862 @@
+// 3% Club — schema per 09_3_Percent_Club_Database_Architecture.md
+// Canonical vocabularies per README.md "Canonical Product Vocabulary".
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------- enums (only where the source defines a closed list) ----------
+
+enum RoleCode {
+  ADMIN
+  MANAGER
+  STAFF
+  VIEWER
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DISABLED
+}
+
+/// README: Customer interest statuses
+enum InterestStatus {
+  NOT_YET_CONTACTED
+  INTERESTED
+  VERY_INTERESTED
+  NOT_INTERESTED
+  REVISIT_LATER
+  CALL_REQUIRED
+  MEETING_REQUIRED
+  CONVERTED
+  CLOSED
+}
+
+/// README: Campaign statuses
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  RUNNING
+  PAUSED
+  COMPLETED
+  STOPPED
+  ARCHIVED
+}
+
+/// README: Automation statuses
+enum AutomationStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  DISABLED
+}
+
+/// README: Call statuses
+enum CallStatus {
+  NEW
+  ASSIGNED
+  CONTACTED
+  COMPLETED
+  RESCHEDULED
+  CLOSED
+}
+
+enum ConversationStatus {
+  OPEN
+  CLOSED
+}
+
+enum MessageDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum MessageType {
+  TEXT
+  TEMPLATE
+  INTERACTIVE
+  MEDIA
+  SYSTEM
+}
+
+enum DeliveryStatus {
+  QUEUED
+  SENT
+  DELIVERED
+  READ
+  FAILED
+}
+
+enum AutomationType {
+  INTRODUCTION
+  YES_NO_BRANCH
+  REVISION
+  NO_RESPONSE_FOLLOW_UP
+  FAQ
+  HANDOFF
+  CUSTOM
+}
+
+enum StepType {
+  TRIGGER
+  CONDITION
+  ACTION
+  WAIT
+  BRANCH
+}
+
+enum RunState {
+  RUNNING
+  WAITING
+  PAUSED
+  COMPLETED
+  STOPPED
+  FAILED
+}
+
+enum FollowUpStatus {
+  PENDING
+  COMPLETED
+  RESCHEDULED
+  CANCELLED
+}
+
+enum ScorePeriod {
+  DAILY
+  WEEKLY
+  MONTHLY
+  OVERALL
+}
+
+// GAP-006 customer_status, GAP-007 meeting_status, GAP-008 outcome and
+// GAP-032 customer_type have no source-defined value list, so they stay String
+// and are validated against configurable settings rather than a migration.
+
+// ---------- identity & access ----------
+
+model User {
+  id              String     @id @default(uuid()) @db.Uuid
+  email           String     @unique
+  passwordHash    String?
+  externalSubject String?    @unique
+  displayName     String
+  status          UserStatus @default(ACTIVE)
+  lastLoginAt     DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  userRoles          UserRole[]
+  staffProfile       StaffProfile?
+  assignedCustomers  Customer[]         @relation("CustomerAssignedStaff")
+  conversations      Conversation[]
+  notifications      Notification[]
+  activityLogs       ActivityLog[]
+  followUpsAssigned  FollowUp[]         @relation("FollowUpAssignee")
+  followUpsCreated   FollowUp[]         @relation("FollowUpCreator")
+  callsAssigned      Call[]
+  meetingsAssigned   Meeting[]
+  campaignsCreated   Campaign[]
+  automationsCreated Automation[]
+  leadsAssigned      Lead[]
+  stageChanges       LeadStageHistory[]
+  assignmentsMade    StaffAssignment[]  @relation("AssignmentActor")
+  assignmentsGot     StaffAssignment[]  @relation("AssignmentStaff")
+  tagsAssigned       CustomerTag[]
+
+  @@index([status])
+  @@map("users")
+}
+
+model Role {
+  id          String   @id @default(uuid()) @db.Uuid
+  code        RoleCode @unique
+  name        String
+  description String?
+  systemRole  Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userRoles       UserRole[]
+  rolePermissions RolePermission[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id          String  @id @default(uuid()) @db.Uuid
+  code        String  @unique
+  module      String
+  action      String
+  description String?
+
+  rolePermissions RolePermission[]
+
+  @@index([module])
+  @@map("permissions")
+}
+
+model UserRole {
+  userId String @db.Uuid
+  roleId String @db.Uuid
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@map("user_roles")
+}
+
+model RolePermission {
+  roleId       String @db.Uuid
+  permissionId String @db.Uuid
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model StaffProfile {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @unique @db.Uuid
+  staffCode String   @unique
+  active    Boolean  @default(true)
+  managerId String?  @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  manager StaffProfile?  @relation("StaffManager", fields: [managerId], references: [id])
+  reports StaffProfile[] @relation("StaffManager")
+  scores  StaffScore[]
+
+  @@index([active])
+  @@map("staff_profiles")
+}
+
+// ---------- customers ----------
+
+model Source {
+  id        String   @id @default(uuid()) @db.Uuid
+  code      String   @unique
+  name      String
+  type      String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  customers Customer[]
+  calls     Call[]
+  meetings  Meeting[]
+
+  @@map("sources")
+}
+
+model Tag {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  customerTags CustomerTag[]
+
+  @@map("tags")
+}
+
+model Customer {
+  id                String         @id @default(uuid()) @db.Uuid
+  name              String
+  phoneE164         String         @unique
+  email             String?
+  location          String?
+  sourceId          String         @db.Uuid
+  sourceDetail      String?
+  campaignId        String?        @db.Uuid
+  customerType      String?
+  interestStatus    InterestStatus @default(NOT_YET_CONTACTED)
+  customerStatus    String?
+  assignedStaffId   String?        @db.Uuid
+  nextFollowUpAt    DateTime?
+  lastInteractionAt DateTime?
+  requirements      Json?
+  outcome           String?
+  conversionStatus  String?
+  optedOutAt        DateTime?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  source         Source             @relation(fields: [sourceId], references: [id])
+  campaign       Campaign?          @relation("CustomerOriginCampaign", fields: [campaignId], references: [id])
+  assignedStaff  User?              @relation("CustomerAssignedStaff", fields: [assignedStaffId], references: [id])
+  tags           CustomerTag[]
+  conversations  Conversation[]
+  messages       Message[]
+  lead           Lead?
+  responses      CustomerResponse[]
+  followUps      FollowUp[]
+  calls          Call[]
+  meetings       Meeting[]
+  assignments    StaffAssignment[]
+  runs           AutomationRun[]
+  audiences      CampaignAudience[]
+  deliveries     CampaignDelivery[]
+  activityLogs   ActivityLog[]
+  templateUsages TemplateUsage[]
+
+  @@index([sourceId])
+  @@index([assignedStaffId])
+  @@index([interestStatus])
+  @@index([nextFollowUpAt])
+  @@index([lastInteractionAt])
+  @@index([campaignId])
+  @@map("customers")
+}
+
+model CustomerTag {
+  customerId String   @db.Uuid
+  tagId      String   @db.Uuid
+  assignedBy String?  @db.Uuid
+  assignedAt DateTime @default(now())
+
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  tag      Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  actor    User?    @relation(fields: [assignedBy], references: [id])
+
+  @@id([customerId, tagId])
+  @@map("customer_tags")
+}
+
+// ---------- conversations & messages ----------
+
+model Conversation {
+  id              String             @id @default(uuid()) @db.Uuid
+  customerId      String             @db.Uuid
+  channel         String             @default("whatsapp")
+  status          ConversationStatus @default(OPEN)
+  assignedStaffId String?            @db.Uuid
+  lastMessageAt   DateTime?
+  unreadCount     Int                @default(0)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  customer      Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  assignedStaff User?     @relation(fields: [assignedStaffId], references: [id])
+  messages      Message[]
+
+  @@index([status, lastMessageAt])
+  @@index([assignedStaffId])
+  @@index([customerId])
+  @@map("conversations")
+}
+
+model Message {
+  id                String           @id @default(uuid()) @db.Uuid
+  conversationId    String           @db.Uuid
+  customerId        String           @db.Uuid
+  providerMessageId String?          @unique
+  direction         MessageDirection
+  type              MessageType      @default(TEXT)
+  templateId        String?          @db.Uuid
+  body              String?
+  payload           Json?
+  deliveryStatus    DeliveryStatus   @default(QUEUED)
+  sentAt            DateTime?
+  deliveredAt       DateTime?
+  readAt            DateTime?
+  failedAt          DateTime?
+  failureCode       String?
+  createdAt         DateTime         @default(now())
+
+  conversation Conversation       @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  customer     Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  template     Template?          @relation(fields: [templateId], references: [id])
+  responses    CustomerResponse[]
+  deliveries   CampaignDelivery[]
+
+  @@index([conversationId, createdAt])
+  @@index([customerId, createdAt])
+  @@index([deliveryStatus])
+  @@map("messages")
+}
+
+// ---------- templates & FAQ ----------
+
+model Template {
+  id                  String    @id @default(uuid()) @db.Uuid
+  name                String    @unique
+  category            String
+  providerTemplateKey String?
+  language            String?
+  approvalStatus      String?
+  body                String
+  structure           Json?
+  active              Boolean   @default(true)
+  archivedAt          DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  messages  Message[]
+  campaigns Campaign[]
+  usages    TemplateUsage[]
+
+  @@index([category])
+  @@index([active])
+  @@map("templates")
+}
+
+model TemplateUsage {
+  id            String   @id @default(uuid()) @db.Uuid
+  templateId    String   @db.Uuid
+  usageType     String
+  usageObjectId String   @db.Uuid
+  customerId    String?  @db.Uuid
+  usedAt        DateTime @default(now())
+
+  template Template  @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  customer Customer? @relation(fields: [customerId], references: [id])
+
+  @@index([templateId, usedAt])
+  @@map("template_usages")
+}
+
+model Faq {
+  id        String   @id @default(uuid()) @db.Uuid
+  category  String
+  question  String
+  answer    String
+  active    Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category, sortOrder])
+  @@map("faqs")
+}
+
+// ---------- campaigns ----------
+
+model Campaign {
+  id                      String         @id @default(uuid()) @db.Uuid
+  name                    String
+  purpose                 String?
+  targetSegmentDefinition Json
+  sourceSegment           String?
+  templateId              String         @db.Uuid
+  personalizationConfig   Json?
+  scheduledAt             DateTime?
+  status                  CampaignStatus @default(DRAFT)
+  createdById             String         @db.Uuid
+  startedAt               DateTime?
+  completedAt             DateTime?
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+
+  template        Template           @relation(fields: [templateId], references: [id])
+  createdBy       User               @relation(fields: [createdById], references: [id])
+  audiences       CampaignAudience[]
+  deliveries      CampaignDelivery[]
+  originCustomers Customer[]         @relation("CustomerOriginCampaign")
+  calls           Call[]
+
+  @@index([status, scheduledAt])
+  @@map("campaigns")
+}
+
+model CampaignAudience {
+  campaignId      String   @db.Uuid
+  customerId      String   @db.Uuid
+  inclusionReason String
+  excludedReason  String?
+  resolvedAt      DateTime @default(now())
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@id([campaignId, customerId])
+  @@map("campaign_audiences")
+}
+
+model CampaignDelivery {
+  id               String         @id @default(uuid()) @db.Uuid
+  campaignId       String         @db.Uuid
+  customerId       String         @db.Uuid
+  messageId        String?        @db.Uuid
+  status           DeliveryStatus @default(QUEUED)
+  sentAt           DateTime?
+  deliveredAt      DateTime?
+  readAt           DateTime?
+  repliedAt        DateTime?
+  leadGenerated    Boolean        @default(false)
+  callRequested    Boolean        @default(false)
+  meetingRequested Boolean        @default(false)
+  result           String?
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  message  Message? @relation(fields: [messageId], references: [id])
+
+  @@unique([campaignId, customerId])
+  @@index([campaignId, status])
+  @@map("campaign_deliveries")
+}
+
+// ---------- automation ----------
+
+model Automation {
+  id              String           @id @default(uuid()) @db.Uuid
+  name            String
+  type            AutomationType
+  status          AutomationStatus @default(DRAFT)
+  version         Int              @default(1)
+  description     String?
+  entryConditions Json?
+  createdById     String           @db.Uuid
+  activatedAt     DateTime?
+  archivedAt      DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  createdBy User             @relation(fields: [createdById], references: [id])
+  steps     AutomationStep[]
+  runs      AutomationRun[]
+
+  @@index([status])
+  @@index([type])
+  @@map("automations")
+}
+
+model AutomationStep {
+  id           String   @id @default(uuid()) @db.Uuid
+  automationId String   @db.Uuid
+  version      Int      @default(1)
+  stepKey      String
+  stepType     StepType
+  config       Json
+  nextStepKey  String?
+  branchMap    Json?
+  sortOrder    Int      @default(0)
+
+  automation Automation @relation(fields: [automationId], references: [id], onDelete: Cascade)
+
+  @@unique([automationId, version, stepKey])
+  @@index([automationId, sortOrder])
+  @@map("automation_steps")
+}
+
+model AutomationRun {
+  id                String    @id @default(uuid()) @db.Uuid
+  automationId      String    @db.Uuid
+  automationVersion Int
+  customerId        String    @db.Uuid
+  state             RunState  @default(RUNNING)
+  currentStepKey    String?
+  enteredAt         DateTime  @default(now())
+  nextActionAt      DateTime?
+  pausedAt          DateTime?
+  pauseRemainingMs  Int?
+  stoppedAt         DateTime?
+  stopReason        String?
+  completedAt       DateTime?
+
+  automation Automation         @relation(fields: [automationId], references: [id], onDelete: Cascade)
+  customer   Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  events     AutomationEvent[]
+  responses  CustomerResponse[]
+
+  // Durable timer queue: the worker claims due rows by (state, nextActionAt).
+  @@index([state, nextActionAt])
+  @@index([customerId, state])
+  @@index([automationId])
+  @@map("automation_runs")
+}
+
+model AutomationEvent {
+  id             String   @id @default(uuid()) @db.Uuid
+  runId          String   @db.Uuid
+  stepKey        String?
+  eventType      String
+  payload        Json?
+  idempotencyKey String?  @unique
+  occurredAt     DateTime @default(now())
+
+  run AutomationRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@index([runId, occurredAt])
+  @@map("automation_events")
+}
+
+model CustomerResponse {
+  id           String   @id @default(uuid()) @db.Uuid
+  customerId   String   @db.Uuid
+  runId        String?  @db.Uuid
+  questionKey  String
+  questionText String?
+  response     String
+  result       String?
+  messageId    String?  @db.Uuid
+  receivedAt   DateTime @default(now())
+
+  customer Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  run      AutomationRun? @relation(fields: [runId], references: [id])
+  message  Message?       @relation(fields: [messageId], references: [id])
+
+  @@index([customerId, receivedAt])
+  @@map("customer_responses")
+}
+
+// ---------- leads, follow-ups, calls, meetings ----------
+
+model LeadStage {
+  id        String  @id @default(uuid()) @db.Uuid
+  code      String  @unique
+  name      String
+  sortOrder Int
+  active    Boolean @default(true)
+
+  leads       Lead[]
+  fromHistory LeadStageHistory[] @relation("FromStage")
+  toHistory   LeadStageHistory[] @relation("ToStage")
+
+  @@map("lead_stages")
+}
+
+model Lead {
+  id              String         @id @default(uuid()) @db.Uuid
+  customerId      String         @unique @db.Uuid
+  stageId         String         @db.Uuid
+  interestStatus  InterestStatus @default(NOT_YET_CONTACTED)
+  assignedStaffId String?        @db.Uuid
+  status          String         @default("open")
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  customer      Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  stage         LeadStage          @relation(fields: [stageId], references: [id])
+  assignedStaff User?              @relation(fields: [assignedStaffId], references: [id])
+  history       LeadStageHistory[]
+  followUps     FollowUp[]
+
+  @@index([stageId])
+  @@index([assignedStaffId])
+  @@map("leads")
+}
+
+model LeadStageHistory {
+  id          String   @id @default(uuid()) @db.Uuid
+  leadId      String   @db.Uuid
+  fromStageId String?  @db.Uuid
+  toStageId   String   @db.Uuid
+  changedById String?  @db.Uuid
+  note        String?
+  changedAt   DateTime @default(now())
+
+  lead      Lead       @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  fromStage LeadStage? @relation("FromStage", fields: [fromStageId], references: [id])
+  toStage   LeadStage  @relation("ToStage", fields: [toStageId], references: [id])
+  changedBy User?      @relation(fields: [changedById], references: [id])
+
+  @@index([leadId, changedAt])
+  @@map("lead_stage_history")
+}
+
+model FollowUp {
+  id                String         @id @default(uuid()) @db.Uuid
+  customerId        String         @db.Uuid
+  leadId            String?        @db.Uuid
+  assignedStaffId   String         @db.Uuid
+  type              String
+  dueAt             DateTime
+  status            FollowUpStatus @default(PENDING)
+  completedAt       DateTime?
+  rescheduledFromId String?        @db.Uuid
+  notes             String?
+  createdById       String         @db.Uuid
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  customer        Customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  lead            Lead?      @relation(fields: [leadId], references: [id])
+  assignedStaff   User       @relation("FollowUpAssignee", fields: [assignedStaffId], references: [id])
+  createdBy       User       @relation("FollowUpCreator", fields: [createdById], references: [id])
+  rescheduledFrom FollowUp?  @relation("Reschedule", fields: [rescheduledFromId], references: [id])
+  reschedules     FollowUp[] @relation("Reschedule")
+  calls           Call[]
+  meetings        Meeting[]
+
+  @@index([assignedStaffId, status, dueAt])
+  @@index([dueAt, status])
+  @@index([customerId])
+  @@map("follow_ups")
+}
+
+model Call {
+  id              String     @id @default(uuid()) @db.Uuid
+  customerId      String     @db.Uuid
+  requirement     String
+  sourceId        String?    @db.Uuid
+  campaignId      String?    @db.Uuid
+  assignedStaffId String?    @db.Uuid
+  requestedAt     DateTime   @default(now())
+  status          CallStatus @default(NEW)
+  followUpId      String?    @db.Uuid
+  notes           String?
+  completedAt     DateTime?
+
+  customer      Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  source        Source?   @relation(fields: [sourceId], references: [id])
+  campaign      Campaign? @relation(fields: [campaignId], references: [id])
+  assignedStaff User?     @relation(fields: [assignedStaffId], references: [id])
+  followUp      FollowUp? @relation(fields: [followUpId], references: [id])
+
+  @@index([status, requestedAt])
+  @@index([assignedStaffId, status])
+  @@map("calls")
+}
+
+model Meeting {
+  id              String    @id @default(uuid()) @db.Uuid
+  customerId      String    @db.Uuid
+  requirement     String
+  sourceId        String?   @db.Uuid
+  assignedStaffId String?   @db.Uuid
+  requestedAt     DateTime  @default(now())
+  scheduledAt     DateTime?
+  meetingStatus   String    @default("New")
+  followUpId      String?   @db.Uuid
+  notes           String?
+  outcome         String?
+  completedAt     DateTime?
+
+  customer      Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  source        Source?   @relation(fields: [sourceId], references: [id])
+  assignedStaff User?     @relation(fields: [assignedStaffId], references: [id])
+  followUp      FollowUp? @relation(fields: [followUpId], references: [id])
+
+  @@index([meetingStatus, requestedAt])
+  @@index([assignedStaffId])
+  @@map("meetings")
+}
+
+model StaffAssignment {
+  id           String    @id @default(uuid()) @db.Uuid
+  customerId   String    @db.Uuid
+  staffId      String    @db.Uuid
+  assignedById String?   @db.Uuid
+  assignedAt   DateTime  @default(now())
+  endedAt      DateTime?
+  reason       String?
+
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  staff      User     @relation("AssignmentStaff", fields: [staffId], references: [id])
+  assignedBy User?    @relation("AssignmentActor", fields: [assignedById], references: [id])
+
+  @@index([customerId, assignedAt])
+  @@index([staffId, endedAt])
+  @@map("staff_assignments")
+}
+
+// ---------- scoring, notifications, audit, reports ----------
+
+model StaffScoreConfig {
+  id            String    @id @default(uuid()) @db.Uuid
+  name          String
+  effectiveFrom DateTime
+  effectiveTo   DateTime?
+  factorConfig  Json
+  approvedById  String?   @db.Uuid
+  active        Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+
+  scores StaffScore[]
+
+  @@index([active, effectiveFrom])
+  @@map("staff_score_configs")
+}
+
+model StaffScore {
+  id           String      @id @default(uuid()) @db.Uuid
+  staffId      String      @db.Uuid
+  configId     String      @db.Uuid
+  periodType   ScorePeriod
+  periodStart  DateTime
+  periodEnd    DateTime
+  factorValues Json
+  score        Decimal     @db.Decimal(10, 4)
+  calculatedAt DateTime    @default(now())
+
+  staff  StaffProfile     @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  config StaffScoreConfig @relation(fields: [configId], references: [id])
+
+  @@unique([staffId, configId, periodType, periodStart])
+  @@index([periodType, periodStart])
+  @@map("staff_scores")
+}
+
+model Notification {
+  id          String    @id @default(uuid()) @db.Uuid
+  userId      String    @db.Uuid
+  eventType   String
+  relatedType String?
+  relatedId   String?   @db.Uuid
+  title       String
+  body        String?
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt, createdAt])
+  @@map("notifications")
+}
+
+model ActivityLog {
+  id          String   @id @default(uuid()) @db.Uuid
+  actorUserId String?  @db.Uuid
+  eventType   String
+  objectType  String
+  objectId    String?
+  customerId  String?  @db.Uuid
+  before      Json?
+  after       Json?
+  metadata    Json?
+  occurredAt  DateTime @default(now())
+
+  actor    User?     @relation(fields: [actorUserId], references: [id])
+  customer Customer? @relation(fields: [customerId], references: [id])
+
+  @@index([occurredAt])
+  @@index([customerId, occurredAt])
+  @@index([objectType, objectId])
+  @@map("activity_logs")
+}
+
+model ReportDefinition {
+  id               String     @id @default(uuid()) @db.Uuid
+  code             String     @unique
+  name             String
+  description      String?
+  metricDefinition Json
+  allowedRoles     RoleCode[]
+  active           Boolean    @default(true)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  @@map("report_definitions")
+}
+
+/// Emergency controls (BR-39 / F-022) and business config for resolved GAP
+/// decisions: no-response wait, reporting timezone, send windows, taxonomies.
+model SystemSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  @@map("system_settings")
+}
