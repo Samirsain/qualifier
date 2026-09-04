@@ -40,6 +40,13 @@ export function parsePhone(
     if (!E164.test(cleaned)) {
       return { ok: false, reason: "not a valid international number" };
     }
+    // For +91 numbers, also validate the national part is a valid Indian mobile.
+    if (cleaned.startsWith("+91")) {
+      const national = cleaned.slice(3);
+      if (!IN_MOBILE.test(national)) {
+        return { ok: false, reason: "not a valid Indian mobile number" };
+      }
+    }
     return { ok: true, e164: cleaned, assumedCountry: false };
   }
 

@@ -76,3 +76,18 @@ test("an explicit + number that is malformed is rejected", () => {
   assert.equal(parsePhone("+9").ok, false);
   assert.equal(parsePhone("+0123456789").ok, false);
 });
+
+test("an explicit +91 number must still be a valid Indian mobile", () => {
+  // Truncated: only 8 national digits.
+  assert.equal(parsePhone("+9198765432").ok, false);
+  // National part starts with 1, not 6-9.
+  assert.equal(parsePhone("+91123456789").ok, false);
+  // Correct ones still pass.
+  assert.equal(parsePhone("+919876543210").ok, true);
+});
+
+test("a non-Indian country code is not held to Indian mobile rules", () => {
+  // We only know India's national format; other countries pass on E.164 shape.
+  assert.equal(parsePhone("+14155552671").ok, true);
+  assert.equal(parsePhone("+442071838750").ok, true);
+});
