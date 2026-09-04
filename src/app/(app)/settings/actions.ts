@@ -81,7 +81,6 @@ export async function saveSettings(
   // that reads them is refreshed.
   revalidatePath("/settings");
   revalidatePath("/automations");
-  revalidatePath("/analytics");
 
   return { saved: true };
 }

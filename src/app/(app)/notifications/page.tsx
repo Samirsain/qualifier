@@ -84,7 +84,7 @@ export default async function NotificationsPage() {
                 <div className="flex gap-2">
                   {n.relatedType && n.relatedId && (
                     <Link
-                      href={notificationHref(n.relatedType, n.relatedId)}
+                      href={notificationHref(n.relatedType)}
                       className={buttonClass.secondary}
                     >
                       Open

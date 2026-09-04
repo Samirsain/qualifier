@@ -278,12 +278,7 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
             ) : (
               <div className="flex flex-col gap-3">
                 <div>
-                  <Link
-                    href={`/customers/${customer.id}`}
-                    className="font-medium underline-offset-2 hover:underline"
-                  >
-                    {customer.name}
-                  </Link>
+                  <p className="font-medium">{customer.name}</p>
                   <p className="font-[family-name:var(--font-mono)] text-[length:var(--text-small)] text-[color:var(--color-text-secondary)]">
                     {customer.phoneE164}
                   </p>
@@ -303,13 +298,6 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
                 {customer.optedOutAt && (
                   <Badge tone="error">Opted out — do not message</Badge>
                 )}
-
-                <Link
-                  href={`/customers/${customer.id}`}
-                  className={buttonClass.secondary}
-                >
-                  Open full history
-                </Link>
               </div>
             )}
           </Card>

@@ -40,16 +40,8 @@ export async function notify(entry: {
 }
 
 /** Where a notification should take the user (F-019 "navigation to object"). */
-export function notificationHref(relatedType: string, relatedId: string): string {
+export function notificationHref(relatedType: string): string {
   switch (relatedType) {
-    case "customer":
-      return `/customers/${relatedId}`;
-    case "call":
-      return "/follow-ups?tab=calls";
-    case "meeting":
-      return "/follow-ups?tab=meetings";
-    case "follow_up":
-      return "/follow-ups";
     case "conversation":
       return "/inbox";
     default:
