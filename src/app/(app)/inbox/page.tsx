@@ -10,15 +10,9 @@ import {
   cx,
   inputClass,
 } from "@/components/ui";
-import {
-  INTEREST_STATUS_LABELS,
-  interestTone,
-  statusTone,
-  titleCase,
-  type InterestStatusKey,
-} from "@/lib/labels";
+import { statusTone, titleCase } from "@/lib/labels";
 import { prisma } from "@/lib/prisma";
-import { can, customerScope } from "@/lib/rbac";
+import { can } from "@/lib/rbac";
 import { requirePermission } from "@/lib/session";
 import type { Prisma } from "@/generated/prisma/client";
 
@@ -36,11 +30,8 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
   const filter = typeof params.filter === "string" ? params.filter : "open";
   const q = typeof params.q === "string" ? params.q.trim() : "";
 
-  const scope = customerScope(user.roles, user.id);
-
   const where: Prisma.ConversationWhereInput = {
     customer: {
-      ...scope,
       ...(q && {
         OR: [
           { name: { contains: q, mode: "insensitive" } },
@@ -59,7 +50,7 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
     take: 60,
     include: {
       customer: {
-        select: { id: true, name: true, phoneE164: true, interestStatus: true },
+        select: { id: true, name: true, phoneE164: true },
       },
       messages: {
         orderBy: { createdAt: "desc" },
@@ -210,7 +201,7 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
             title={active ? active.customer.name : "Conversation"}
             actions={
               active &&
-              can(user.roles, "conversation:close") && (
+              can(user.roles, "conversation:reply") && (
                 <form action={setConversationStatus}>
                   <input type="hidden" name="conversationId" value={active.id} />
                   <input
@@ -297,10 +288,6 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
                     {customer.phoneE164}
                   </p>
                 </div>
-
-                <Badge tone={interestTone(customer.interestStatus)}>
-                  {INTEREST_STATUS_LABELS[customer.interestStatus as InterestStatusKey]}
-                </Badge>
 
                 <dl className="flex flex-col gap-2 text-[length:var(--text-small)]">
                   <Fact label="Source">{customer.source.name}</Fact>

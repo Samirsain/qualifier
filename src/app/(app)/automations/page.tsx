@@ -27,7 +27,7 @@ export const dynamic = "force-dynamic";
  * on this page: pause-all, per-automation pause, and upcoming actions.
  */
 export default async function AutomationsPage() {
-  const user = await requirePermission("automation:read");
+  const user = await requirePermission("automation:pause_all");
 
   const [automations, pausedAll, upcoming] = await Promise.all([
     prisma.automation.findMany({
@@ -52,7 +52,7 @@ export default async function AutomationsPage() {
   );
 
   const isPausedAll = pausedAll === true;
-  const canPause = can(user.roles, "automation:pause");
+  const canPause = can(user.roles, "automation:pause_all");
   const canPauseAll = can(user.roles, "automation:pause_all");
 
   return (
@@ -152,7 +152,7 @@ export default async function AutomationsPage() {
                           </button>
                         </form>
                       ) : null}
-                      {can(user.roles, "automation:create") && (
+                      {can(user.roles, "automation:pause_all") && (
                         <form action={duplicateAutomation}>
                           <input type="hidden" name="id" value={a.id} />
                           <button type="submit" className={buttonClass.secondary}>

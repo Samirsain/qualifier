@@ -1,13 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { timingSafeEqual } from "node:crypto";
 import { tick } from "@/lib/automation/worker";
-import { dispatchDueCampaigns } from "@/lib/campaigns/runner";
 
 export const dynamic = "force-dynamic";
 
 /**
- * Drives the durable timer worker and the campaign dispatcher. Call it on a
- * schedule — a platform cron,
+ * Drives the durable timer worker. Call it on a schedule — a platform cron,
  * a container sidecar, or `curl` in a loop for local development:
  *
  *   curl -H "Authorization: Bearer $AUTOMATION_TICK_SECRET" \
@@ -30,11 +28,8 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // Automations first: a customer reply may stop a journey before the
-    // campaign dispatcher would have messaged them again.
     const automations = await tick();
-    const campaigns = await dispatchDueCampaigns();
-    return NextResponse.json({ automations, campaigns });
+    return NextResponse.json({ automations });
   } catch (err) {
     console.error("[tick] failed", err);
     return new NextResponse("Tick failed", { status: 500 });

@@ -21,7 +21,7 @@ export async function activateAutomation(
   _prev: ControlState,
   formData: FormData,
 ): Promise<ControlState> {
-  const user = await assertPermission("automation:activate");
+  const user = await assertPermission("automation:pause_all");
   const id = z.uuid().parse(formData.get("id"));
 
   const problems = await validateAutomation(id);
@@ -58,9 +58,7 @@ export async function setAutomationStatus(formData: FormData) {
   const status = z.enum(["ACTIVE", "PAUSED", "DISABLED", "DRAFT"]).parse(
     formData.get("status"),
   );
-  const user = await assertPermission(
-    status === "ACTIVE" ? "automation:activate" : "automation:pause",
-  );
+  const user = await assertPermission("automation:pause_all");
   const id = z.uuid().parse(formData.get("id"));
 
   const before = await prisma.automation.findUnique({
@@ -113,7 +111,7 @@ export async function setPauseAll(formData: FormData) {
 
 /** Stop one customer's journey (doc 07 §12). Actor and reason are recorded. */
 export async function stopCustomerRun(formData: FormData) {
-  const user = await assertPermission("automation:pause");
+  const user = await assertPermission("automation:pause_all");
   const runId = z.uuid().parse(formData.get("runId"));
   const reason = String(formData.get("reason") ?? "").trim() || "stopped by staff";
 
@@ -143,7 +141,7 @@ export async function enrol(
   _prev: ControlState,
   formData: FormData,
 ): Promise<ControlState> {
-  const user = await assertPermission("automation:update");
+  const user = await assertPermission("automation:pause_all");
   const automationId = z.uuid().parse(formData.get("automationId"));
   const customerId = z.uuid().parse(formData.get("customerId"));
 
@@ -165,7 +163,7 @@ export async function enrol(
 
 /** Duplicate a journey as a new Draft (BR-15). */
 export async function duplicateAutomation(formData: FormData) {
-  const user = await assertPermission("automation:create");
+  const user = await assertPermission("automation:pause_all");
   const id = z.uuid().parse(formData.get("id"));
 
   const source = await prisma.automation.findUniqueOrThrow({

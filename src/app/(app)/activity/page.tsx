@@ -38,7 +38,7 @@ const SECURITY_EVENTS = [
 export default async function ActivityPage({
   searchParams,
 }: PageProps<"/activity">) {
-  await requirePermission("activity:read");
+  await requirePermission("settings:read");
   const params = await searchParams;
 
   const q = typeof params.q === "string" ? params.q.trim() : "";
@@ -160,18 +160,7 @@ export default async function ActivityPage({
                   <Cell className="font-[family-name:var(--font-mono)] text-[length:var(--text-small)]">
                     {e.objectType}
                   </Cell>
-                  <Cell>
-                    {e.customer ? (
-                      <Link
-                        href={`/customers/${e.customer.id}`}
-                        className="underline-offset-2 hover:underline"
-                      >
-                        {e.customer.name}
-                      </Link>
-                    ) : (
-                      "—"
-                    )}
-                  </Cell>
+                  <Cell>{e.customer ? e.customer.name : "—"}</Cell>
                   <Cell>
                     {e.before || e.after ? (
                       <details>

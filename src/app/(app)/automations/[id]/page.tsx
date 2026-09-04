@@ -32,7 +32,7 @@ export const dynamic = "force-dynamic";
 export default async function AutomationDetailPage({
   params,
 }: PageProps<"/automations/[id]">) {
-  const user = await requirePermission("automation:read");
+  const user = await requirePermission("automation:pause_all");
   const { id } = await params;
 
   const automation = await prisma.automation.findUnique({
@@ -66,7 +66,7 @@ export default async function AutomationDetailPage({
   ]);
 
   const countByState = new Map(runCounts.map((r) => [r.state, r._count._all]));
-  const canPause = can(user.roles, "automation:pause");
+  const canPause = can(user.roles, "automation:pause_all");
 
   return (
     <>
@@ -78,7 +78,7 @@ export default async function AutomationDetailPage({
             <Badge tone={statusTone(automation.status)}>
               {AUTOMATION_STATUS_LABELS[automation.status]}
             </Badge>
-            {can(user.roles, "automation:activate") &&
+            {can(user.roles, "automation:pause_all") &&
               automation.status !== "ACTIVE" && (
                 <ActivateButton id={automation.id} blocked={problems.length > 0} />
               )}

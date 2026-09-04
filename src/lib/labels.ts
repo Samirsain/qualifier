@@ -1,27 +1,20 @@
-/** Enum → business wording from README "Canonical Product Vocabulary". */
-
-export const INTEREST_STATUS_LABELS = {
-  NOT_YET_CONTACTED: "Not Yet Contacted",
-  INTERESTED: "Interested",
-  VERY_INTERESTED: "Very Interested",
-  NOT_INTERESTED: "Not Interested",
-  REVISIT_LATER: "Revisit Later",
-  CALL_REQUIRED: "Call Required",
-  MEETING_REQUIRED: "Meeting Required",
-  CONVERTED: "Converted",
-  CLOSED: "Closed",
+/** The five statuses a number can be in. */
+export const CUSTOMER_STATUS_LABELS = {
+  NOT_STARTED: "Not started",
+  IN_FUNNEL: "In funnel",
+  QUALIFIED: "Qualified",
+  NOT_INTERESTED: "Not interested",
+  NO_RESPONSE: "No response",
 } as const;
 
-export type InterestStatusKey = keyof typeof INTEREST_STATUS_LABELS;
+export type CustomerStatusKey = keyof typeof CUSTOMER_STATUS_LABELS;
 
-export const CAMPAIGN_STATUS_LABELS = {
+export const BATCH_STATUS_LABELS = {
   DRAFT: "Draft",
-  SCHEDULED: "Scheduled",
   RUNNING: "Running",
   PAUSED: "Paused",
-  COMPLETED: "Completed",
   STOPPED: "Stopped",
-  ARCHIVED: "Archived",
+  COMPLETED: "Completed",
 } as const;
 
 export const AUTOMATION_STATUS_LABELS = {
@@ -31,16 +24,11 @@ export const AUTOMATION_STATUS_LABELS = {
   DISABLED: "Disabled",
 } as const;
 
-export const CALL_STATUS_LABELS = {
-  NEW: "New",
-  ASSIGNED: "Assigned",
-  CONTACTED: "Contacted",
-  COMPLETED: "Completed",
-  RESCHEDULED: "Rescheduled",
-  CLOSED: "Closed",
-} as const;
-
-/** README "Lead stages" — the source-defined ten-stage pipeline, in order. */
+/**
+ * Kept only for prisma/seed.ts, which still seeds the full (untouched)
+ * CRM schema. Nothing in the UI reads these any more — schema removal is
+ * Task 3, at which point this and the seed data both go.
+ */
 export const LEAD_STAGES = [
   { code: "NEW", name: "New" },
   { code: "CONTACTED", name: "Contacted" },
@@ -54,7 +42,6 @@ export const LEAD_STAGES = [
   { code: "LOST", name: "Lost" },
 ] as const;
 
-/** README "Customer sources". */
 export const CUSTOMER_SOURCES = [
   { code: "WHATSAPP_CAMPAIGN", name: "WhatsApp Campaign", type: "campaign" },
   { code: "THREE_PERCENT_CAMPAIGN", name: "3% Club Campaign", type: "campaign" },
@@ -72,48 +59,27 @@ export const CUSTOMER_SOURCES = [
 
 type Tone = "neutral" | "success" | "warning" | "error" | "info";
 
-export function interestTone(status: string): Tone {
-  switch (status) {
-    case "CONVERTED":
-    case "VERY_INTERESTED":
-      return "success";
-    case "INTERESTED":
-      return "info";
-    case "CALL_REQUIRED":
-    case "MEETING_REQUIRED":
-    case "REVISIT_LATER":
-      return "warning";
-    case "NOT_INTERESTED":
-    case "CLOSED":
-      return "error";
-    default:
-      return "neutral";
-  }
-}
-
 export function statusTone(status: string): Tone {
   switch (status) {
+    case "QUALIFIED":
     case "ACTIVE":
     case "RUNNING":
     case "COMPLETED":
     case "DELIVERED":
     case "READ":
       return "success";
+    case "IN_FUNNEL":
+    case "SENT":
+    case "QUEUED":
+      return "info";
     case "PAUSED":
-    case "SCHEDULED":
-    case "PENDING":
-    case "RESCHEDULED":
+    case "NO_RESPONSE":
       return "warning";
+    case "NOT_INTERESTED":
     case "STOPPED":
     case "DISABLED":
     case "FAILED":
       return "error";
-    case "SENT":
-    case "QUEUED":
-    case "NEW":
-    case "ASSIGNED":
-    case "CONTACTED":
-      return "info";
     default:
       return "neutral";
   }
