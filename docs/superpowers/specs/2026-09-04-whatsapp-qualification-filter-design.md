@@ -266,18 +266,43 @@ Plus login. Seven routes plus login, down from twenty-eight.
 with a `phone` column and optional `name`.
 
 **Parsing rules:**
-- Phone normalised to E.164. A number without a country code is **rejected with
-  its row number**, not guessed — guessing a country code sends messages to the
-  wrong country.
-- Duplicates within the file are collapsed, and reported.
-- A number already in the database is reused, not duplicated (`phoneE164` is
+
+The default country is **India (+91)**, because in practice almost every number
+loaded will be Indian. It is a setting (`numbers.default_country`), not a
+constant, so a non-Indian list is a configuration change rather than a code
+change.
+
+A bare number is completed to E.164 only when it matches a real Indian mobile
+shape. Indian mobile numbers are exactly ten digits and begin with 6, 7, 8 or 9,
+so that rule does the validating — a ten-digit number that is not a plausible
+mobile is still rejected rather than silently given a +91.
+
+| Input | Result |
+|---|---|
+| `+919876543210` | accepted as-is |
+| `919876543210` | `+919876543210` |
+| `09876543210` | leading zero dropped → `+919876543210` |
+| `9876543210` | `+919876543210` — assumed Indian |
+| `98765 43210`, `98765-43210` | spaces and dashes stripped, then as above |
+| `1234567890` | **rejected** — ten digits but not a valid mobile prefix |
+| `987654321` / `98765432101` | **rejected** — wrong length |
+| `+14155552671` | accepted as-is — an explicit country code is always honoured |
+
+Other rules:
+
+- Duplicates within the file are collapsed, and the count is reported.
+- A number already in the database is reused, not duplicated (`phoneE164` stays
   unique).
 - A number with `optedOutAt` set is added to the batch as skipped, with the
   reason shown — visible, not silently dropped.
+- Every rejected row is reported with its **row number and the reason**, so the
+  file can be corrected rather than re-guessed.
 
-**Review before start:** the parsed result is shown — how many valid, how many
-rejected and why, how many already opted out — and the batch only starts on an
-explicit action.
+**Review before start:** the parsed result is shown before anything is sent —
+how many valid, how many rejected and why, how many already opted out, and
+**how many had +91 assumed**. That last count is shown deliberately: assuming a
+country code is the one step that can send a message to the wrong person, so it
+is stated rather than buried. The batch starts only on an explicit action.
 
 ---
 
@@ -306,6 +331,7 @@ customer data is at risk.
 | 2 | No-response wait duration (GAP-002) | Funnels with a no-response branch cannot be activated. |
 | 3 | Opt-out keywords (GAP-018) | Replying STOP is treated as an unrecognised reply. |
 | 4 | Business timezone (GAP-020) | Date filters on the export use the server day. |
+| 5 | Default country for bare numbers | Decided: **India (+91)**. Stored as a setting, changeable without code. |
 
 Decisions 2 through 4 are entered in Settings. Decision 1 is commercial.
 
