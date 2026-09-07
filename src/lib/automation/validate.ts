@@ -187,6 +187,18 @@ export async function validateAutomation(automationId: string): Promise<string[]
     }
   }
 
+  // A funnel that cannot qualify anyone has no output, which is almost
+  // certainly a mistake rather than an intent.
+  const qualifies = steps.some((step) => {
+    const parsed = actionConfig.safeParse(step.config);
+    return parsed.success && parsed.data.action === "mark_qualified";
+  });
+  if (!qualifies) {
+    problems.push(
+      'the funnel has no "Mark qualified" step, so it can never produce an output',
+    );
+  }
+
   // Template availability — an archived or inactive template blocks activation.
   if (templateIds.size > 0) {
     const templates = await prisma.template.findMany({
