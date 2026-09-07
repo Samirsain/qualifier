@@ -80,7 +80,7 @@ export async function saveSettings(
   // Timing and policy values change how journeys behave, so every surface
   // that reads them is refreshed.
   revalidatePath("/settings");
-  revalidatePath("/automations");
+  revalidatePath("/funnels");
 
   return { saved: true };
 }
@@ -93,5 +93,5 @@ export async function setPauseAllFromSettings(formData: FormData) {
   await setSetting("automation.pause_all", paused, user.id);
 
   revalidatePath("/settings");
-  revalidatePath("/automations");
+  revalidatePath("/funnels");
 }
