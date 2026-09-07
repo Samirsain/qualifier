@@ -40,16 +40,6 @@ export const SETTING_SPECS = [
       "Analytics period boundaries use the server timezone, so date-based figures are not anchored to an approved business day.",
   },
   {
-    key: "followup.sla_hours",
-    label: "Follow-up SLA",
-    gap: "GAP-014",
-    type: "number",
-    unit: "hours",
-    help: "How long after the due time a follow-up should be escalated.",
-    whileUnset:
-      "Overdue means only past due. Nothing escalates and no one is alerted.",
-  },
-  {
     key: "optout.keywords",
     label: "Opt-out keywords",
     gap: "GAP-018",
@@ -67,37 +57,13 @@ export const SETTING_SPECS = [
     whileUnset: "Messages can be sent at any hour of the day.",
   },
   {
-    key: "customer.status_values",
-    label: "Customer status values",
-    gap: "GAP-006",
-    type: "list",
-    help: "Comma separated list of the approved customer statuses.",
-    whileUnset: 'Customer status shows "Not defined" and cannot be set from a list.',
-  },
-  {
-    key: "meeting.status_values",
-    label: "Meeting status values",
-    gap: "GAP-007",
-    type: "list",
-    help: "Comma separated list of the approved meeting statuses.",
-    whileUnset: "Meeting status is free text, so two people can spell it differently.",
-  },
-  {
-    key: "outcome.values",
-    label: "Outcome values",
-    gap: "GAP-008",
-    type: "list",
-    help: "Comma separated list of the approved outcomes.",
+    key: "numbers.default_country",
+    label: "Default country for bare numbers",
+    gap: "Decided",
+    type: "text",
+    help: 'Two-letter code. Numbers without a country code are completed with this. Currently only "IN" is supported.',
     whileUnset:
-      "Outcome is free text and staff scoring can only count that an outcome exists, not what it was worth.",
-  },
-  {
-    key: "customer.type_values",
-    label: "Customer type values",
-    gap: "GAP-032",
-    type: "list",
-    help: "Comma separated list of the approved customer types.",
-    whileUnset: 'Customer type shows "Not defined".',
+      "Numbers without a country code are rejected instead of being completed.",
   },
 ] as const satisfies readonly SettingSpec[];
 

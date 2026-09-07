@@ -96,13 +96,11 @@ block launch outright:
 
 | GAP | Decision | Consequence while unset |
 |---|---|---|
-| **GAP-002** | No-response wait | The 3% Club journey **cannot be activated**. This is the product's core journey. |
+| **GAP-002** | No-response wait | Any funnel with a no-response branch **cannot be activated** |
 | **GAP-022** | WhatsApp provider | No real messages can be sent. Production refuses to boot on `mock`. |
-| GAP-020 | Reporting timezone | Analytics dates use the server zone |
+| GAP-020 | Reporting timezone | Date boundaries use the server zone |
 | GAP-018 | Opt-out keywords | Nobody can opt out by replying STOP |
-| GAP-001 | Scoring weights | No staff score is produced |
-| GAP-014 | Follow-up SLA | Nothing escalates |
-| GAP-006/007/008/032 | Taxonomies | Those fields stay free text |
+| GAP-021 | Send window | Messages can go out at any hour |
 
 ### 3.2 Infrastructure not built
 
@@ -111,8 +109,10 @@ block launch outright:
   them automatically.
 - **The tick worker is not scheduled.** `/api/automation/tick` exists and is
   authenticated, but nothing calls it. **Until it is on a schedule, no timer
-  fires and no campaign sends.** This is the single most important operational
-  gap.
+  fires and no batch enrols past its first slice.** This is the single most
+  important operational gap. (The route was also behind the session cookie
+  gate until 2026-09-07, which made it unreachable to a scheduler at all; see
+  `PROGRESS.md` §11.)
 - **No backups configured or restore rehearsed** (doc 16 §6, §7). Supabase has
   automatic backups; a restore has not been tested.
 - **No monitoring or alerting** (doc 16 §8, NFR-010). No correlation IDs on
@@ -122,7 +122,7 @@ block launch outright:
 
 ### 3.3 Testing gaps
 
-- **58 of 71 tests are pure logic.** No test touches the database, so the
+- **Every test is pure logic.** No test touches the database, so the
   runtime paths — dedupe, status monotonicity, timer claiming, run advancement —
   are unproven by automation. The branch-timeout bug proves this matters: it
   passed every structural test and only surfaced when the app actually ran.
@@ -135,17 +135,17 @@ block launch outright:
 
 ### 3.4 Known performance concerns
 
-- `/staff-scoring` runs ~13 queries per staff member. Fine for a small team,
-  poor at fifty. Needs batching before scale.
-- `/analytics` issues roughly 30 metric queries plus 5 per source.
-- Neither is a correctness problem, and no load target exists yet (GAP-023).
+- `createBatch` upserts one customer per row in a loop. Fine for the list sizes
+  seen so far, slow for tens of thousands. `createMany` plus a single
+  `batchMember` insert would fix it if upload time becomes a complaint.
+- No load target exists yet (GAP-023).
 
 ---
 
 ## 4. Shortest path to a safe launch
 
-1. Decide **GAP-002** and **GAP-022** — without these the core journey cannot
-   run at all.
+1. Decide **GAP-002** and **GAP-022** — without these no funnel with a
+   no-response branch can run, and nothing real can be sent.
 2. Point `/api/automation/tick` at a scheduler (platform cron, every minute).
    Nothing time-based works until this exists.
 3. Generate real secrets: `openssl rand -base64 32` for `AUTH_SECRET`,

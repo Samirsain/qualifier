@@ -652,3 +652,55 @@ Items 4 through 7 are not gate-enforceable — no code can tell that a stand-in
 measure is the wrong one. They are surfaced instead: the factor carries a
 `pendingDecision` note that prints beside every number it produces, in the
 configuration editor and in each score breakdown.
+
+---
+
+## 11. Rescope — WhatsApp qualification filter (2026-09-07)
+
+The build was a full CRM. It is now a qualification filter: upload numbers,
+run a self-built funnel, export the ones who ask to be contacted. The CRM team
+works outside this system.
+
+Spec: `docs/superpowers/specs/2026-09-04-whatsapp-qualification-filter-design.md`
+Plan: `docs/superpowers/plans/2026-09-04-whatsapp-qualification-filter.md`
+
+**Removed:** leads and the ten-stage pipeline, follow-ups, calls, meetings,
+staff profiles and assignment, staff scoring, campaigns, customers CRUD,
+sources, tags, FAQs, analytics and report definitions. 37 tables became 15.
+Four roles became two, held as a column on `users` rather than a join table.
+
+**Added:** `Batch` and `BatchMember`; a five-value `CustomerStatus`; a funnel
+builder that writes `automation_steps` rows; a number-list parser with an
+India default and Indian-mobile validation; a batch runner that enrols in
+slices; a qualified list with CSV export and an `exportedAt` stamp.
+
+**Kept unchanged:** the automation engine — durable timers, `SKIP LOCKED`
+claiming, event idempotency, pause/resume/stop. Only `executeAction`'s action
+list changed, and `mark_qualified` was added to it.
+
+### Defects found while finishing the rescope
+
+- **The timer worker was unreachable.** `src/proxy.ts` gated every path behind
+  the session cookie, so `/api/automation/tick` — driven by a scheduler with a
+  bearer secret and no cookie — was redirected to `/login`. No wait would ever
+  have fired in production. The route is now public to the proxy and keeps its
+  own timing-safe secret check.
+- **The migration history described the old schema.** It was never deployed
+  anywhere, so it is replaced by a single init matching the current datamodel.
+
+### Verified end to end against the live database
+
+Funnel activated → batch of two numbers created and dispatched by the tick
+endpoint → both enrolled and set `IN_FUNNEL`, four outbound messages sent →
+two signed inbound `YES` replies → `QUALIFIED` with `qualifiedAt` stamped and
+the run stopped → CSV export returned the row and stamped `exportedAt`, and the
+next "new only" export was header-only. Unauthenticated tick returned 403. The
+smoke-test rows were then deleted.
+
+```bash
+npm run typecheck        # clean
+npm run test             # 53 pass, 0 fail
+npm run build            # 15 routes compiled
+npx eslint src prisma --max-warnings=0   # clean
+npx prisma validate      # valid
+```

@@ -1,95 +1,96 @@
-# 3% Club — Customer Dashboard
+# 3% Club — WhatsApp qualification filter
 
-Implementation of `3_Percent_Club_Complete_Documentation_Package`.
+Upload a list of numbers, run them through a funnel you build yourself, and
+export the ones who ask to be contacted. The CRM team works outside this
+system; this is the filter that feeds it.
+
+Spec: `docs/superpowers/specs/2026-09-04-whatsapp-qualification-filter-design.md`
+
+## The flow
+
+1. **Funnels** — build a sequence: message, question, wait, mark qualified,
+   stop. A funnel cannot go live without a Mark qualified step, because one
+   that cannot qualify anyone produces nothing.
+2. **Batches** — paste or load a list of numbers, review what was parsed, then
+   run it through a live funnel. The funnel version is frozen onto the batch,
+   so later edits cannot change what a running batch sends.
+3. **Qualified** — the numbers that said yes. Export to CSV; each export
+   stamps the rows so the next "new only" export never repeats them.
+
+## Screens
+
+| Screen | What it is for |
+|---|---|
+| Batches | What is running, and the upload flow |
+| Qualified | The output list and its CSV export |
+| Funnels | The funnel library and builder |
+| Templates | Approved message templates |
+| Inbox | Conversations, for replies a funnel could not handle |
+| Settings | The open business decisions, and the emergency pause |
 
 ## Stack
 
 | Layer | Choice | Notes |
 |---|---|---|
-| Web + API | Next.js 16.3.4 (App Router, Turbopack), React 19.2 | Doc 08 recommends Next.js. Server Actions replace a separate NestJS service — one deployable instead of two. |
-| Database | PostgreSQL 18 via Prisma 7 | Doc 09 schema, all 37 entities. |
-| Auth | Auth.js v5, credentials + JWT session | Identity provider and MFA are GAP-025 (TBD), so this is swappable. |
-| Styling | Tailwind CSS 4, semantic tokens | Doc 05 tokens in `src/app/globals.css`. Brand hex values are a pending design approval. |
+| Web + API | Next.js 16.3.4 (App Router, Turbopack), React 19.2 | Server Actions and Route Handlers; one deployable. |
+| Database | PostgreSQL 18 via Prisma 7 | 15 models. Supabase in development. |
+| Auth | Auth.js v5, credentials + JWT session | Two roles: Admin and Viewer. |
+| Styling | Tailwind CSS 4, semantic tokens | Tokens in `src/app/globals.css`. |
 | Durable timers | `automation_runs.next_action_at` + worker | See "Deviations" below. |
 
 ## Setup
 
 ```bash
-docker compose up -d          # or point DATABASE_URL at any Postgres
-cp .env.example .env          # then set AUTH_SECRET
+cp .env.example .env          # then set DATABASE_URL and AUTH_SECRET
 npm install
-npm run db:migrate            # creates the schema
-npm run db:seed               # roles, permissions, lead stages, sources, admin
+npm run db:deploy             # applies migrations
+npm run db:seed               # admin user, settings, starter funnel
 npm run dev
 ```
+
+Any Postgres works. `docker compose up -d` starts a local one; with Docker
+unavailable, `npx prisma dev` runs an embedded Postgres and prints a TCP URL
+for `DATABASE_URL`.
 
 Seeded admin: `admin@3percent.local` / `ChangeMe123!` (override with
 `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD`).
 
-## Deviations from the documentation
+### Driving the timers
+
+Waits and no-response branches only fire while something ticks the worker.
+Point a scheduler at it:
+
+```bash
+curl -X POST -H "Authorization: Bearer $AUTOMATION_TICK_SECRET" \
+     http://localhost:3000/api/automation/tick
+```
+
+The same call also enrols the next slice of each running batch. Ticking more
+often than the shortest wait is harmless: claiming is transactional and every
+effect is idempotent.
+
+## Deviations from the source documentation
 
 Doc 08 marks technical content as *recommendation, not business rule*. Two
 recommendations were not adopted:
 
 1. **NestJS** — the API surface is Next.js Server Actions and Route Handlers.
    Same modular boundaries (`src/lib`, per-module `actions.ts`), one process to
-   deploy and monitor instead of two. Business rules stay out of components.
+   deploy and monitor instead of two.
 2. **Temporal** — automation waits are stored as `automation_runs.next_action_at`
    and claimed by a worker polling the `(state, next_action_at)` index. This
-   satisfies the source requirements (exact 1-day revision wait, configured
-   no-response wait, pause/resume, restart-safety via `automation_events.
-   idempotency_key`) without a second cluster. If measured throughput or
-   workflow complexity outgrows it, the run/step/event tables map onto Temporal
-   workflows without a schema change.
+   satisfies the requirements (exact waits, pause/resume, restart-safety via
+   `automation_events.idempotency_key`) without a second cluster.
 
-## Status against the development plan
-
-| Phase | State |
-|---|---|
-| DEV-001 Project foundation | Done — app, schema, migrations, env, build |
-| DEV-002 Authentication and roles | Done — Auth.js, 4 roles, permission matrix, API+UI guards, audited login |
-| DEV-003 Customers, sources, tags, 360 | Done — list, filters, create, profile, 360 timeline, assignment history |
-| DEV-004 WhatsApp Inbox and message integration | Done — provider adapter (mock + Meta Cloud API), signed webhook, idempotent ingest, three-pane inbox, reply/template send, close/reopen |
-| DEV-005 Templates and FAQ | Done — template library, editor with preview, duplicate/archive, usage counts; FAQ CRUD by category with search |
-| DEV-006 Lead CRM and follow-ups | Done — ten-stage pipeline with counts, stage moves always written to history, follow-up today/upcoming/overdue/completed queues, complete/reschedule, call and meeting queues |
-| DEV-007 Calls, meetings and staff assignment | Done — one creation service for staff and automations, ownership + reassignment with notifications, staff workload and profile |
-| DEV-008 Automation engine foundation | Done — step runtime, durable timer worker with `SKIP LOCKED` claiming, event idempotency, validation, pause/resume/stop/pause-all |
-| DEV-009 3% Club YES/NO and 1-day revision | Done — 25-step journey; the critical NO rule is structurally enforced and tested |
-| DEV-010 No-response and additional types | Partial — the no-response path exists; its wait value is blocked on GAP-002 |
-| DEV-011 Campaigns | Done — segment builder with shared preview/launch resolver, audience frozen at launch, mid-batch stop, per-customer delivery reporting |
-| DEV-012 Staff scoring | Done — factors, versioned config, activation gate, explainable calculation. **No configuration is active**; the seed creates none (GAP-001) |
-| DEV-013 Analytics and reports | Done — one shared metric layer for dashboard and reports, 31 defined KPIs, source performance cohort |
-| DEV-014 Admin, settings and activity | Done — append-only activity log, settings for the open business decisions, emergency controls |
-| DEV-015 Hardening and QA | Partial — security hardening done and tested; QA automation and the doc 15 §5 release gate are not |
-| DEV-016 Deployment | Not started |
-
-**Not production ready.** See `PRODUCTION.md` for the blockers, the five
-defects found and fixed in the hardening pass, and the shortest path to a safe
-launch.
-
-See `PROGRESS.md` for the full build record: what maps to which document, the
-deviations, and how each open business decision is handled.
+**Not production ready.** See `PRODUCTION.md` for the blockers.
+`PROGRESS.md` has the full build record.
 
 ## Checks
 
 ```bash
 npm run typecheck        # next typegen + tsc --noEmit
-npm run test             # node:test via tsx — 71 tests
+npm run test             # node:test via tsx
 npm run build
-npx eslint src prisma
+npx eslint src prisma --max-warnings=0
+npx prisma validate
 ```
-
-## Open business decisions in code
-
-Fields whose taxonomy the business has not defined (`customer_status`,
-`meeting_status`, `outcome`, `customer_type`) are stored as `String` and
-surfaced in the UI as "Not defined" rather than given invented values. Timing
-and policy decisions live in the `system_settings` table seeded to `null`:
-no-response wait (GAP-002), reporting timezone (GAP-020), send window
-(GAP-021), follow-up SLA (GAP-014), opt-out keywords (GAP-018).
-
-No staff-scoring formula runs until a `staff_score_configs` row is approved and
-activated (GAP-001). The activation gate refuses a configuration with unset
-weights, a missing cap or target, no approval note, or one where every enabled
-factor is a raw count — doc 13 §4 warns that last case favours larger
-workloads. `PROGRESS.md` §10 lists the nine decisions needed.

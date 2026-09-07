@@ -12,7 +12,11 @@ export function proxy(request: NextRequest) {
   const isPublic =
     pathname.startsWith("/login") ||
     pathname.startsWith("/api/auth") ||
-    pathname.startsWith("/api/webhooks");
+    pathname.startsWith("/api/webhooks") ||
+    // Driven by a scheduler, not a browser: it authenticates with
+    // AUTOMATION_TICK_SECRET and has no session cookie to present. Behind the
+    // cookie gate it was redirected to /login, so no timer ever fired.
+    pathname.startsWith("/api/automation/tick");
 
   if (isPublic) return NextResponse.next();
 
