@@ -66,15 +66,6 @@ async function applyStatus(
     },
   });
 
-  await prisma.campaignDelivery.updateMany({
-    where: { messageId: message.id },
-    data: {
-      status: event.status,
-      ...(event.status === "DELIVERED" && { deliveredAt: event.at }),
-      ...(event.status === "READ" && { readAt: event.at }),
-    },
-  });
-
   return true;
 }
 
@@ -147,11 +138,6 @@ async function applyInboundMessage(
     await tx.customer.update({
       where: { id: customer.id },
       data: { lastInteractionAt: event.receivedAt },
-    });
-
-    await tx.campaignDelivery.updateMany({
-      where: { customerId: customer.id, repliedAt: null },
-      data: { repliedAt: event.receivedAt },
     });
 
     await tx.activityLog.create({

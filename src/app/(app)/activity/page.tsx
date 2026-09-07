@@ -127,7 +127,7 @@ export default async function ActivityPage({
         {entries.length === 0 ? (
           <EmptyState
             title={q || objectType ? "No events match" : "No activity recorded yet"}
-            description="Customer, assignment, status, follow-up, automation, campaign and security events appear here as they happen."
+            description="Customer, status, automation and security events appear here as they happen."
           />
         ) : (
           <>

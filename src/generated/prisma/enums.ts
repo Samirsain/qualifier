@@ -11,8 +11,6 @@
 
 export const RoleCode = {
   ADMIN: 'ADMIN',
-  MANAGER: 'MANAGER',
-  STAFF: 'STAFF',
   VIEWER: 'VIEWER'
 } as const
 
@@ -28,32 +26,26 @@ export const UserStatus = {
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
 
-export const InterestStatus = {
-  NOT_YET_CONTACTED: 'NOT_YET_CONTACTED',
-  INTERESTED: 'INTERESTED',
-  VERY_INTERESTED: 'VERY_INTERESTED',
+export const CustomerStatus = {
+  NOT_STARTED: 'NOT_STARTED',
+  IN_FUNNEL: 'IN_FUNNEL',
+  QUALIFIED: 'QUALIFIED',
   NOT_INTERESTED: 'NOT_INTERESTED',
-  REVISIT_LATER: 'REVISIT_LATER',
-  CALL_REQUIRED: 'CALL_REQUIRED',
-  MEETING_REQUIRED: 'MEETING_REQUIRED',
-  CONVERTED: 'CONVERTED',
-  CLOSED: 'CLOSED'
+  NO_RESPONSE: 'NO_RESPONSE'
 } as const
 
-export type InterestStatus = (typeof InterestStatus)[keyof typeof InterestStatus]
+export type CustomerStatus = (typeof CustomerStatus)[keyof typeof CustomerStatus]
 
 
-export const CampaignStatus = {
+export const BatchStatus = {
   DRAFT: 'DRAFT',
-  SCHEDULED: 'SCHEDULED',
   RUNNING: 'RUNNING',
   PAUSED: 'PAUSED',
-  COMPLETED: 'COMPLETED',
   STOPPED: 'STOPPED',
-  ARCHIVED: 'ARCHIVED'
+  COMPLETED: 'COMPLETED'
 } as const
 
-export type CampaignStatus = (typeof CampaignStatus)[keyof typeof CampaignStatus]
+export type BatchStatus = (typeof BatchStatus)[keyof typeof BatchStatus]
 
 
 export const AutomationStatus = {
@@ -64,18 +56,6 @@ export const AutomationStatus = {
 } as const
 
 export type AutomationStatus = (typeof AutomationStatus)[keyof typeof AutomationStatus]
-
-
-export const CallStatus = {
-  NEW: 'NEW',
-  ASSIGNED: 'ASSIGNED',
-  CONTACTED: 'CONTACTED',
-  COMPLETED: 'COMPLETED',
-  RESCHEDULED: 'RESCHEDULED',
-  CLOSED: 'CLOSED'
-} as const
-
-export type CallStatus = (typeof CallStatus)[keyof typeof CallStatus]
 
 
 export const ConversationStatus = {
@@ -150,23 +130,3 @@ export const RunState = {
 } as const
 
 export type RunState = (typeof RunState)[keyof typeof RunState]
-
-
-export const FollowUpStatus = {
-  PENDING: 'PENDING',
-  COMPLETED: 'COMPLETED',
-  RESCHEDULED: 'RESCHEDULED',
-  CANCELLED: 'CANCELLED'
-} as const
-
-export type FollowUpStatus = (typeof FollowUpStatus)[keyof typeof FollowUpStatus]
-
-
-export const ScorePeriod = {
-  DAILY: 'DAILY',
-  WEEKLY: 'WEEKLY',
-  MONTHLY: 'MONTHLY',
-  OVERALL: 'OVERALL'
-} as const
-
-export type ScorePeriod = (typeof ScorePeriod)[keyof typeof ScorePeriod]

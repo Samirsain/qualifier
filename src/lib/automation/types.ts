@@ -3,11 +3,11 @@ import { z } from "zod";
 /**
  * Automation step configuration (doc 07 §5).
  *
- * The action and condition vocabularies are exactly the source-defined lists
- * in doc 07 §3 and §4 — nothing extra is invented, and nothing is dropped.
+ * The action and condition vocabularies cover what a qualification funnel can
+ * actually do: message, branch on the answer, set a status, and qualify.
  */
 
-/** Doc 07 §4 — Supported Actions. */
+/** Supported actions. */
 export const actionConfig = z.discriminatedUnion("action", [
   z.object({
     action: z.literal("send_message"),
@@ -15,45 +15,17 @@ export const actionConfig = z.discriminatedUnion("action", [
     body: z.string().max(4000).optional(),
   }),
   z.object({
-    action: z.literal("add_tag"),
-    tag: z.string().min(1).max(60),
+    action: z.literal("mark_qualified"),
   }),
   z.object({
-    action: z.literal("remove_tag"),
-    tag: z.string().min(1).max(60),
-  }),
-  z.object({
-    action: z.literal("change_customer_status"),
-    interestStatus: z.enum([
-      "NOT_YET_CONTACTED",
-      "INTERESTED",
-      "VERY_INTERESTED",
+    action: z.literal("set_status"),
+    status: z.enum([
+      "NOT_STARTED",
+      "IN_FUNNEL",
+      "QUALIFIED",
       "NOT_INTERESTED",
-      "REVISIT_LATER",
-      "CALL_REQUIRED",
-      "MEETING_REQUIRED",
-      "CONVERTED",
-      "CLOSED",
+      "NO_RESPONSE",
     ]),
-  }),
-  z.object({
-    action: z.literal("assign_staff"),
-    /** Omitted means "leave the current owner" — no routing rule is invented
-     *  because the assignment algorithm is GAP-005. */
-    staffId: z.uuid().optional(),
-  }),
-  z.object({
-    action: z.literal("create_follow_up"),
-    type: z.string().min(1).max(60),
-    dueInHours: z.number().int().min(0).max(24 * 365),
-  }),
-  z.object({
-    action: z.literal("create_call_request"),
-    requirement: z.string().min(1).max(500),
-  }),
-  z.object({
-    action: z.literal("create_meeting_request"),
-    requirement: z.string().min(1).max(500),
   }),
   z.object({
     action: z.literal("add_note"),
@@ -107,23 +79,13 @@ export const branchConfig = z.object({
 
 export type BranchConfig = z.infer<typeof branchConfig>;
 
-/** Doc 07 §3 — Supported Conditions. */
+/** Supported conditions — only the ones that still have data behind them. */
 export const conditionConfig = z.object({
   condition: z.enum([
-    "customer_is_new",
-    "customer_source",
-    "customer_campaign",
     "customer_answered_yes",
     "customer_answered_no",
     "customer_did_not_respond",
     "customer_replied",
-    "customer_has_tag",
-    "customer_is_interested",
-    "customer_requested_call",
-    "customer_requested_meeting",
-    "follow_up_is_due",
-    "customer_status_changed",
-    "customer_is_existing",
   ]),
   value: z.string().max(120).optional(),
   thenStepKey: z.string().max(60).optional(),

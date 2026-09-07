@@ -52,40 +52,19 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Role: 'Role',
-  Permission: 'Permission',
-  UserRole: 'UserRole',
-  RolePermission: 'RolePermission',
-  StaffProfile: 'StaffProfile',
-  Source: 'Source',
-  Tag: 'Tag',
+  Batch: 'Batch',
+  BatchMember: 'BatchMember',
   Customer: 'Customer',
-  CustomerTag: 'CustomerTag',
   Conversation: 'Conversation',
   Message: 'Message',
   Template: 'Template',
-  TemplateUsage: 'TemplateUsage',
-  Faq: 'Faq',
-  Campaign: 'Campaign',
-  CampaignAudience: 'CampaignAudience',
-  CampaignDelivery: 'CampaignDelivery',
   Automation: 'Automation',
   AutomationStep: 'AutomationStep',
   AutomationRun: 'AutomationRun',
   AutomationEvent: 'AutomationEvent',
   CustomerResponse: 'CustomerResponse',
-  LeadStage: 'LeadStage',
-  Lead: 'Lead',
-  LeadStageHistory: 'LeadStageHistory',
-  FollowUp: 'FollowUp',
-  Call: 'Call',
-  Meeting: 'Meeting',
-  StaffAssignment: 'StaffAssignment',
-  StaffScoreConfig: 'StaffScoreConfig',
-  StaffScore: 'StaffScore',
   Notification: 'Notification',
   ActivityLog: 'ActivityLog',
-  ReportDefinition: 'ReportDefinition',
   SystemSetting: 'SystemSetting'
 } as const
 
@@ -111,6 +90,7 @@ export const UserScalarFieldEnum = {
   passwordHash: 'passwordHash',
   externalSubject: 'externalSubject',
   displayName: 'displayName',
+  role: 'role',
   status: 'status',
   lastLoginAt: 'lastLoginAt',
   createdAt: 'createdAt',
@@ -120,80 +100,30 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const RoleScalarFieldEnum = {
+export const BatchScalarFieldEnum = {
   id: 'id',
-  code: 'code',
   name: 'name',
-  description: 'description',
-  systemRole: 'systemRole',
+  automationId: 'automationId',
+  automationVersion: 'automationVersion',
+  status: 'status',
+  createdById: 'createdById',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+export type BatchScalarFieldEnum = (typeof BatchScalarFieldEnum)[keyof typeof BatchScalarFieldEnum]
 
 
-export const PermissionScalarFieldEnum = {
-  id: 'id',
-  code: 'code',
-  module: 'module',
-  action: 'action',
-  description: 'description'
+export const BatchMemberScalarFieldEnum = {
+  batchId: 'batchId',
+  customerId: 'customerId',
+  enrolledAt: 'enrolledAt',
+  skippedReason: 'skippedReason'
 } as const
 
-export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
-
-
-export const UserRoleScalarFieldEnum = {
-  userId: 'userId',
-  roleId: 'roleId'
-} as const
-
-export type UserRoleScalarFieldEnum = (typeof UserRoleScalarFieldEnum)[keyof typeof UserRoleScalarFieldEnum]
-
-
-export const RolePermissionScalarFieldEnum = {
-  roleId: 'roleId',
-  permissionId: 'permissionId'
-} as const
-
-export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnum)[keyof typeof RolePermissionScalarFieldEnum]
-
-
-export const StaffProfileScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  staffCode: 'staffCode',
-  active: 'active',
-  managerId: 'managerId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type StaffProfileScalarFieldEnum = (typeof StaffProfileScalarFieldEnum)[keyof typeof StaffProfileScalarFieldEnum]
-
-
-export const SourceScalarFieldEnum = {
-  id: 'id',
-  code: 'code',
-  name: 'name',
-  type: 'type',
-  active: 'active',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type SourceScalarFieldEnum = (typeof SourceScalarFieldEnum)[keyof typeof SourceScalarFieldEnum]
-
-
-export const TagScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  active: 'active',
-  createdAt: 'createdAt'
-} as const
-
-export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+export type BatchMemberScalarFieldEnum = (typeof BatchMemberScalarFieldEnum)[keyof typeof BatchMemberScalarFieldEnum]
 
 
 export const CustomerScalarFieldEnum = {
@@ -202,19 +132,12 @@ export const CustomerScalarFieldEnum = {
   phoneE164: 'phoneE164',
   email: 'email',
   location: 'location',
-  sourceId: 'sourceId',
-  sourceDetail: 'sourceDetail',
-  campaignId: 'campaignId',
-  customerType: 'customerType',
-  interestStatus: 'interestStatus',
-  customerStatus: 'customerStatus',
-  assignedStaffId: 'assignedStaffId',
-  nextFollowUpAt: 'nextFollowUpAt',
-  lastInteractionAt: 'lastInteractionAt',
-  requirements: 'requirements',
-  outcome: 'outcome',
-  conversionStatus: 'conversionStatus',
+  status: 'status',
+  batchId: 'batchId',
   optedOutAt: 'optedOutAt',
+  lastInteractionAt: 'lastInteractionAt',
+  qualifiedAt: 'qualifiedAt',
+  exportedAt: 'exportedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -222,22 +145,11 @@ export const CustomerScalarFieldEnum = {
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
 
 
-export const CustomerTagScalarFieldEnum = {
-  customerId: 'customerId',
-  tagId: 'tagId',
-  assignedBy: 'assignedBy',
-  assignedAt: 'assignedAt'
-} as const
-
-export type CustomerTagScalarFieldEnum = (typeof CustomerTagScalarFieldEnum)[keyof typeof CustomerTagScalarFieldEnum]
-
-
 export const ConversationScalarFieldEnum = {
   id: 'id',
   customerId: 'customerId',
   channel: 'channel',
   status: 'status',
-  assignedStaffId: 'assignedStaffId',
   lastMessageAt: 'lastMessageAt',
   unreadCount: 'unreadCount',
   createdAt: 'createdAt',
@@ -285,82 +197,6 @@ export const TemplateScalarFieldEnum = {
 } as const
 
 export type TemplateScalarFieldEnum = (typeof TemplateScalarFieldEnum)[keyof typeof TemplateScalarFieldEnum]
-
-
-export const TemplateUsageScalarFieldEnum = {
-  id: 'id',
-  templateId: 'templateId',
-  usageType: 'usageType',
-  usageObjectId: 'usageObjectId',
-  customerId: 'customerId',
-  usedAt: 'usedAt'
-} as const
-
-export type TemplateUsageScalarFieldEnum = (typeof TemplateUsageScalarFieldEnum)[keyof typeof TemplateUsageScalarFieldEnum]
-
-
-export const FaqScalarFieldEnum = {
-  id: 'id',
-  category: 'category',
-  question: 'question',
-  answer: 'answer',
-  active: 'active',
-  sortOrder: 'sortOrder',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type FaqScalarFieldEnum = (typeof FaqScalarFieldEnum)[keyof typeof FaqScalarFieldEnum]
-
-
-export const CampaignScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  purpose: 'purpose',
-  targetSegmentDefinition: 'targetSegmentDefinition',
-  sourceSegment: 'sourceSegment',
-  templateId: 'templateId',
-  personalizationConfig: 'personalizationConfig',
-  scheduledAt: 'scheduledAt',
-  status: 'status',
-  createdById: 'createdById',
-  startedAt: 'startedAt',
-  completedAt: 'completedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CampaignScalarFieldEnum = (typeof CampaignScalarFieldEnum)[keyof typeof CampaignScalarFieldEnum]
-
-
-export const CampaignAudienceScalarFieldEnum = {
-  campaignId: 'campaignId',
-  customerId: 'customerId',
-  inclusionReason: 'inclusionReason',
-  excludedReason: 'excludedReason',
-  resolvedAt: 'resolvedAt'
-} as const
-
-export type CampaignAudienceScalarFieldEnum = (typeof CampaignAudienceScalarFieldEnum)[keyof typeof CampaignAudienceScalarFieldEnum]
-
-
-export const CampaignDeliveryScalarFieldEnum = {
-  id: 'id',
-  campaignId: 'campaignId',
-  customerId: 'customerId',
-  messageId: 'messageId',
-  status: 'status',
-  sentAt: 'sentAt',
-  deliveredAt: 'deliveredAt',
-  readAt: 'readAt',
-  repliedAt: 'repliedAt',
-  leadGenerated: 'leadGenerated',
-  callRequested: 'callRequested',
-  meetingRequested: 'meetingRequested',
-  result: 'result'
-} as const
-
-export type CampaignDeliveryScalarFieldEnum = (typeof CampaignDeliveryScalarFieldEnum)[keyof typeof CampaignDeliveryScalarFieldEnum]
 
 
 export const AutomationScalarFieldEnum = {
@@ -443,140 +279,6 @@ export const CustomerResponseScalarFieldEnum = {
 export type CustomerResponseScalarFieldEnum = (typeof CustomerResponseScalarFieldEnum)[keyof typeof CustomerResponseScalarFieldEnum]
 
 
-export const LeadStageScalarFieldEnum = {
-  id: 'id',
-  code: 'code',
-  name: 'name',
-  sortOrder: 'sortOrder',
-  active: 'active'
-} as const
-
-export type LeadStageScalarFieldEnum = (typeof LeadStageScalarFieldEnum)[keyof typeof LeadStageScalarFieldEnum]
-
-
-export const LeadScalarFieldEnum = {
-  id: 'id',
-  customerId: 'customerId',
-  stageId: 'stageId',
-  interestStatus: 'interestStatus',
-  assignedStaffId: 'assignedStaffId',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
-
-
-export const LeadStageHistoryScalarFieldEnum = {
-  id: 'id',
-  leadId: 'leadId',
-  fromStageId: 'fromStageId',
-  toStageId: 'toStageId',
-  changedById: 'changedById',
-  note: 'note',
-  changedAt: 'changedAt'
-} as const
-
-export type LeadStageHistoryScalarFieldEnum = (typeof LeadStageHistoryScalarFieldEnum)[keyof typeof LeadStageHistoryScalarFieldEnum]
-
-
-export const FollowUpScalarFieldEnum = {
-  id: 'id',
-  customerId: 'customerId',
-  leadId: 'leadId',
-  assignedStaffId: 'assignedStaffId',
-  type: 'type',
-  dueAt: 'dueAt',
-  status: 'status',
-  completedAt: 'completedAt',
-  rescheduledFromId: 'rescheduledFromId',
-  notes: 'notes',
-  createdById: 'createdById',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type FollowUpScalarFieldEnum = (typeof FollowUpScalarFieldEnum)[keyof typeof FollowUpScalarFieldEnum]
-
-
-export const CallScalarFieldEnum = {
-  id: 'id',
-  customerId: 'customerId',
-  requirement: 'requirement',
-  sourceId: 'sourceId',
-  campaignId: 'campaignId',
-  assignedStaffId: 'assignedStaffId',
-  requestedAt: 'requestedAt',
-  status: 'status',
-  followUpId: 'followUpId',
-  notes: 'notes',
-  completedAt: 'completedAt'
-} as const
-
-export type CallScalarFieldEnum = (typeof CallScalarFieldEnum)[keyof typeof CallScalarFieldEnum]
-
-
-export const MeetingScalarFieldEnum = {
-  id: 'id',
-  customerId: 'customerId',
-  requirement: 'requirement',
-  sourceId: 'sourceId',
-  assignedStaffId: 'assignedStaffId',
-  requestedAt: 'requestedAt',
-  scheduledAt: 'scheduledAt',
-  meetingStatus: 'meetingStatus',
-  followUpId: 'followUpId',
-  notes: 'notes',
-  outcome: 'outcome',
-  completedAt: 'completedAt'
-} as const
-
-export type MeetingScalarFieldEnum = (typeof MeetingScalarFieldEnum)[keyof typeof MeetingScalarFieldEnum]
-
-
-export const StaffAssignmentScalarFieldEnum = {
-  id: 'id',
-  customerId: 'customerId',
-  staffId: 'staffId',
-  assignedById: 'assignedById',
-  assignedAt: 'assignedAt',
-  endedAt: 'endedAt',
-  reason: 'reason'
-} as const
-
-export type StaffAssignmentScalarFieldEnum = (typeof StaffAssignmentScalarFieldEnum)[keyof typeof StaffAssignmentScalarFieldEnum]
-
-
-export const StaffScoreConfigScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  effectiveFrom: 'effectiveFrom',
-  effectiveTo: 'effectiveTo',
-  factorConfig: 'factorConfig',
-  approvedById: 'approvedById',
-  active: 'active',
-  createdAt: 'createdAt'
-} as const
-
-export type StaffScoreConfigScalarFieldEnum = (typeof StaffScoreConfigScalarFieldEnum)[keyof typeof StaffScoreConfigScalarFieldEnum]
-
-
-export const StaffScoreScalarFieldEnum = {
-  id: 'id',
-  staffId: 'staffId',
-  configId: 'configId',
-  periodType: 'periodType',
-  periodStart: 'periodStart',
-  periodEnd: 'periodEnd',
-  factorValues: 'factorValues',
-  score: 'score',
-  calculatedAt: 'calculatedAt'
-} as const
-
-export type StaffScoreScalarFieldEnum = (typeof StaffScoreScalarFieldEnum)[keyof typeof StaffScoreScalarFieldEnum]
-
-
 export const NotificationScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -606,21 +308,6 @@ export const ActivityLogScalarFieldEnum = {
 } as const
 
 export type ActivityLogScalarFieldEnum = (typeof ActivityLogScalarFieldEnum)[keyof typeof ActivityLogScalarFieldEnum]
-
-
-export const ReportDefinitionScalarFieldEnum = {
-  id: 'id',
-  code: 'code',
-  name: 'name',
-  description: 'description',
-  metricDefinition: 'metricDefinition',
-  allowedRoles: 'allowedRoles',
-  active: 'active',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ReportDefinitionScalarFieldEnum = (typeof ReportDefinitionScalarFieldEnum)[keyof typeof ReportDefinitionScalarFieldEnum]
 
 
 export const SystemSettingScalarFieldEnum = {

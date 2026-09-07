@@ -1,8 +1,8 @@
 import "server-only";
 import { logActivity } from "@/lib/activity";
+import { notify } from "@/lib/notifications";
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
-import { createCallRequest, createMeetingRequest } from "@/lib/requests";
 import { getSetting } from "@/lib/settings";
 import { sendToCustomer } from "@/lib/whatsapp/outbound";
 import {
@@ -425,32 +425,7 @@ async function evaluateCondition(
   customerId: string,
   config: { condition: string; value?: string },
 ): Promise<boolean> {
-  const customer = await prisma.customer.findUnique({
-    where: { id: customerId },
-    include: {
-      source: { select: { code: true } },
-      tags: { include: { tag: { select: { name: true } } } },
-    },
-  });
-  if (!customer) return false;
-
   switch (config.condition) {
-    case "customer_is_new":
-      return customer.interestStatus === "NOT_YET_CONTACTED";
-    case "customer_is_existing":
-      return customer.customerType === "existing";
-    case "customer_source":
-      return customer.source.code === config.value;
-    case "customer_campaign":
-      return customer.campaignId === config.value;
-    case "customer_has_tag":
-      return customer.tags.some((t) => t.tag.name === config.value);
-    case "customer_is_interested":
-      return ["INTERESTED", "VERY_INTERESTED"].includes(customer.interestStatus);
-    case "customer_requested_call":
-      return customer.interestStatus === "CALL_REQUIRED";
-    case "customer_requested_meeting":
-      return customer.interestStatus === "MEETING_REQUIRED";
     case "customer_answered_yes":
     case "customer_answered_no": {
       const wanted = config.condition === "customer_answered_yes" ? "YES" : "NO";
@@ -473,18 +448,6 @@ async function evaluateCondition(
           where: { customerId, direction: "INBOUND" },
         })) === 0
       );
-    case "follow_up_is_due":
-      return (
-        (await prisma.followUp.count({
-          where: { customerId, status: "PENDING", dueAt: { lte: new Date() } },
-        })) > 0
-      );
-    case "customer_status_changed":
-      return (
-        (await prisma.activityLog.count({
-          where: { customerId, eventType: "customer.interest_status_changed" },
-        })) > 0
-      );
     default:
       return false;
   }
@@ -505,102 +468,54 @@ async function executeAction(
       return result.ok ? "ok" : "failed";
     }
 
-    case "add_tag": {
-      const tag = await prisma.tag.upsert({
-        where: { name: config.tag },
-        update: {},
-        create: { name: config.tag },
+    case "mark_qualified": {
+      // The system's output event. Deliberately its own action rather than a
+      // general status change, so it is unmistakable in the audit log.
+      const customer = await prisma.customer.update({
+        where: { id: customerId },
+        data: { status: "QUALIFIED", qualifiedAt: new Date() },
+        select: { name: true, phoneE164: true },
       });
-      await prisma.customerTag.upsert({
-        where: { customerId_tagId: { customerId, tagId: tag.id } },
-        update: {},
-        create: { customerId, tagId: tag.id },
+      await logActivity({
+        eventType: "customer.qualified",
+        objectType: "customer",
+        objectId: customerId,
+        customerId,
+        metadata: { by: "automation", runId },
       });
-      return "ok";
-    }
-
-    case "remove_tag": {
-      const tag = await prisma.tag.findUnique({ where: { name: config.tag } });
-      if (tag) {
-        await prisma.customerTag.deleteMany({ where: { customerId, tagId: tag.id } });
+      // Nobody is assigned anything here, so everyone who can act on a
+      // qualified number is told about it.
+      const admins = await prisma.user.findMany({
+        where: { role: "ADMIN", status: "ACTIVE" },
+        select: { id: true },
+      });
+      for (const admin of admins) {
+        await notify({
+          userId: admin.id,
+          eventType: "customer.qualified",
+          title: `${customer.name ?? customer.phoneE164} asked to be contacted`,
+          relatedType: "customer",
+          relatedId: customerId,
+        });
       }
       return "ok";
     }
 
-    case "change_customer_status": {
-      await prisma.$transaction([
-        prisma.customer.update({
-          where: { id: customerId },
-          data: { interestStatus: config.interestStatus },
-        }),
-        prisma.lead.updateMany({
-          where: { customerId },
-          data: { interestStatus: config.interestStatus },
-        }),
-      ]);
+    case "set_status": {
+      await prisma.customer.update({
+        where: { id: customerId },
+        data: { status: config.status },
+      });
       await logActivity({
-        eventType: "customer.interest_status_changed",
+        eventType: "customer.status_changed",
         objectType: "customer",
         objectId: customerId,
         customerId,
-        after: { interestStatus: config.interestStatus },
+        after: { status: config.status },
         metadata: { by: "automation", runId },
       });
       return "ok";
     }
-
-    case "assign_staff": {
-      if (!config.staffId) return "ok"; // GAP-005 — no routing rule invented
-      const before = await prisma.customer.findUnique({
-        where: { id: customerId },
-        select: { assignedStaffId: true },
-      });
-      if (before?.assignedStaffId === config.staffId) return "ok";
-      await prisma.$transaction([
-        prisma.customer.update({
-          where: { id: customerId },
-          data: { assignedStaffId: config.staffId },
-        }),
-        prisma.staffAssignment.create({
-          data: { customerId, staffId: config.staffId, reason: "automation" },
-        }),
-      ]);
-      return "ok";
-    }
-
-    case "create_follow_up": {
-      const customer = await prisma.customer.findUnique({
-        where: { id: customerId },
-        select: { assignedStaffId: true, lead: { select: { id: true } } },
-      });
-      // A follow-up needs an owner; an unassigned customer gets none rather
-      // than one silently assigned to nobody.
-      if (!customer?.assignedStaffId) return "ok";
-      const dueAt = new Date(Date.now() + config.dueInHours * 60 * 60 * 1000);
-      await prisma.followUp.create({
-        data: {
-          customerId,
-          leadId: customer.lead?.id,
-          assignedStaffId: customer.assignedStaffId,
-          createdById: customer.assignedStaffId,
-          type: config.type,
-          dueAt,
-        },
-      });
-      await prisma.customer.update({
-        where: { id: customerId },
-        data: { nextFollowUpAt: dueAt },
-      });
-      return "ok";
-    }
-
-    case "create_call_request":
-      await createCallRequest({ customerId, requirement: config.requirement });
-      return "ok";
-
-    case "create_meeting_request":
-      await createMeetingRequest({ customerId, requirement: config.requirement });
-      return "ok";
 
     case "add_note":
       await logActivity({

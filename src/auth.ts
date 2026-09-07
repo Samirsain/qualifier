@@ -62,7 +62,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const user = await prisma.user.findUnique({
           where: { email: parsed.data.email.toLowerCase() },
-          include: { userRoles: { include: { role: true } } },
         });
 
         // §7: disabled/suspended users must not obtain a session.
@@ -92,7 +91,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           id: user.id,
           email: user.email,
           name: user.displayName,
-          roles: user.userRoles.map((ur) => ur.role.code as RoleCode),
+          roles: [user.role as RoleCode],
         };
       },
     }),

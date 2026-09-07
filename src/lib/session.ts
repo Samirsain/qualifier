@@ -33,7 +33,7 @@ export async function currentUser(): Promise<CurrentUser | null> {
       email: true,
       displayName: true,
       status: true,
-      userRoles: { select: { role: { select: { code: true } } } },
+      role: true,
     },
   });
 
@@ -46,7 +46,7 @@ export async function currentUser(): Promise<CurrentUser | null> {
     email: account.email,
     // Live roles, so a revoked role takes effect immediately rather than at
     // the next sign-in.
-    roles: account.userRoles.map((ur) => ur.role.code as RoleCode),
+    roles: [account.role as RoleCode],
   };
 }
 

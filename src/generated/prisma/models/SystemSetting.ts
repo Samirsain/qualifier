@@ -14,8 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model SystemSetting
- * Emergency controls (BR-39 / F-022) and business config for resolved GAP
- * decisions: no-response wait, reporting timezone, send windows, taxonomies.
+ * Emergency controls (BR-39 / F-022) and business config for resolved
+ * decisions: no-response wait, reporting timezone, opt-out keywords.
  */
 export type SystemSettingModel = runtime.Types.Result.DefaultSelection<Prisma.$SystemSettingPayload>
 

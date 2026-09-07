@@ -19,7 +19,6 @@ export async function sendToCustomer(input: {
   actorUserId?: string;
   body?: string;
   templateId?: string;
-  campaignId?: string;
 }): Promise<SendOutcome> {
   const customer = await prisma.customer.findUnique({
     where: { id: input.customerId },
@@ -148,17 +147,6 @@ export async function sendToCustomer(input: {
       },
     }),
   ]);
-
-  if (template) {
-    await prisma.templateUsage.create({
-      data: {
-        templateId: template.id,
-        usageType: input.campaignId ? "campaign" : "conversation",
-        usageObjectId: input.campaignId ?? conversation.id,
-        customerId: customer.id,
-      },
-    });
-  }
 
   return { ok: true, messageId: message.id };
 }

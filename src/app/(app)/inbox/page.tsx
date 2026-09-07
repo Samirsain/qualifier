@@ -10,7 +10,7 @@ import {
   cx,
   inputClass,
 } from "@/components/ui";
-import { statusTone, titleCase } from "@/lib/labels";
+import { CUSTOMER_STATUS_LABELS, statusTone, titleCase } from "@/lib/labels";
 import { prisma } from "@/lib/prisma";
 import { can } from "@/lib/rbac";
 import { requirePermission } from "@/lib/session";
@@ -20,7 +20,7 @@ export const dynamic = "force-dynamic";
 
 /**
  * UI-003 — WhatsApp Inbox. Three panes: conversation list, thread, customer
- * context. Reply, template send, status, assignment and close/reopen (BR-07).
+ * context. Read and reply only — there is nothing to assign or route here.
  */
 export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
   const user = await requirePermission("conversation:read");
@@ -83,16 +83,7 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
   const customer = active
     ? await prisma.customer.findUnique({
         where: { id: active.customer.id },
-        include: {
-          source: { select: { name: true } },
-          assignedStaff: { select: { displayName: true } },
-          lead: { include: { stage: { select: { name: true } } } },
-          followUps: {
-            where: { status: "PENDING" },
-            orderBy: { dueAt: "asc" },
-            take: 3,
-          },
-        },
+        include: { batch: { select: { name: true } } },
       })
     : null;
 
@@ -174,7 +165,9 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
                         )}
                       >
                         <div className="flex items-center justify-between gap-2">
-                          <span className="truncate font-medium">{c.customer.name}</span>
+                          <span className="truncate font-medium">
+                            {c.customer.name ?? c.customer.phoneE164}
+                          </span>
                           {c.unreadCount > 0 && (
                             <Badge tone="info">{c.unreadCount} unread</Badge>
                           )}
@@ -198,7 +191,11 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
           {/* Pane 2 — thread */}
           <Card
             className="min-w-0"
-            title={active ? active.customer.name : "Conversation"}
+            title={
+              active
+                ? (active.customer.name ?? active.customer.phoneE164)
+                : "Conversation"
+            }
             actions={
               active &&
               can(user.roles, "conversation:reply") && (
@@ -278,21 +275,19 @@ export default async function InboxPage({ searchParams }: PageProps<"/inbox">) {
             ) : (
               <div className="flex flex-col gap-3">
                 <div>
-                  <p className="font-medium">{customer.name}</p>
+                  <p className="font-medium">{customer.name ?? customer.phoneE164}</p>
                   <p className="font-[family-name:var(--font-mono)] text-[length:var(--text-small)] text-[color:var(--color-text-secondary)]">
                     {customer.phoneE164}
                   </p>
                 </div>
 
                 <dl className="flex flex-col gap-2 text-[length:var(--text-small)]">
-                  <Fact label="Source">{customer.source.name}</Fact>
-                  <Fact label="Lead stage">{customer.lead?.stage.name ?? "—"}</Fact>
-                  <Fact label="Owner">
-                    {customer.assignedStaff?.displayName ?? "Unassigned"}
+                  <Fact label="Status">
+                    <Badge tone={statusTone(customer.status)}>
+                      {CUSTOMER_STATUS_LABELS[customer.status]}
+                    </Badge>
                   </Fact>
-                  <Fact label="Next follow-up">
-                    {customer.followUps[0]?.dueAt.toLocaleString() ?? "None scheduled"}
-                  </Fact>
+                  <Fact label="Batch">{customer.batch?.name ?? "—"}</Fact>
                 </dl>
 
                 {customer.optedOutAt && (

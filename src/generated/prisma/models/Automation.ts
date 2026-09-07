@@ -271,6 +271,7 @@ export type AutomationWhereInput = {
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   steps?: Prisma.AutomationStepListRelationFilter
   runs?: Prisma.AutomationRunListRelationFilter
+  batches?: Prisma.BatchListRelationFilter
 }
 
 export type AutomationOrderByWithRelationInput = {
@@ -289,6 +290,7 @@ export type AutomationOrderByWithRelationInput = {
   createdBy?: Prisma.UserOrderByWithRelationInput
   steps?: Prisma.AutomationStepOrderByRelationAggregateInput
   runs?: Prisma.AutomationRunOrderByRelationAggregateInput
+  batches?: Prisma.BatchOrderByRelationAggregateInput
 }
 
 export type AutomationWhereUniqueInput = Prisma.AtLeast<{
@@ -310,6 +312,7 @@ export type AutomationWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   steps?: Prisma.AutomationStepListRelationFilter
   runs?: Prisma.AutomationRunListRelationFilter
+  batches?: Prisma.BatchListRelationFilter
 }, "id">
 
 export type AutomationOrderByWithAggregationInput = {
@@ -365,6 +368,7 @@ export type AutomationCreateInput = {
   createdBy: Prisma.UserCreateNestedOneWithoutAutomationsCreatedInput
   steps?: Prisma.AutomationStepCreateNestedManyWithoutAutomationInput
   runs?: Prisma.AutomationRunCreateNestedManyWithoutAutomationInput
+  batches?: Prisma.BatchCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationUncheckedCreateInput = {
@@ -382,6 +386,7 @@ export type AutomationUncheckedCreateInput = {
   updatedAt?: Date | string
   steps?: Prisma.AutomationStepUncheckedCreateNestedManyWithoutAutomationInput
   runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutAutomationInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationUpdateInput = {
@@ -399,6 +404,7 @@ export type AutomationUpdateInput = {
   createdBy?: Prisma.UserUpdateOneRequiredWithoutAutomationsCreatedNestedInput
   steps?: Prisma.AutomationStepUpdateManyWithoutAutomationNestedInput
   runs?: Prisma.AutomationRunUpdateManyWithoutAutomationNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationUncheckedUpdateInput = {
@@ -416,6 +422,7 @@ export type AutomationUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   steps?: Prisma.AutomationStepUncheckedUpdateManyWithoutAutomationNestedInput
   runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutAutomationNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationCreateManyInput = {
@@ -472,6 +479,11 @@ export type AutomationOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type AutomationScalarRelationFilter = {
+  is?: Prisma.AutomationWhereInput
+  isNot?: Prisma.AutomationWhereInput
+}
+
 export type AutomationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -523,11 +535,6 @@ export type AutomationSumOrderByAggregateInput = {
   version?: Prisma.SortOrder
 }
 
-export type AutomationScalarRelationFilter = {
-  is?: Prisma.AutomationWhereInput
-  isNot?: Prisma.AutomationWhereInput
-}
-
 export type AutomationCreateNestedManyWithoutCreatedByInput = {
   create?: Prisma.XOR<Prisma.AutomationCreateWithoutCreatedByInput, Prisma.AutomationUncheckedCreateWithoutCreatedByInput> | Prisma.AutomationCreateWithoutCreatedByInput[] | Prisma.AutomationUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.AutomationCreateOrConnectWithoutCreatedByInput | Prisma.AutomationCreateOrConnectWithoutCreatedByInput[]
@@ -568,6 +575,20 @@ export type AutomationUncheckedUpdateManyWithoutCreatedByNestedInput = {
   update?: Prisma.AutomationUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.AutomationUpdateWithWhereUniqueWithoutCreatedByInput[]
   updateMany?: Prisma.AutomationUpdateManyWithWhereWithoutCreatedByInput | Prisma.AutomationUpdateManyWithWhereWithoutCreatedByInput[]
   deleteMany?: Prisma.AutomationScalarWhereInput | Prisma.AutomationScalarWhereInput[]
+}
+
+export type AutomationCreateNestedOneWithoutBatchesInput = {
+  create?: Prisma.XOR<Prisma.AutomationCreateWithoutBatchesInput, Prisma.AutomationUncheckedCreateWithoutBatchesInput>
+  connectOrCreate?: Prisma.AutomationCreateOrConnectWithoutBatchesInput
+  connect?: Prisma.AutomationWhereUniqueInput
+}
+
+export type AutomationUpdateOneRequiredWithoutBatchesNestedInput = {
+  create?: Prisma.XOR<Prisma.AutomationCreateWithoutBatchesInput, Prisma.AutomationUncheckedCreateWithoutBatchesInput>
+  connectOrCreate?: Prisma.AutomationCreateOrConnectWithoutBatchesInput
+  upsert?: Prisma.AutomationUpsertWithoutBatchesInput
+  connect?: Prisma.AutomationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AutomationUpdateToOneWithWhereWithoutBatchesInput, Prisma.AutomationUpdateWithoutBatchesInput>, Prisma.AutomationUncheckedUpdateWithoutBatchesInput>
 }
 
 export type EnumAutomationTypeFieldUpdateOperationsInput = {
@@ -620,6 +641,7 @@ export type AutomationCreateWithoutCreatedByInput = {
   updatedAt?: Date | string
   steps?: Prisma.AutomationStepCreateNestedManyWithoutAutomationInput
   runs?: Prisma.AutomationRunCreateNestedManyWithoutAutomationInput
+  batches?: Prisma.BatchCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationUncheckedCreateWithoutCreatedByInput = {
@@ -636,6 +658,7 @@ export type AutomationUncheckedCreateWithoutCreatedByInput = {
   updatedAt?: Date | string
   steps?: Prisma.AutomationStepUncheckedCreateNestedManyWithoutAutomationInput
   runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutAutomationInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationCreateOrConnectWithoutCreatedByInput = {
@@ -682,6 +705,90 @@ export type AutomationScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Automation"> | Date | string
 }
 
+export type AutomationCreateWithoutBatchesInput = {
+  id?: string
+  name: string
+  type: $Enums.AutomationType
+  status?: $Enums.AutomationStatus
+  version?: number
+  description?: string | null
+  entryConditions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  activatedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: Prisma.UserCreateNestedOneWithoutAutomationsCreatedInput
+  steps?: Prisma.AutomationStepCreateNestedManyWithoutAutomationInput
+  runs?: Prisma.AutomationRunCreateNestedManyWithoutAutomationInput
+}
+
+export type AutomationUncheckedCreateWithoutBatchesInput = {
+  id?: string
+  name: string
+  type: $Enums.AutomationType
+  status?: $Enums.AutomationStatus
+  version?: number
+  description?: string | null
+  entryConditions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdById: string
+  activatedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  steps?: Prisma.AutomationStepUncheckedCreateNestedManyWithoutAutomationInput
+  runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutAutomationInput
+}
+
+export type AutomationCreateOrConnectWithoutBatchesInput = {
+  where: Prisma.AutomationWhereUniqueInput
+  create: Prisma.XOR<Prisma.AutomationCreateWithoutBatchesInput, Prisma.AutomationUncheckedCreateWithoutBatchesInput>
+}
+
+export type AutomationUpsertWithoutBatchesInput = {
+  update: Prisma.XOR<Prisma.AutomationUpdateWithoutBatchesInput, Prisma.AutomationUncheckedUpdateWithoutBatchesInput>
+  create: Prisma.XOR<Prisma.AutomationCreateWithoutBatchesInput, Prisma.AutomationUncheckedCreateWithoutBatchesInput>
+  where?: Prisma.AutomationWhereInput
+}
+
+export type AutomationUpdateToOneWithWhereWithoutBatchesInput = {
+  where?: Prisma.AutomationWhereInput
+  data: Prisma.XOR<Prisma.AutomationUpdateWithoutBatchesInput, Prisma.AutomationUncheckedUpdateWithoutBatchesInput>
+}
+
+export type AutomationUpdateWithoutBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAutomationTypeFieldUpdateOperationsInput | $Enums.AutomationType
+  status?: Prisma.EnumAutomationStatusFieldUpdateOperationsInput | $Enums.AutomationStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entryConditions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutAutomationsCreatedNestedInput
+  steps?: Prisma.AutomationStepUpdateManyWithoutAutomationNestedInput
+  runs?: Prisma.AutomationRunUpdateManyWithoutAutomationNestedInput
+}
+
+export type AutomationUncheckedUpdateWithoutBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAutomationTypeFieldUpdateOperationsInput | $Enums.AutomationType
+  status?: Prisma.EnumAutomationStatusFieldUpdateOperationsInput | $Enums.AutomationStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entryConditions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  steps?: Prisma.AutomationStepUncheckedUpdateManyWithoutAutomationNestedInput
+  runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutAutomationNestedInput
+}
+
 export type AutomationCreateWithoutStepsInput = {
   id?: string
   name: string
@@ -696,6 +803,7 @@ export type AutomationCreateWithoutStepsInput = {
   updatedAt?: Date | string
   createdBy: Prisma.UserCreateNestedOneWithoutAutomationsCreatedInput
   runs?: Prisma.AutomationRunCreateNestedManyWithoutAutomationInput
+  batches?: Prisma.BatchCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationUncheckedCreateWithoutStepsInput = {
@@ -712,6 +820,7 @@ export type AutomationUncheckedCreateWithoutStepsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutAutomationInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationCreateOrConnectWithoutStepsInput = {
@@ -744,6 +853,7 @@ export type AutomationUpdateWithoutStepsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.UserUpdateOneRequiredWithoutAutomationsCreatedNestedInput
   runs?: Prisma.AutomationRunUpdateManyWithoutAutomationNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationUncheckedUpdateWithoutStepsInput = {
@@ -760,6 +870,7 @@ export type AutomationUncheckedUpdateWithoutStepsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutAutomationNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationCreateWithoutRunsInput = {
@@ -776,6 +887,7 @@ export type AutomationCreateWithoutRunsInput = {
   updatedAt?: Date | string
   createdBy: Prisma.UserCreateNestedOneWithoutAutomationsCreatedInput
   steps?: Prisma.AutomationStepCreateNestedManyWithoutAutomationInput
+  batches?: Prisma.BatchCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationUncheckedCreateWithoutRunsInput = {
@@ -792,6 +904,7 @@ export type AutomationUncheckedCreateWithoutRunsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   steps?: Prisma.AutomationStepUncheckedCreateNestedManyWithoutAutomationInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutAutomationInput
 }
 
 export type AutomationCreateOrConnectWithoutRunsInput = {
@@ -824,6 +937,7 @@ export type AutomationUpdateWithoutRunsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.UserUpdateOneRequiredWithoutAutomationsCreatedNestedInput
   steps?: Prisma.AutomationStepUpdateManyWithoutAutomationNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationUncheckedUpdateWithoutRunsInput = {
@@ -840,6 +954,7 @@ export type AutomationUncheckedUpdateWithoutRunsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   steps?: Prisma.AutomationStepUncheckedUpdateManyWithoutAutomationNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationCreateManyCreatedByInput = {
@@ -870,6 +985,7 @@ export type AutomationUpdateWithoutCreatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   steps?: Prisma.AutomationStepUpdateManyWithoutAutomationNestedInput
   runs?: Prisma.AutomationRunUpdateManyWithoutAutomationNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationUncheckedUpdateWithoutCreatedByInput = {
@@ -886,6 +1002,7 @@ export type AutomationUncheckedUpdateWithoutCreatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   steps?: Prisma.AutomationStepUncheckedUpdateManyWithoutAutomationNestedInput
   runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutAutomationNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutAutomationNestedInput
 }
 
 export type AutomationUncheckedUpdateManyWithoutCreatedByInput = {
@@ -910,11 +1027,13 @@ export type AutomationUncheckedUpdateManyWithoutCreatedByInput = {
 export type AutomationCountOutputType = {
   steps: number
   runs: number
+  batches: number
 }
 
 export type AutomationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   steps?: boolean | AutomationCountOutputTypeCountStepsArgs
   runs?: boolean | AutomationCountOutputTypeCountRunsArgs
+  batches?: boolean | AutomationCountOutputTypeCountBatchesArgs
 }
 
 /**
@@ -941,6 +1060,13 @@ export type AutomationCountOutputTypeCountRunsArgs<ExtArgs extends runtime.Types
   where?: Prisma.AutomationRunWhereInput
 }
 
+/**
+ * AutomationCountOutputType without action
+ */
+export type AutomationCountOutputTypeCountBatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BatchWhereInput
+}
+
 
 export type AutomationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -958,6 +1084,7 @@ export type AutomationSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   steps?: boolean | Prisma.Automation$stepsArgs<ExtArgs>
   runs?: boolean | Prisma.Automation$runsArgs<ExtArgs>
+  batches?: boolean | Prisma.Automation$batchesArgs<ExtArgs>
   _count?: boolean | Prisma.AutomationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["automation"]>
 
@@ -1013,6 +1140,7 @@ export type AutomationInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   steps?: boolean | Prisma.Automation$stepsArgs<ExtArgs>
   runs?: boolean | Prisma.Automation$runsArgs<ExtArgs>
+  batches?: boolean | Prisma.Automation$batchesArgs<ExtArgs>
   _count?: boolean | Prisma.AutomationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AutomationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1028,6 +1156,7 @@ export type $AutomationPayload<ExtArgs extends runtime.Types.Extensions.Internal
     createdBy: Prisma.$UserPayload<ExtArgs>
     steps: Prisma.$AutomationStepPayload<ExtArgs>[]
     runs: Prisma.$AutomationRunPayload<ExtArgs>[]
+    batches: Prisma.$BatchPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1439,6 +1568,7 @@ export interface Prisma__AutomationClient<T, Null = never, ExtArgs extends runti
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   steps<T extends Prisma.Automation$stepsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Automation$stepsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AutomationStepPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   runs<T extends Prisma.Automation$runsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Automation$runsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  batches<T extends Prisma.Automation$batchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Automation$batchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1926,6 +2056,30 @@ export type Automation$runsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.AutomationRunScalarFieldEnum | Prisma.AutomationRunScalarFieldEnum[]
+}
+
+/**
+ * Automation.batches
+ */
+export type Automation$batchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Batch
+   */
+  select?: Prisma.BatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Batch
+   */
+  omit?: Prisma.BatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BatchInclude<ExtArgs> | null
+  where?: Prisma.BatchWhereInput
+  orderBy?: Prisma.BatchOrderByWithRelationInput | Prisma.BatchOrderByWithRelationInput[]
+  cursor?: Prisma.BatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BatchScalarFieldEnum | Prisma.BatchScalarFieldEnum[]
 }
 
 /**

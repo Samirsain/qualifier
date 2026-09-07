@@ -23,50 +23,20 @@ export * from './enums';
  */
 export type User = Prisma.UserModel
 /**
- * Model Role
+ * Model Batch
  * 
  */
-export type Role = Prisma.RoleModel
+export type Batch = Prisma.BatchModel
 /**
- * Model Permission
+ * Model BatchMember
  * 
  */
-export type Permission = Prisma.PermissionModel
-/**
- * Model UserRole
- * 
- */
-export type UserRole = Prisma.UserRoleModel
-/**
- * Model RolePermission
- * 
- */
-export type RolePermission = Prisma.RolePermissionModel
-/**
- * Model StaffProfile
- * 
- */
-export type StaffProfile = Prisma.StaffProfileModel
-/**
- * Model Source
- * 
- */
-export type Source = Prisma.SourceModel
-/**
- * Model Tag
- * 
- */
-export type Tag = Prisma.TagModel
+export type BatchMember = Prisma.BatchMemberModel
 /**
  * Model Customer
  * 
  */
 export type Customer = Prisma.CustomerModel
-/**
- * Model CustomerTag
- * 
- */
-export type CustomerTag = Prisma.CustomerTagModel
 /**
  * Model Conversation
  * 
@@ -82,31 +52,6 @@ export type Message = Prisma.MessageModel
  * 
  */
 export type Template = Prisma.TemplateModel
-/**
- * Model TemplateUsage
- * 
- */
-export type TemplateUsage = Prisma.TemplateUsageModel
-/**
- * Model Faq
- * 
- */
-export type Faq = Prisma.FaqModel
-/**
- * Model Campaign
- * 
- */
-export type Campaign = Prisma.CampaignModel
-/**
- * Model CampaignAudience
- * 
- */
-export type CampaignAudience = Prisma.CampaignAudienceModel
-/**
- * Model CampaignDelivery
- * 
- */
-export type CampaignDelivery = Prisma.CampaignDeliveryModel
 /**
  * Model Automation
  * 
@@ -133,51 +78,6 @@ export type AutomationEvent = Prisma.AutomationEventModel
  */
 export type CustomerResponse = Prisma.CustomerResponseModel
 /**
- * Model LeadStage
- * 
- */
-export type LeadStage = Prisma.LeadStageModel
-/**
- * Model Lead
- * 
- */
-export type Lead = Prisma.LeadModel
-/**
- * Model LeadStageHistory
- * 
- */
-export type LeadStageHistory = Prisma.LeadStageHistoryModel
-/**
- * Model FollowUp
- * 
- */
-export type FollowUp = Prisma.FollowUpModel
-/**
- * Model Call
- * 
- */
-export type Call = Prisma.CallModel
-/**
- * Model Meeting
- * 
- */
-export type Meeting = Prisma.MeetingModel
-/**
- * Model StaffAssignment
- * 
- */
-export type StaffAssignment = Prisma.StaffAssignmentModel
-/**
- * Model StaffScoreConfig
- * 
- */
-export type StaffScoreConfig = Prisma.StaffScoreConfigModel
-/**
- * Model StaffScore
- * 
- */
-export type StaffScore = Prisma.StaffScoreModel
-/**
  * Model Notification
  * 
  */
@@ -188,13 +88,8 @@ export type Notification = Prisma.NotificationModel
  */
 export type ActivityLog = Prisma.ActivityLogModel
 /**
- * Model ReportDefinition
- * 
- */
-export type ReportDefinition = Prisma.ReportDefinitionModel
-/**
  * Model SystemSetting
- * Emergency controls (BR-39 / F-022) and business config for resolved GAP
- * decisions: no-response wait, reporting timezone, send windows, taxonomies.
+ * Emergency controls (BR-39 / F-022) and business config for resolved
+ * decisions: no-response wait, reporting timezone, opt-out keywords.
  */
 export type SystemSetting = Prisma.SystemSettingModel

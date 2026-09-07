@@ -30,6 +30,7 @@ export type UserMinAggregateOutputType = {
   passwordHash: string | null
   externalSubject: string | null
   displayName: string | null
+  role: $Enums.RoleCode | null
   status: $Enums.UserStatus | null
   lastLoginAt: Date | null
   createdAt: Date | null
@@ -42,6 +43,7 @@ export type UserMaxAggregateOutputType = {
   passwordHash: string | null
   externalSubject: string | null
   displayName: string | null
+  role: $Enums.RoleCode | null
   status: $Enums.UserStatus | null
   lastLoginAt: Date | null
   createdAt: Date | null
@@ -54,6 +56,7 @@ export type UserCountAggregateOutputType = {
   passwordHash: number
   externalSubject: number
   displayName: number
+  role: number
   status: number
   lastLoginAt: number
   createdAt: number
@@ -68,6 +71,7 @@ export type UserMinAggregateInputType = {
   passwordHash?: true
   externalSubject?: true
   displayName?: true
+  role?: true
   status?: true
   lastLoginAt?: true
   createdAt?: true
@@ -80,6 +84,7 @@ export type UserMaxAggregateInputType = {
   passwordHash?: true
   externalSubject?: true
   displayName?: true
+  role?: true
   status?: true
   lastLoginAt?: true
   createdAt?: true
@@ -92,6 +97,7 @@ export type UserCountAggregateInputType = {
   passwordHash?: true
   externalSubject?: true
   displayName?: true
+  role?: true
   status?: true
   lastLoginAt?: true
   createdAt?: true
@@ -177,6 +183,7 @@ export type UserGroupByOutputType = {
   passwordHash: string | null
   externalSubject: string | null
   displayName: string
+  role: $Enums.RoleCode
   status: $Enums.UserStatus
   lastLoginAt: Date | null
   createdAt: Date
@@ -210,27 +217,15 @@ export type UserWhereInput = {
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   externalSubject?: Prisma.StringNullableFilter<"User"> | string | null
   displayName?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.EnumRoleCodeFilter<"User"> | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  userRoles?: Prisma.UserRoleListRelationFilter
-  staffProfile?: Prisma.XOR<Prisma.StaffProfileNullableScalarRelationFilter, Prisma.StaffProfileWhereInput> | null
-  assignedCustomers?: Prisma.CustomerListRelationFilter
-  conversations?: Prisma.ConversationListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   activityLogs?: Prisma.ActivityLogListRelationFilter
-  followUpsAssigned?: Prisma.FollowUpListRelationFilter
-  followUpsCreated?: Prisma.FollowUpListRelationFilter
-  callsAssigned?: Prisma.CallListRelationFilter
-  meetingsAssigned?: Prisma.MeetingListRelationFilter
-  campaignsCreated?: Prisma.CampaignListRelationFilter
   automationsCreated?: Prisma.AutomationListRelationFilter
-  leadsAssigned?: Prisma.LeadListRelationFilter
-  stageChanges?: Prisma.LeadStageHistoryListRelationFilter
-  assignmentsMade?: Prisma.StaffAssignmentListRelationFilter
-  assignmentsGot?: Prisma.StaffAssignmentListRelationFilter
-  tagsAssigned?: Prisma.CustomerTagListRelationFilter
+  batchesCreated?: Prisma.BatchListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -239,27 +234,15 @@ export type UserOrderByWithRelationInput = {
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   externalSubject?: Prisma.SortOrderInput | Prisma.SortOrder
   displayName?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  userRoles?: Prisma.UserRoleOrderByRelationAggregateInput
-  staffProfile?: Prisma.StaffProfileOrderByWithRelationInput
-  assignedCustomers?: Prisma.CustomerOrderByRelationAggregateInput
-  conversations?: Prisma.ConversationOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   activityLogs?: Prisma.ActivityLogOrderByRelationAggregateInput
-  followUpsAssigned?: Prisma.FollowUpOrderByRelationAggregateInput
-  followUpsCreated?: Prisma.FollowUpOrderByRelationAggregateInput
-  callsAssigned?: Prisma.CallOrderByRelationAggregateInput
-  meetingsAssigned?: Prisma.MeetingOrderByRelationAggregateInput
-  campaignsCreated?: Prisma.CampaignOrderByRelationAggregateInput
   automationsCreated?: Prisma.AutomationOrderByRelationAggregateInput
-  leadsAssigned?: Prisma.LeadOrderByRelationAggregateInput
-  stageChanges?: Prisma.LeadStageHistoryOrderByRelationAggregateInput
-  assignmentsMade?: Prisma.StaffAssignmentOrderByRelationAggregateInput
-  assignmentsGot?: Prisma.StaffAssignmentOrderByRelationAggregateInput
-  tagsAssigned?: Prisma.CustomerTagOrderByRelationAggregateInput
+  batchesCreated?: Prisma.BatchOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -271,27 +254,15 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   displayName?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.EnumRoleCodeFilter<"User"> | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  userRoles?: Prisma.UserRoleListRelationFilter
-  staffProfile?: Prisma.XOR<Prisma.StaffProfileNullableScalarRelationFilter, Prisma.StaffProfileWhereInput> | null
-  assignedCustomers?: Prisma.CustomerListRelationFilter
-  conversations?: Prisma.ConversationListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   activityLogs?: Prisma.ActivityLogListRelationFilter
-  followUpsAssigned?: Prisma.FollowUpListRelationFilter
-  followUpsCreated?: Prisma.FollowUpListRelationFilter
-  callsAssigned?: Prisma.CallListRelationFilter
-  meetingsAssigned?: Prisma.MeetingListRelationFilter
-  campaignsCreated?: Prisma.CampaignListRelationFilter
   automationsCreated?: Prisma.AutomationListRelationFilter
-  leadsAssigned?: Prisma.LeadListRelationFilter
-  stageChanges?: Prisma.LeadStageHistoryListRelationFilter
-  assignmentsMade?: Prisma.StaffAssignmentListRelationFilter
-  assignmentsGot?: Prisma.StaffAssignmentListRelationFilter
-  tagsAssigned?: Prisma.CustomerTagListRelationFilter
+  batchesCreated?: Prisma.BatchListRelationFilter
 }, "id" | "email" | "externalSubject">
 
 export type UserOrderByWithAggregationInput = {
@@ -300,6 +271,7 @@ export type UserOrderByWithAggregationInput = {
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   externalSubject?: Prisma.SortOrderInput | Prisma.SortOrder
   displayName?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -318,6 +290,7 @@ export type UserScalarWhereWithAggregatesInput = {
   passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   externalSubject?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   displayName?: Prisma.StringWithAggregatesFilter<"User"> | string
+  role?: Prisma.EnumRoleCodeWithAggregatesFilter<"User"> | $Enums.RoleCode
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
   lastLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -330,27 +303,15 @@ export type UserCreateInput = {
   passwordHash?: string | null
   externalSubject?: string | null
   displayName: string
+  role?: $Enums.RoleCode
   status?: $Enums.UserStatus
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
   automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
+  batchesCreated?: Prisma.BatchCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -359,27 +320,15 @@ export type UserUncheckedCreateInput = {
   passwordHash?: string | null
   externalSubject?: string | null
   displayName: string
+  role?: $Enums.RoleCode
   status?: $Enums.UserStatus
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
   automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
+  batchesCreated?: Prisma.BatchUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUpdateInput = {
@@ -388,27 +337,15 @@ export type UserUpdateInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
   automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
+  batchesCreated?: Prisma.BatchUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -417,27 +354,15 @@ export type UserUncheckedUpdateInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
+  batchesCreated?: Prisma.BatchUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -446,6 +371,7 @@ export type UserCreateManyInput = {
   passwordHash?: string | null
   externalSubject?: string | null
   displayName: string
+  role?: $Enums.RoleCode
   status?: $Enums.UserStatus
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
@@ -458,6 +384,7 @@ export type UserUpdateManyMutationInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -470,6 +397,7 @@ export type UserUncheckedUpdateManyInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -482,6 +410,7 @@ export type UserCountOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   externalSubject?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -494,6 +423,7 @@ export type UserMaxOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   externalSubject?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -506,6 +436,7 @@ export type UserMinOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   externalSubject?: Prisma.SortOrder
   displayName?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -530,6 +461,10 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type EnumRoleCodeFieldUpdateOperationsInput = {
+  set?: $Enums.RoleCode
+}
+
 export type EnumUserStatusFieldUpdateOperationsInput = {
   set?: $Enums.UserStatus
 }
@@ -542,94 +477,18 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
-export type UserCreateNestedOneWithoutUserRolesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutUserRolesInput, Prisma.UserUncheckedCreateWithoutUserRolesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserRolesInput
+export type UserCreateNestedOneWithoutBatchesCreatedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBatchesCreatedInput, Prisma.UserUncheckedCreateWithoutBatchesCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBatchesCreatedInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutUserRolesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutUserRolesInput, Prisma.UserUncheckedCreateWithoutUserRolesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserRolesInput
-  upsert?: Prisma.UserUpsertWithoutUserRolesInput
+export type UserUpdateOneRequiredWithoutBatchesCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBatchesCreatedInput, Prisma.UserUncheckedCreateWithoutBatchesCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBatchesCreatedInput
+  upsert?: Prisma.UserUpsertWithoutBatchesCreatedInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserRolesInput, Prisma.UserUpdateWithoutUserRolesInput>, Prisma.UserUncheckedUpdateWithoutUserRolesInput>
-}
-
-export type UserCreateNestedOneWithoutStaffProfileInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutStaffProfileInput, Prisma.UserUncheckedCreateWithoutStaffProfileInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStaffProfileInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutStaffProfileNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutStaffProfileInput, Prisma.UserUncheckedCreateWithoutStaffProfileInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStaffProfileInput
-  upsert?: Prisma.UserUpsertWithoutStaffProfileInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStaffProfileInput, Prisma.UserUpdateWithoutStaffProfileInput>, Prisma.UserUncheckedUpdateWithoutStaffProfileInput>
-}
-
-export type UserCreateNestedOneWithoutAssignedCustomersInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedCustomersInput, Prisma.UserUncheckedCreateWithoutAssignedCustomersInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedCustomersInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneWithoutAssignedCustomersNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedCustomersInput, Prisma.UserUncheckedCreateWithoutAssignedCustomersInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedCustomersInput
-  upsert?: Prisma.UserUpsertWithoutAssignedCustomersInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignedCustomersInput, Prisma.UserUpdateWithoutAssignedCustomersInput>, Prisma.UserUncheckedUpdateWithoutAssignedCustomersInput>
-}
-
-export type UserCreateNestedOneWithoutTagsAssignedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutTagsAssignedInput, Prisma.UserUncheckedCreateWithoutTagsAssignedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTagsAssignedInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneWithoutTagsAssignedNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutTagsAssignedInput, Prisma.UserUncheckedCreateWithoutTagsAssignedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTagsAssignedInput
-  upsert?: Prisma.UserUpsertWithoutTagsAssignedInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTagsAssignedInput, Prisma.UserUpdateWithoutTagsAssignedInput>, Prisma.UserUncheckedUpdateWithoutTagsAssignedInput>
-}
-
-export type UserCreateNestedOneWithoutConversationsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutConversationsInput, Prisma.UserUncheckedCreateWithoutConversationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneWithoutConversationsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutConversationsInput, Prisma.UserUncheckedCreateWithoutConversationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationsInput
-  upsert?: Prisma.UserUpsertWithoutConversationsInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutConversationsInput, Prisma.UserUpdateWithoutConversationsInput>, Prisma.UserUncheckedUpdateWithoutConversationsInput>
-}
-
-export type UserCreateNestedOneWithoutCampaignsCreatedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCampaignsCreatedInput, Prisma.UserUncheckedCreateWithoutCampaignsCreatedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCampaignsCreatedInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutCampaignsCreatedNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCampaignsCreatedInput, Prisma.UserUncheckedCreateWithoutCampaignsCreatedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCampaignsCreatedInput
-  upsert?: Prisma.UserUpsertWithoutCampaignsCreatedInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCampaignsCreatedInput, Prisma.UserUpdateWithoutCampaignsCreatedInput>, Prisma.UserUncheckedUpdateWithoutCampaignsCreatedInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBatchesCreatedInput, Prisma.UserUpdateWithoutBatchesCreatedInput>, Prisma.UserUncheckedUpdateWithoutBatchesCreatedInput>
 }
 
 export type UserCreateNestedOneWithoutAutomationsCreatedInput = {
@@ -644,128 +503,6 @@ export type UserUpdateOneRequiredWithoutAutomationsCreatedNestedInput = {
   upsert?: Prisma.UserUpsertWithoutAutomationsCreatedInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAutomationsCreatedInput, Prisma.UserUpdateWithoutAutomationsCreatedInput>, Prisma.UserUncheckedUpdateWithoutAutomationsCreatedInput>
-}
-
-export type UserCreateNestedOneWithoutLeadsAssignedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadsAssignedInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneWithoutLeadsAssignedNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadsAssignedInput
-  upsert?: Prisma.UserUpsertWithoutLeadsAssignedInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeadsAssignedInput, Prisma.UserUpdateWithoutLeadsAssignedInput>, Prisma.UserUncheckedUpdateWithoutLeadsAssignedInput>
-}
-
-export type UserCreateNestedOneWithoutStageChangesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutStageChangesInput, Prisma.UserUncheckedCreateWithoutStageChangesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStageChangesInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneWithoutStageChangesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutStageChangesInput, Prisma.UserUncheckedCreateWithoutStageChangesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStageChangesInput
-  upsert?: Prisma.UserUpsertWithoutStageChangesInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStageChangesInput, Prisma.UserUpdateWithoutStageChangesInput>, Prisma.UserUncheckedUpdateWithoutStageChangesInput>
-}
-
-export type UserCreateNestedOneWithoutFollowUpsAssignedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowUpsAssignedInput, Prisma.UserUncheckedCreateWithoutFollowUpsAssignedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowUpsAssignedInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserCreateNestedOneWithoutFollowUpsCreatedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowUpsCreatedInput, Prisma.UserUncheckedCreateWithoutFollowUpsCreatedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowUpsCreatedInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutFollowUpsAssignedNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowUpsAssignedInput, Prisma.UserUncheckedCreateWithoutFollowUpsAssignedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowUpsAssignedInput
-  upsert?: Prisma.UserUpsertWithoutFollowUpsAssignedInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFollowUpsAssignedInput, Prisma.UserUpdateWithoutFollowUpsAssignedInput>, Prisma.UserUncheckedUpdateWithoutFollowUpsAssignedInput>
-}
-
-export type UserUpdateOneRequiredWithoutFollowUpsCreatedNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowUpsCreatedInput, Prisma.UserUncheckedCreateWithoutFollowUpsCreatedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowUpsCreatedInput
-  upsert?: Prisma.UserUpsertWithoutFollowUpsCreatedInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFollowUpsCreatedInput, Prisma.UserUpdateWithoutFollowUpsCreatedInput>, Prisma.UserUncheckedUpdateWithoutFollowUpsCreatedInput>
-}
-
-export type UserCreateNestedOneWithoutCallsAssignedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCallsAssignedInput, Prisma.UserUncheckedCreateWithoutCallsAssignedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCallsAssignedInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneWithoutCallsAssignedNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCallsAssignedInput, Prisma.UserUncheckedCreateWithoutCallsAssignedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCallsAssignedInput
-  upsert?: Prisma.UserUpsertWithoutCallsAssignedInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCallsAssignedInput, Prisma.UserUpdateWithoutCallsAssignedInput>, Prisma.UserUncheckedUpdateWithoutCallsAssignedInput>
-}
-
-export type UserCreateNestedOneWithoutMeetingsAssignedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutMeetingsAssignedInput, Prisma.UserUncheckedCreateWithoutMeetingsAssignedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMeetingsAssignedInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneWithoutMeetingsAssignedNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutMeetingsAssignedInput, Prisma.UserUncheckedCreateWithoutMeetingsAssignedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMeetingsAssignedInput
-  upsert?: Prisma.UserUpsertWithoutMeetingsAssignedInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMeetingsAssignedInput, Prisma.UserUpdateWithoutMeetingsAssignedInput>, Prisma.UserUncheckedUpdateWithoutMeetingsAssignedInput>
-}
-
-export type UserCreateNestedOneWithoutAssignmentsGotInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignmentsGotInput, Prisma.UserUncheckedCreateWithoutAssignmentsGotInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignmentsGotInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserCreateNestedOneWithoutAssignmentsMadeInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignmentsMadeInput, Prisma.UserUncheckedCreateWithoutAssignmentsMadeInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignmentsMadeInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutAssignmentsGotNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignmentsGotInput, Prisma.UserUncheckedCreateWithoutAssignmentsGotInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignmentsGotInput
-  upsert?: Prisma.UserUpsertWithoutAssignmentsGotInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignmentsGotInput, Prisma.UserUpdateWithoutAssignmentsGotInput>, Prisma.UserUncheckedUpdateWithoutAssignmentsGotInput>
-}
-
-export type UserUpdateOneWithoutAssignmentsMadeNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignmentsMadeInput, Prisma.UserUncheckedCreateWithoutAssignmentsMadeInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignmentsMadeInput
-  upsert?: Prisma.UserUpsertWithoutAssignmentsMadeInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignmentsMadeInput, Prisma.UserUpdateWithoutAssignmentsMadeInput>, Prisma.UserUncheckedUpdateWithoutAssignmentsMadeInput>
 }
 
 export type UserCreateNestedOneWithoutNotificationsInput = {
@@ -798,772 +535,84 @@ export type UserUpdateOneWithoutActivityLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutActivityLogsInput, Prisma.UserUpdateWithoutActivityLogsInput>, Prisma.UserUncheckedUpdateWithoutActivityLogsInput>
 }
 
-export type UserCreateWithoutUserRolesInput = {
+export type UserCreateWithoutBatchesCreatedInput = {
   id?: string
   email: string
   passwordHash?: string | null
   externalSubject?: string | null
   displayName: string
+  role?: $Enums.RoleCode
   status?: $Enums.UserStatus
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
   automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
 }
 
-export type UserUncheckedCreateWithoutUserRolesInput = {
+export type UserUncheckedCreateWithoutBatchesCreatedInput = {
   id?: string
   email: string
   passwordHash?: string | null
   externalSubject?: string | null
   displayName: string
+  role?: $Enums.RoleCode
   status?: $Enums.UserStatus
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
   automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
 }
 
-export type UserCreateOrConnectWithoutUserRolesInput = {
+export type UserCreateOrConnectWithoutBatchesCreatedInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutUserRolesInput, Prisma.UserUncheckedCreateWithoutUserRolesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBatchesCreatedInput, Prisma.UserUncheckedCreateWithoutBatchesCreatedInput>
 }
 
-export type UserUpsertWithoutUserRolesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutUserRolesInput, Prisma.UserUncheckedUpdateWithoutUserRolesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutUserRolesInput, Prisma.UserUncheckedCreateWithoutUserRolesInput>
+export type UserUpsertWithoutBatchesCreatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBatchesCreatedInput, Prisma.UserUncheckedUpdateWithoutBatchesCreatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBatchesCreatedInput, Prisma.UserUncheckedCreateWithoutBatchesCreatedInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutUserRolesInput = {
+export type UserUpdateToOneWithWhereWithoutBatchesCreatedInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutUserRolesInput, Prisma.UserUncheckedUpdateWithoutUserRolesInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBatchesCreatedInput, Prisma.UserUncheckedUpdateWithoutBatchesCreatedInput>
 }
 
-export type UserUpdateWithoutUserRolesInput = {
+export type UserUpdateWithoutBatchesCreatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
   automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
 }
 
-export type UserUncheckedUpdateWithoutUserRolesInput = {
+export type UserUncheckedUpdateWithoutBatchesCreatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserCreateWithoutStaffProfileInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutStaffProfileInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutStaffProfileInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutStaffProfileInput, Prisma.UserUncheckedCreateWithoutStaffProfileInput>
-}
-
-export type UserUpsertWithoutStaffProfileInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutStaffProfileInput, Prisma.UserUncheckedUpdateWithoutStaffProfileInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutStaffProfileInput, Prisma.UserUncheckedCreateWithoutStaffProfileInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutStaffProfileInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutStaffProfileInput, Prisma.UserUncheckedUpdateWithoutStaffProfileInput>
-}
-
-export type UserUpdateWithoutStaffProfileInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutStaffProfileInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserCreateWithoutAssignedCustomersInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutAssignedCustomersInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutAssignedCustomersInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedCustomersInput, Prisma.UserUncheckedCreateWithoutAssignedCustomersInput>
-}
-
-export type UserUpsertWithoutAssignedCustomersInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutAssignedCustomersInput, Prisma.UserUncheckedUpdateWithoutAssignedCustomersInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedCustomersInput, Prisma.UserUncheckedCreateWithoutAssignedCustomersInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutAssignedCustomersInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutAssignedCustomersInput, Prisma.UserUncheckedUpdateWithoutAssignedCustomersInput>
-}
-
-export type UserUpdateWithoutAssignedCustomersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutAssignedCustomersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserCreateWithoutTagsAssignedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-}
-
-export type UserUncheckedCreateWithoutTagsAssignedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-}
-
-export type UserCreateOrConnectWithoutTagsAssignedInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutTagsAssignedInput, Prisma.UserUncheckedCreateWithoutTagsAssignedInput>
-}
-
-export type UserUpsertWithoutTagsAssignedInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutTagsAssignedInput, Prisma.UserUncheckedUpdateWithoutTagsAssignedInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutTagsAssignedInput, Prisma.UserUncheckedCreateWithoutTagsAssignedInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutTagsAssignedInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutTagsAssignedInput, Prisma.UserUncheckedUpdateWithoutTagsAssignedInput>
-}
-
-export type UserUpdateWithoutTagsAssignedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-}
-
-export type UserUncheckedUpdateWithoutTagsAssignedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-}
-
-export type UserCreateWithoutConversationsInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutConversationsInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutConversationsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutConversationsInput, Prisma.UserUncheckedCreateWithoutConversationsInput>
-}
-
-export type UserUpsertWithoutConversationsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutConversationsInput, Prisma.UserUncheckedUpdateWithoutConversationsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutConversationsInput, Prisma.UserUncheckedCreateWithoutConversationsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutConversationsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutConversationsInput, Prisma.UserUncheckedUpdateWithoutConversationsInput>
-}
-
-export type UserUpdateWithoutConversationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutConversationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserCreateWithoutCampaignsCreatedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutCampaignsCreatedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutCampaignsCreatedInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutCampaignsCreatedInput, Prisma.UserUncheckedCreateWithoutCampaignsCreatedInput>
-}
-
-export type UserUpsertWithoutCampaignsCreatedInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutCampaignsCreatedInput, Prisma.UserUncheckedUpdateWithoutCampaignsCreatedInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutCampaignsCreatedInput, Prisma.UserUncheckedCreateWithoutCampaignsCreatedInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutCampaignsCreatedInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutCampaignsCreatedInput, Prisma.UserUncheckedUpdateWithoutCampaignsCreatedInput>
-}
-
-export type UserUpdateWithoutCampaignsCreatedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutCampaignsCreatedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutAutomationsCreatedInput = {
@@ -1572,26 +621,14 @@ export type UserCreateWithoutAutomationsCreatedInput = {
   passwordHash?: string | null
   externalSubject?: string | null
   displayName: string
+  role?: $Enums.RoleCode
   status?: $Enums.UserStatus
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
+  batchesCreated?: Prisma.BatchCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutAutomationsCreatedInput = {
@@ -1600,26 +637,14 @@ export type UserUncheckedCreateWithoutAutomationsCreatedInput = {
   passwordHash?: string | null
   externalSubject?: string | null
   displayName: string
+  role?: $Enums.RoleCode
   status?: $Enums.UserStatus
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
+  batchesCreated?: Prisma.BatchUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutAutomationsCreatedInput = {
@@ -1644,26 +669,14 @@ export type UserUpdateWithoutAutomationsCreatedInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
+  batchesCreated?: Prisma.BatchUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAutomationsCreatedInput = {
@@ -1672,1050 +685,14 @@ export type UserUncheckedUpdateWithoutAutomationsCreatedInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserCreateWithoutLeadsAssignedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutLeadsAssignedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutLeadsAssignedInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedInput>
-}
-
-export type UserUpsertWithoutLeadsAssignedInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutLeadsAssignedInput, Prisma.UserUncheckedUpdateWithoutLeadsAssignedInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutLeadsAssignedInput, Prisma.UserUncheckedCreateWithoutLeadsAssignedInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutLeadsAssignedInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutLeadsAssignedInput, Prisma.UserUncheckedUpdateWithoutLeadsAssignedInput>
-}
-
-export type UserUpdateWithoutLeadsAssignedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutLeadsAssignedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserCreateWithoutStageChangesInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutStageChangesInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutStageChangesInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutStageChangesInput, Prisma.UserUncheckedCreateWithoutStageChangesInput>
-}
-
-export type UserUpsertWithoutStageChangesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutStageChangesInput, Prisma.UserUncheckedUpdateWithoutStageChangesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutStageChangesInput, Prisma.UserUncheckedCreateWithoutStageChangesInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutStageChangesInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutStageChangesInput, Prisma.UserUncheckedUpdateWithoutStageChangesInput>
-}
-
-export type UserUpdateWithoutStageChangesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutStageChangesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserCreateWithoutFollowUpsAssignedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutFollowUpsAssignedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutFollowUpsAssignedInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutFollowUpsAssignedInput, Prisma.UserUncheckedCreateWithoutFollowUpsAssignedInput>
-}
-
-export type UserCreateWithoutFollowUpsCreatedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutFollowUpsCreatedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutFollowUpsCreatedInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutFollowUpsCreatedInput, Prisma.UserUncheckedCreateWithoutFollowUpsCreatedInput>
-}
-
-export type UserUpsertWithoutFollowUpsAssignedInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutFollowUpsAssignedInput, Prisma.UserUncheckedUpdateWithoutFollowUpsAssignedInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutFollowUpsAssignedInput, Prisma.UserUncheckedCreateWithoutFollowUpsAssignedInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutFollowUpsAssignedInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutFollowUpsAssignedInput, Prisma.UserUncheckedUpdateWithoutFollowUpsAssignedInput>
-}
-
-export type UserUpdateWithoutFollowUpsAssignedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutFollowUpsAssignedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserUpsertWithoutFollowUpsCreatedInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutFollowUpsCreatedInput, Prisma.UserUncheckedUpdateWithoutFollowUpsCreatedInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutFollowUpsCreatedInput, Prisma.UserUncheckedCreateWithoutFollowUpsCreatedInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutFollowUpsCreatedInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutFollowUpsCreatedInput, Prisma.UserUncheckedUpdateWithoutFollowUpsCreatedInput>
-}
-
-export type UserUpdateWithoutFollowUpsCreatedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutFollowUpsCreatedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserCreateWithoutCallsAssignedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutCallsAssignedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutCallsAssignedInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutCallsAssignedInput, Prisma.UserUncheckedCreateWithoutCallsAssignedInput>
-}
-
-export type UserUpsertWithoutCallsAssignedInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutCallsAssignedInput, Prisma.UserUncheckedUpdateWithoutCallsAssignedInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutCallsAssignedInput, Prisma.UserUncheckedCreateWithoutCallsAssignedInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutCallsAssignedInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutCallsAssignedInput, Prisma.UserUncheckedUpdateWithoutCallsAssignedInput>
-}
-
-export type UserUpdateWithoutCallsAssignedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutCallsAssignedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserCreateWithoutMeetingsAssignedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutMeetingsAssignedInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutMeetingsAssignedInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutMeetingsAssignedInput, Prisma.UserUncheckedCreateWithoutMeetingsAssignedInput>
-}
-
-export type UserUpsertWithoutMeetingsAssignedInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutMeetingsAssignedInput, Prisma.UserUncheckedUpdateWithoutMeetingsAssignedInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutMeetingsAssignedInput, Prisma.UserUncheckedCreateWithoutMeetingsAssignedInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutMeetingsAssignedInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutMeetingsAssignedInput, Prisma.UserUncheckedUpdateWithoutMeetingsAssignedInput>
-}
-
-export type UserUpdateWithoutMeetingsAssignedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutMeetingsAssignedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserCreateWithoutAssignmentsGotInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutAssignmentsGotInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutAssignmentsGotInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutAssignmentsGotInput, Prisma.UserUncheckedCreateWithoutAssignmentsGotInput>
-}
-
-export type UserCreateWithoutAssignmentsMadeInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
-}
-
-export type UserUncheckedCreateWithoutAssignmentsMadeInput = {
-  id?: string
-  email: string
-  passwordHash?: string | null
-  externalSubject?: string | null
-  displayName: string
-  status?: $Enums.UserStatus
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
-  automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
-}
-
-export type UserCreateOrConnectWithoutAssignmentsMadeInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutAssignmentsMadeInput, Prisma.UserUncheckedCreateWithoutAssignmentsMadeInput>
-}
-
-export type UserUpsertWithoutAssignmentsGotInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutAssignmentsGotInput, Prisma.UserUncheckedUpdateWithoutAssignmentsGotInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutAssignmentsGotInput, Prisma.UserUncheckedCreateWithoutAssignmentsGotInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutAssignmentsGotInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutAssignmentsGotInput, Prisma.UserUncheckedUpdateWithoutAssignmentsGotInput>
-}
-
-export type UserUpdateWithoutAssignmentsGotInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutAssignmentsGotInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
-}
-
-export type UserUpsertWithoutAssignmentsMadeInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutAssignmentsMadeInput, Prisma.UserUncheckedUpdateWithoutAssignmentsMadeInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutAssignmentsMadeInput, Prisma.UserUncheckedCreateWithoutAssignmentsMadeInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutAssignmentsMadeInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutAssignmentsMadeInput, Prisma.UserUncheckedUpdateWithoutAssignmentsMadeInput>
-}
-
-export type UserUpdateWithoutAssignmentsMadeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
-}
-
-export type UserUncheckedUpdateWithoutAssignmentsMadeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  displayName?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
-  automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
+  batchesCreated?: Prisma.BatchUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -2724,26 +701,14 @@ export type UserCreateWithoutNotificationsInput = {
   passwordHash?: string | null
   externalSubject?: string | null
   displayName: string
+  role?: $Enums.RoleCode
   status?: $Enums.UserStatus
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
   automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
+  batchesCreated?: Prisma.BatchCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -2752,26 +717,14 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   passwordHash?: string | null
   externalSubject?: string | null
   displayName: string
+  role?: $Enums.RoleCode
   status?: $Enums.UserStatus
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutActorInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
   automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
+  batchesCreated?: Prisma.BatchUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -2796,26 +749,14 @@ export type UserUpdateWithoutNotificationsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
   automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
+  batchesCreated?: Prisma.BatchUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -2824,26 +765,14 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutActorNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
+  batchesCreated?: Prisma.BatchUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutActivityLogsInput = {
@@ -2852,26 +781,14 @@ export type UserCreateWithoutActivityLogsInput = {
   passwordHash?: string | null
   externalSubject?: string | null
   displayName: string
+  role?: $Enums.RoleCode
   status?: $Enums.UserStatus
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutAssignedStaffInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  followUpsAssigned?: Prisma.FollowUpCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignCreateNestedManyWithoutCreatedByInput
   automationsCreated?: Prisma.AutomationCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagCreateNestedManyWithoutActorInput
+  batchesCreated?: Prisma.BatchCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutActivityLogsInput = {
@@ -2880,26 +797,14 @@ export type UserUncheckedCreateWithoutActivityLogsInput = {
   passwordHash?: string | null
   externalSubject?: string | null
   displayName: string
+  role?: $Enums.RoleCode
   status?: $Enums.UserStatus
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  userRoles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
-  staffProfile?: Prisma.StaffProfileUncheckedCreateNestedOneWithoutUserInput
-  assignedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedCreateNestedManyWithoutAssignedStaffInput
-  followUpsCreated?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCreatedByInput
-  callsAssigned?: Prisma.CallUncheckedCreateNestedManyWithoutAssignedStaffInput
-  meetingsAssigned?: Prisma.MeetingUncheckedCreateNestedManyWithoutAssignedStaffInput
-  campaignsCreated?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatedByInput
   automationsCreated?: Prisma.AutomationUncheckedCreateNestedManyWithoutCreatedByInput
-  leadsAssigned?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedStaffInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedCreateNestedManyWithoutChangedByInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutStaffInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutActorInput
+  batchesCreated?: Prisma.BatchUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutActivityLogsInput = {
@@ -2924,26 +829,14 @@ export type UserUpdateWithoutActivityLogsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutAssignedStaffNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  followUpsAssigned?: Prisma.FollowUpUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUpdateManyWithoutCreatedByNestedInput
   automationsCreated?: Prisma.AutomationUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUpdateManyWithoutActorNestedInput
+  batchesCreated?: Prisma.BatchUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActivityLogsInput = {
@@ -2952,26 +845,14 @@ export type UserUncheckedUpdateWithoutActivityLogsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleCodeFieldUpdateOperationsInput | $Enums.RoleCode
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRoles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
-  staffProfile?: Prisma.StaffProfileUncheckedUpdateOneWithoutUserNestedInput
-  assignedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  followUpsAssigned?: Prisma.FollowUpUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  followUpsCreated?: Prisma.FollowUpUncheckedUpdateManyWithoutCreatedByNestedInput
-  callsAssigned?: Prisma.CallUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  meetingsAssigned?: Prisma.MeetingUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  campaignsCreated?: Prisma.CampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   automationsCreated?: Prisma.AutomationUncheckedUpdateManyWithoutCreatedByNestedInput
-  leadsAssigned?: Prisma.LeadUncheckedUpdateManyWithoutAssignedStaffNestedInput
-  stageChanges?: Prisma.LeadStageHistoryUncheckedUpdateManyWithoutChangedByNestedInput
-  assignmentsMade?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
-  assignmentsGot?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutStaffNestedInput
-  tagsAssigned?: Prisma.CustomerTagUncheckedUpdateManyWithoutActorNestedInput
+  batchesCreated?: Prisma.BatchUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 
@@ -2980,41 +861,17 @@ export type UserUncheckedUpdateWithoutActivityLogsInput = {
  */
 
 export type UserCountOutputType = {
-  userRoles: number
-  assignedCustomers: number
-  conversations: number
   notifications: number
   activityLogs: number
-  followUpsAssigned: number
-  followUpsCreated: number
-  callsAssigned: number
-  meetingsAssigned: number
-  campaignsCreated: number
   automationsCreated: number
-  leadsAssigned: number
-  stageChanges: number
-  assignmentsMade: number
-  assignmentsGot: number
-  tagsAssigned: number
+  batchesCreated: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  userRoles?: boolean | UserCountOutputTypeCountUserRolesArgs
-  assignedCustomers?: boolean | UserCountOutputTypeCountAssignedCustomersArgs
-  conversations?: boolean | UserCountOutputTypeCountConversationsArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   activityLogs?: boolean | UserCountOutputTypeCountActivityLogsArgs
-  followUpsAssigned?: boolean | UserCountOutputTypeCountFollowUpsAssignedArgs
-  followUpsCreated?: boolean | UserCountOutputTypeCountFollowUpsCreatedArgs
-  callsAssigned?: boolean | UserCountOutputTypeCountCallsAssignedArgs
-  meetingsAssigned?: boolean | UserCountOutputTypeCountMeetingsAssignedArgs
-  campaignsCreated?: boolean | UserCountOutputTypeCountCampaignsCreatedArgs
   automationsCreated?: boolean | UserCountOutputTypeCountAutomationsCreatedArgs
-  leadsAssigned?: boolean | UserCountOutputTypeCountLeadsAssignedArgs
-  stageChanges?: boolean | UserCountOutputTypeCountStageChangesArgs
-  assignmentsMade?: boolean | UserCountOutputTypeCountAssignmentsMadeArgs
-  assignmentsGot?: boolean | UserCountOutputTypeCountAssignmentsGotArgs
-  tagsAssigned?: boolean | UserCountOutputTypeCountTagsAssignedArgs
+  batchesCreated?: boolean | UserCountOutputTypeCountBatchesCreatedArgs
 }
 
 /**
@@ -3025,27 +882,6 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountUserRolesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserRoleWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountAssignedCustomersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CustomerWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ConversationWhereInput
 }
 
 /**
@@ -3065,41 +901,6 @@ export type UserCountOutputTypeCountActivityLogsArgs<ExtArgs extends runtime.Typ
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountFollowUpsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.FollowUpWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountFollowUpsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.FollowUpWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountCallsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CallWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountMeetingsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.MeetingWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountCampaignsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CampaignWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
 export type UserCountOutputTypeCountAutomationsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AutomationWhereInput
 }
@@ -3107,36 +908,8 @@ export type UserCountOutputTypeCountAutomationsCreatedArgs<ExtArgs extends runti
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountLeadsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LeadWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountStageChangesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LeadStageHistoryWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountAssignmentsMadeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StaffAssignmentWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountAssignmentsGotArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StaffAssignmentWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountTagsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CustomerTagWhereInput
+export type UserCountOutputTypeCountBatchesCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BatchWhereInput
 }
 
 
@@ -3146,27 +919,15 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   passwordHash?: boolean
   externalSubject?: boolean
   displayName?: boolean
+  role?: boolean
   status?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  userRoles?: boolean | Prisma.User$userRolesArgs<ExtArgs>
-  staffProfile?: boolean | Prisma.User$staffProfileArgs<ExtArgs>
-  assignedCustomers?: boolean | Prisma.User$assignedCustomersArgs<ExtArgs>
-  conversations?: boolean | Prisma.User$conversationsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   activityLogs?: boolean | Prisma.User$activityLogsArgs<ExtArgs>
-  followUpsAssigned?: boolean | Prisma.User$followUpsAssignedArgs<ExtArgs>
-  followUpsCreated?: boolean | Prisma.User$followUpsCreatedArgs<ExtArgs>
-  callsAssigned?: boolean | Prisma.User$callsAssignedArgs<ExtArgs>
-  meetingsAssigned?: boolean | Prisma.User$meetingsAssignedArgs<ExtArgs>
-  campaignsCreated?: boolean | Prisma.User$campaignsCreatedArgs<ExtArgs>
   automationsCreated?: boolean | Prisma.User$automationsCreatedArgs<ExtArgs>
-  leadsAssigned?: boolean | Prisma.User$leadsAssignedArgs<ExtArgs>
-  stageChanges?: boolean | Prisma.User$stageChangesArgs<ExtArgs>
-  assignmentsMade?: boolean | Prisma.User$assignmentsMadeArgs<ExtArgs>
-  assignmentsGot?: boolean | Prisma.User$assignmentsGotArgs<ExtArgs>
-  tagsAssigned?: boolean | Prisma.User$tagsAssignedArgs<ExtArgs>
+  batchesCreated?: boolean | Prisma.User$batchesCreatedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -3176,6 +937,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordHash?: boolean
   externalSubject?: boolean
   displayName?: boolean
+  role?: boolean
   status?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
@@ -3188,6 +950,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordHash?: boolean
   externalSubject?: boolean
   displayName?: boolean
+  role?: boolean
   status?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
@@ -3200,31 +963,19 @@ export type UserSelectScalar = {
   passwordHash?: boolean
   externalSubject?: boolean
   displayName?: boolean
+  role?: boolean
   status?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "externalSubject" | "displayName" | "status" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "externalSubject" | "displayName" | "role" | "status" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  userRoles?: boolean | Prisma.User$userRolesArgs<ExtArgs>
-  staffProfile?: boolean | Prisma.User$staffProfileArgs<ExtArgs>
-  assignedCustomers?: boolean | Prisma.User$assignedCustomersArgs<ExtArgs>
-  conversations?: boolean | Prisma.User$conversationsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   activityLogs?: boolean | Prisma.User$activityLogsArgs<ExtArgs>
-  followUpsAssigned?: boolean | Prisma.User$followUpsAssignedArgs<ExtArgs>
-  followUpsCreated?: boolean | Prisma.User$followUpsCreatedArgs<ExtArgs>
-  callsAssigned?: boolean | Prisma.User$callsAssignedArgs<ExtArgs>
-  meetingsAssigned?: boolean | Prisma.User$meetingsAssignedArgs<ExtArgs>
-  campaignsCreated?: boolean | Prisma.User$campaignsCreatedArgs<ExtArgs>
   automationsCreated?: boolean | Prisma.User$automationsCreatedArgs<ExtArgs>
-  leadsAssigned?: boolean | Prisma.User$leadsAssignedArgs<ExtArgs>
-  stageChanges?: boolean | Prisma.User$stageChangesArgs<ExtArgs>
-  assignmentsMade?: boolean | Prisma.User$assignmentsMadeArgs<ExtArgs>
-  assignmentsGot?: boolean | Prisma.User$assignmentsGotArgs<ExtArgs>
-  tagsAssigned?: boolean | Prisma.User$tagsAssignedArgs<ExtArgs>
+  batchesCreated?: boolean | Prisma.User$batchesCreatedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3233,23 +984,10 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    userRoles: Prisma.$UserRolePayload<ExtArgs>[]
-    staffProfile: Prisma.$StaffProfilePayload<ExtArgs> | null
-    assignedCustomers: Prisma.$CustomerPayload<ExtArgs>[]
-    conversations: Prisma.$ConversationPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     activityLogs: Prisma.$ActivityLogPayload<ExtArgs>[]
-    followUpsAssigned: Prisma.$FollowUpPayload<ExtArgs>[]
-    followUpsCreated: Prisma.$FollowUpPayload<ExtArgs>[]
-    callsAssigned: Prisma.$CallPayload<ExtArgs>[]
-    meetingsAssigned: Prisma.$MeetingPayload<ExtArgs>[]
-    campaignsCreated: Prisma.$CampaignPayload<ExtArgs>[]
     automationsCreated: Prisma.$AutomationPayload<ExtArgs>[]
-    leadsAssigned: Prisma.$LeadPayload<ExtArgs>[]
-    stageChanges: Prisma.$LeadStageHistoryPayload<ExtArgs>[]
-    assignmentsMade: Prisma.$StaffAssignmentPayload<ExtArgs>[]
-    assignmentsGot: Prisma.$StaffAssignmentPayload<ExtArgs>[]
-    tagsAssigned: Prisma.$CustomerTagPayload<ExtArgs>[]
+    batchesCreated: Prisma.$BatchPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3257,6 +995,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     passwordHash: string | null
     externalSubject: string | null
     displayName: string
+    role: $Enums.RoleCode
     status: $Enums.UserStatus
     lastLoginAt: Date | null
     createdAt: Date
@@ -3655,23 +1394,10 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  userRoles<T extends Prisma.User$userRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  staffProfile<T extends Prisma.User$staffProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$staffProfileArgs<ExtArgs>>): Prisma.Prisma__StaffProfileClient<runtime.Types.Result.GetResult<Prisma.$StaffProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  assignedCustomers<T extends Prisma.User$assignedCustomersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedCustomersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  conversations<T extends Prisma.User$conversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   activityLogs<T extends Prisma.User$activityLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$activityLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  followUpsAssigned<T extends Prisma.User$followUpsAssignedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followUpsAssignedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  followUpsCreated<T extends Prisma.User$followUpsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followUpsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  callsAssigned<T extends Prisma.User$callsAssignedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$callsAssignedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CallPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  meetingsAssigned<T extends Prisma.User$meetingsAssignedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$meetingsAssignedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MeetingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  campaignsCreated<T extends Prisma.User$campaignsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$campaignsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   automationsCreated<T extends Prisma.User$automationsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$automationsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AutomationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  leadsAssigned<T extends Prisma.User$leadsAssignedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsAssignedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  stageChanges<T extends Prisma.User$stageChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$stageChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadStageHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  assignmentsMade<T extends Prisma.User$assignmentsMadeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignmentsMadeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  assignmentsGot<T extends Prisma.User$assignmentsGotArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignmentsGotArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  tagsAssigned<T extends Prisma.User$tagsAssignedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tagsAssignedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  batchesCreated<T extends Prisma.User$batchesCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$batchesCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3706,6 +1432,7 @@ export interface UserFieldRefs {
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly externalSubject: Prisma.FieldRef<"User", 'String'>
   readonly displayName: Prisma.FieldRef<"User", 'String'>
+  readonly role: Prisma.FieldRef<"User", 'RoleCode'>
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
   readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -4103,97 +1830,6 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.userRoles
- */
-export type User$userRolesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the UserRole
-   */
-  select?: Prisma.UserRoleSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the UserRole
-   */
-  omit?: Prisma.UserRoleOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserRoleInclude<ExtArgs> | null
-  where?: Prisma.UserRoleWhereInput
-  orderBy?: Prisma.UserRoleOrderByWithRelationInput | Prisma.UserRoleOrderByWithRelationInput[]
-  cursor?: Prisma.UserRoleWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UserRoleScalarFieldEnum | Prisma.UserRoleScalarFieldEnum[]
-}
-
-/**
- * User.staffProfile
- */
-export type User$staffProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the StaffProfile
-   */
-  select?: Prisma.StaffProfileSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the StaffProfile
-   */
-  omit?: Prisma.StaffProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.StaffProfileInclude<ExtArgs> | null
-  where?: Prisma.StaffProfileWhereInput
-}
-
-/**
- * User.assignedCustomers
- */
-export type User$assignedCustomersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Customer
-   */
-  select?: Prisma.CustomerSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Customer
-   */
-  omit?: Prisma.CustomerOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CustomerInclude<ExtArgs> | null
-  where?: Prisma.CustomerWhereInput
-  orderBy?: Prisma.CustomerOrderByWithRelationInput | Prisma.CustomerOrderByWithRelationInput[]
-  cursor?: Prisma.CustomerWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CustomerScalarFieldEnum | Prisma.CustomerScalarFieldEnum[]
-}
-
-/**
- * User.conversations
- */
-export type User$conversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Conversation
-   */
-  select?: Prisma.ConversationSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Conversation
-   */
-  omit?: Prisma.ConversationOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ConversationInclude<ExtArgs> | null
-  where?: Prisma.ConversationWhereInput
-  orderBy?: Prisma.ConversationOrderByWithRelationInput | Prisma.ConversationOrderByWithRelationInput[]
-  cursor?: Prisma.ConversationWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ConversationScalarFieldEnum | Prisma.ConversationScalarFieldEnum[]
-}
-
-/**
  * User.notifications
  */
 export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4242,126 +1878,6 @@ export type User$activityLogsArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * User.followUpsAssigned
- */
-export type User$followUpsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the FollowUp
-   */
-  select?: Prisma.FollowUpSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the FollowUp
-   */
-  omit?: Prisma.FollowUpOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FollowUpInclude<ExtArgs> | null
-  where?: Prisma.FollowUpWhereInput
-  orderBy?: Prisma.FollowUpOrderByWithRelationInput | Prisma.FollowUpOrderByWithRelationInput[]
-  cursor?: Prisma.FollowUpWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.FollowUpScalarFieldEnum | Prisma.FollowUpScalarFieldEnum[]
-}
-
-/**
- * User.followUpsCreated
- */
-export type User$followUpsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the FollowUp
-   */
-  select?: Prisma.FollowUpSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the FollowUp
-   */
-  omit?: Prisma.FollowUpOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FollowUpInclude<ExtArgs> | null
-  where?: Prisma.FollowUpWhereInput
-  orderBy?: Prisma.FollowUpOrderByWithRelationInput | Prisma.FollowUpOrderByWithRelationInput[]
-  cursor?: Prisma.FollowUpWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.FollowUpScalarFieldEnum | Prisma.FollowUpScalarFieldEnum[]
-}
-
-/**
- * User.callsAssigned
- */
-export type User$callsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Call
-   */
-  select?: Prisma.CallSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Call
-   */
-  omit?: Prisma.CallOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CallInclude<ExtArgs> | null
-  where?: Prisma.CallWhereInput
-  orderBy?: Prisma.CallOrderByWithRelationInput | Prisma.CallOrderByWithRelationInput[]
-  cursor?: Prisma.CallWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CallScalarFieldEnum | Prisma.CallScalarFieldEnum[]
-}
-
-/**
- * User.meetingsAssigned
- */
-export type User$meetingsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Meeting
-   */
-  select?: Prisma.MeetingSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Meeting
-   */
-  omit?: Prisma.MeetingOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MeetingInclude<ExtArgs> | null
-  where?: Prisma.MeetingWhereInput
-  orderBy?: Prisma.MeetingOrderByWithRelationInput | Prisma.MeetingOrderByWithRelationInput[]
-  cursor?: Prisma.MeetingWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.MeetingScalarFieldEnum | Prisma.MeetingScalarFieldEnum[]
-}
-
-/**
- * User.campaignsCreated
- */
-export type User$campaignsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Campaign
-   */
-  select?: Prisma.CampaignSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Campaign
-   */
-  omit?: Prisma.CampaignOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CampaignInclude<ExtArgs> | null
-  where?: Prisma.CampaignWhereInput
-  orderBy?: Prisma.CampaignOrderByWithRelationInput | Prisma.CampaignOrderByWithRelationInput[]
-  cursor?: Prisma.CampaignWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CampaignScalarFieldEnum | Prisma.CampaignScalarFieldEnum[]
-}
-
-/**
  * User.automationsCreated
  */
 export type User$automationsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4386,123 +1902,27 @@ export type User$automationsCreatedArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
- * User.leadsAssigned
+ * User.batchesCreated
  */
-export type User$leadsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$batchesCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Lead
+   * Select specific fields to fetch from the Batch
    */
-  select?: Prisma.LeadSelect<ExtArgs> | null
+  select?: Prisma.BatchSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Lead
+   * Omit specific fields from the Batch
    */
-  omit?: Prisma.LeadOmit<ExtArgs> | null
+  omit?: Prisma.BatchOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.LeadInclude<ExtArgs> | null
-  where?: Prisma.LeadWhereInput
-  orderBy?: Prisma.LeadOrderByWithRelationInput | Prisma.LeadOrderByWithRelationInput[]
-  cursor?: Prisma.LeadWhereUniqueInput
+  include?: Prisma.BatchInclude<ExtArgs> | null
+  where?: Prisma.BatchWhereInput
+  orderBy?: Prisma.BatchOrderByWithRelationInput | Prisma.BatchOrderByWithRelationInput[]
+  cursor?: Prisma.BatchWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
-}
-
-/**
- * User.stageChanges
- */
-export type User$stageChangesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LeadStageHistory
-   */
-  select?: Prisma.LeadStageHistorySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LeadStageHistory
-   */
-  omit?: Prisma.LeadStageHistoryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LeadStageHistoryInclude<ExtArgs> | null
-  where?: Prisma.LeadStageHistoryWhereInput
-  orderBy?: Prisma.LeadStageHistoryOrderByWithRelationInput | Prisma.LeadStageHistoryOrderByWithRelationInput[]
-  cursor?: Prisma.LeadStageHistoryWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LeadStageHistoryScalarFieldEnum | Prisma.LeadStageHistoryScalarFieldEnum[]
-}
-
-/**
- * User.assignmentsMade
- */
-export type User$assignmentsMadeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the StaffAssignment
-   */
-  select?: Prisma.StaffAssignmentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the StaffAssignment
-   */
-  omit?: Prisma.StaffAssignmentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.StaffAssignmentInclude<ExtArgs> | null
-  where?: Prisma.StaffAssignmentWhereInput
-  orderBy?: Prisma.StaffAssignmentOrderByWithRelationInput | Prisma.StaffAssignmentOrderByWithRelationInput[]
-  cursor?: Prisma.StaffAssignmentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.StaffAssignmentScalarFieldEnum | Prisma.StaffAssignmentScalarFieldEnum[]
-}
-
-/**
- * User.assignmentsGot
- */
-export type User$assignmentsGotArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the StaffAssignment
-   */
-  select?: Prisma.StaffAssignmentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the StaffAssignment
-   */
-  omit?: Prisma.StaffAssignmentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.StaffAssignmentInclude<ExtArgs> | null
-  where?: Prisma.StaffAssignmentWhereInput
-  orderBy?: Prisma.StaffAssignmentOrderByWithRelationInput | Prisma.StaffAssignmentOrderByWithRelationInput[]
-  cursor?: Prisma.StaffAssignmentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.StaffAssignmentScalarFieldEnum | Prisma.StaffAssignmentScalarFieldEnum[]
-}
-
-/**
- * User.tagsAssigned
- */
-export type User$tagsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CustomerTag
-   */
-  select?: Prisma.CustomerTagSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the CustomerTag
-   */
-  omit?: Prisma.CustomerTagOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CustomerTagInclude<ExtArgs> | null
-  where?: Prisma.CustomerTagWhereInput
-  orderBy?: Prisma.CustomerTagOrderByWithRelationInput | Prisma.CustomerTagOrderByWithRelationInput[]
-  cursor?: Prisma.CustomerTagWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CustomerTagScalarFieldEnum | Prisma.CustomerTagScalarFieldEnum[]
+  distinct?: Prisma.BatchScalarFieldEnum | Prisma.BatchScalarFieldEnum[]
 }
 
 /**

@@ -21,10 +21,9 @@ export default async function SettingsPage() {
   const user = await requirePermission("settings:read");
 
   const keys = SETTING_SPECS.map((s) => s.key);
-  const [stored, pauseAll, runningCampaigns, activeAutomations] = await Promise.all([
+  const [stored, pauseAll, activeAutomations] = await Promise.all([
     getSettings([...keys]),
     prisma.systemSetting.findUnique({ where: { key: "automation.pause_all" } }),
-    prisma.campaign.count({ where: { status: "RUNNING" } }),
     prisma.automation.count({ where: { status: "ACTIVE" } }),
   ]);
 
@@ -56,14 +55,12 @@ export default async function SettingsPage() {
             </p>
             <p className="mt-1 text-[color:var(--color-text-secondary)]">
               {activeAutomations} active automation
-              {activeAutomations === 1 ? "" : "s"} · {runningCampaigns} running
-              campaign{runningCampaigns === 1 ? "" : "s"}.
+              {activeAutomations === 1 ? "" : "s"}.
             </p>
             <p className="mt-1 text-[length:var(--text-small)] text-[color:var(--color-text-secondary)]">
               Pausing everything stops all journeys advancing and all timers
               firing. Nothing is lost — runs keep their state and resume where
-              they stopped. Campaigns are stopped individually from the campaign
-              screen.
+              they stopped.
             </p>
           </div>
 

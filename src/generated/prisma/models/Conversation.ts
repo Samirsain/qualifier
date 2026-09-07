@@ -39,7 +39,6 @@ export type ConversationMinAggregateOutputType = {
   customerId: string | null
   channel: string | null
   status: $Enums.ConversationStatus | null
-  assignedStaffId: string | null
   lastMessageAt: Date | null
   unreadCount: number | null
   createdAt: Date | null
@@ -51,7 +50,6 @@ export type ConversationMaxAggregateOutputType = {
   customerId: string | null
   channel: string | null
   status: $Enums.ConversationStatus | null
-  assignedStaffId: string | null
   lastMessageAt: Date | null
   unreadCount: number | null
   createdAt: Date | null
@@ -63,7 +61,6 @@ export type ConversationCountAggregateOutputType = {
   customerId: number
   channel: number
   status: number
-  assignedStaffId: number
   lastMessageAt: number
   unreadCount: number
   createdAt: number
@@ -85,7 +82,6 @@ export type ConversationMinAggregateInputType = {
   customerId?: true
   channel?: true
   status?: true
-  assignedStaffId?: true
   lastMessageAt?: true
   unreadCount?: true
   createdAt?: true
@@ -97,7 +93,6 @@ export type ConversationMaxAggregateInputType = {
   customerId?: true
   channel?: true
   status?: true
-  assignedStaffId?: true
   lastMessageAt?: true
   unreadCount?: true
   createdAt?: true
@@ -109,7 +104,6 @@ export type ConversationCountAggregateInputType = {
   customerId?: true
   channel?: true
   status?: true
-  assignedStaffId?: true
   lastMessageAt?: true
   unreadCount?: true
   createdAt?: true
@@ -208,7 +202,6 @@ export type ConversationGroupByOutputType = {
   customerId: string
   channel: string
   status: $Enums.ConversationStatus
-  assignedStaffId: string | null
   lastMessageAt: Date | null
   unreadCount: number
   createdAt: Date
@@ -243,13 +236,11 @@ export type ConversationWhereInput = {
   customerId?: Prisma.UuidFilter<"Conversation"> | string
   channel?: Prisma.StringFilter<"Conversation"> | string
   status?: Prisma.EnumConversationStatusFilter<"Conversation"> | $Enums.ConversationStatus
-  assignedStaffId?: Prisma.UuidNullableFilter<"Conversation"> | string | null
   lastMessageAt?: Prisma.DateTimeNullableFilter<"Conversation"> | Date | string | null
   unreadCount?: Prisma.IntFilter<"Conversation"> | number
   createdAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
-  assignedStaff?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   messages?: Prisma.MessageListRelationFilter
 }
 
@@ -258,13 +249,11 @@ export type ConversationOrderByWithRelationInput = {
   customerId?: Prisma.SortOrder
   channel?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  assignedStaffId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastMessageAt?: Prisma.SortOrderInput | Prisma.SortOrder
   unreadCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   customer?: Prisma.CustomerOrderByWithRelationInput
-  assignedStaff?: Prisma.UserOrderByWithRelationInput
   messages?: Prisma.MessageOrderByRelationAggregateInput
 }
 
@@ -276,13 +265,11 @@ export type ConversationWhereUniqueInput = Prisma.AtLeast<{
   customerId?: Prisma.UuidFilter<"Conversation"> | string
   channel?: Prisma.StringFilter<"Conversation"> | string
   status?: Prisma.EnumConversationStatusFilter<"Conversation"> | $Enums.ConversationStatus
-  assignedStaffId?: Prisma.UuidNullableFilter<"Conversation"> | string | null
   lastMessageAt?: Prisma.DateTimeNullableFilter<"Conversation"> | Date | string | null
   unreadCount?: Prisma.IntFilter<"Conversation"> | number
   createdAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
-  assignedStaff?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   messages?: Prisma.MessageListRelationFilter
 }, "id">
 
@@ -291,7 +278,6 @@ export type ConversationOrderByWithAggregationInput = {
   customerId?: Prisma.SortOrder
   channel?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  assignedStaffId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastMessageAt?: Prisma.SortOrderInput | Prisma.SortOrder
   unreadCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -311,7 +297,6 @@ export type ConversationScalarWhereWithAggregatesInput = {
   customerId?: Prisma.UuidWithAggregatesFilter<"Conversation"> | string
   channel?: Prisma.StringWithAggregatesFilter<"Conversation"> | string
   status?: Prisma.EnumConversationStatusWithAggregatesFilter<"Conversation"> | $Enums.ConversationStatus
-  assignedStaffId?: Prisma.UuidNullableWithAggregatesFilter<"Conversation"> | string | null
   lastMessageAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Conversation"> | Date | string | null
   unreadCount?: Prisma.IntWithAggregatesFilter<"Conversation"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Conversation"> | Date | string
@@ -327,7 +312,6 @@ export type ConversationCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutConversationsInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutConversationsInput
   messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
 }
 
@@ -336,7 +320,6 @@ export type ConversationUncheckedCreateInput = {
   customerId: string
   channel?: string
   status?: $Enums.ConversationStatus
-  assignedStaffId?: string | null
   lastMessageAt?: Date | string | null
   unreadCount?: number
   createdAt?: Date | string
@@ -353,7 +336,6 @@ export type ConversationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutConversationsNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutConversationsNestedInput
   messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
 }
 
@@ -362,7 +344,6 @@ export type ConversationUncheckedUpdateInput = {
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   unreadCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -375,7 +356,6 @@ export type ConversationCreateManyInput = {
   customerId: string
   channel?: string
   status?: $Enums.ConversationStatus
-  assignedStaffId?: string | null
   lastMessageAt?: Date | string | null
   unreadCount?: number
   createdAt?: Date | string
@@ -397,7 +377,6 @@ export type ConversationUncheckedUpdateManyInput = {
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   unreadCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -419,7 +398,6 @@ export type ConversationCountOrderByAggregateInput = {
   customerId?: Prisma.SortOrder
   channel?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  assignedStaffId?: Prisma.SortOrder
   lastMessageAt?: Prisma.SortOrder
   unreadCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -435,7 +413,6 @@ export type ConversationMaxOrderByAggregateInput = {
   customerId?: Prisma.SortOrder
   channel?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  assignedStaffId?: Prisma.SortOrder
   lastMessageAt?: Prisma.SortOrder
   unreadCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -447,7 +424,6 @@ export type ConversationMinOrderByAggregateInput = {
   customerId?: Prisma.SortOrder
   channel?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  assignedStaffId?: Prisma.SortOrder
   lastMessageAt?: Prisma.SortOrder
   unreadCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -461,48 +437,6 @@ export type ConversationSumOrderByAggregateInput = {
 export type ConversationScalarRelationFilter = {
   is?: Prisma.ConversationWhereInput
   isNot?: Prisma.ConversationWhereInput
-}
-
-export type ConversationCreateNestedManyWithoutAssignedStaffInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutAssignedStaffInput, Prisma.ConversationUncheckedCreateWithoutAssignedStaffInput> | Prisma.ConversationCreateWithoutAssignedStaffInput[] | Prisma.ConversationUncheckedCreateWithoutAssignedStaffInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutAssignedStaffInput | Prisma.ConversationCreateOrConnectWithoutAssignedStaffInput[]
-  createMany?: Prisma.ConversationCreateManyAssignedStaffInputEnvelope
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-}
-
-export type ConversationUncheckedCreateNestedManyWithoutAssignedStaffInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutAssignedStaffInput, Prisma.ConversationUncheckedCreateWithoutAssignedStaffInput> | Prisma.ConversationCreateWithoutAssignedStaffInput[] | Prisma.ConversationUncheckedCreateWithoutAssignedStaffInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutAssignedStaffInput | Prisma.ConversationCreateOrConnectWithoutAssignedStaffInput[]
-  createMany?: Prisma.ConversationCreateManyAssignedStaffInputEnvelope
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-}
-
-export type ConversationUpdateManyWithoutAssignedStaffNestedInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutAssignedStaffInput, Prisma.ConversationUncheckedCreateWithoutAssignedStaffInput> | Prisma.ConversationCreateWithoutAssignedStaffInput[] | Prisma.ConversationUncheckedCreateWithoutAssignedStaffInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutAssignedStaffInput | Prisma.ConversationCreateOrConnectWithoutAssignedStaffInput[]
-  upsert?: Prisma.ConversationUpsertWithWhereUniqueWithoutAssignedStaffInput | Prisma.ConversationUpsertWithWhereUniqueWithoutAssignedStaffInput[]
-  createMany?: Prisma.ConversationCreateManyAssignedStaffInputEnvelope
-  set?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  disconnect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  delete?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  update?: Prisma.ConversationUpdateWithWhereUniqueWithoutAssignedStaffInput | Prisma.ConversationUpdateWithWhereUniqueWithoutAssignedStaffInput[]
-  updateMany?: Prisma.ConversationUpdateManyWithWhereWithoutAssignedStaffInput | Prisma.ConversationUpdateManyWithWhereWithoutAssignedStaffInput[]
-  deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
-}
-
-export type ConversationUncheckedUpdateManyWithoutAssignedStaffNestedInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutAssignedStaffInput, Prisma.ConversationUncheckedCreateWithoutAssignedStaffInput> | Prisma.ConversationCreateWithoutAssignedStaffInput[] | Prisma.ConversationUncheckedCreateWithoutAssignedStaffInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutAssignedStaffInput | Prisma.ConversationCreateOrConnectWithoutAssignedStaffInput[]
-  upsert?: Prisma.ConversationUpsertWithWhereUniqueWithoutAssignedStaffInput | Prisma.ConversationUpsertWithWhereUniqueWithoutAssignedStaffInput[]
-  createMany?: Prisma.ConversationCreateManyAssignedStaffInputEnvelope
-  set?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  disconnect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  delete?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  update?: Prisma.ConversationUpdateWithWhereUniqueWithoutAssignedStaffInput | Prisma.ConversationUpdateWithWhereUniqueWithoutAssignedStaffInput[]
-  updateMany?: Prisma.ConversationUpdateManyWithWhereWithoutAssignedStaffInput | Prisma.ConversationUpdateManyWithWhereWithoutAssignedStaffInput[]
-  deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
 }
 
 export type ConversationCreateNestedManyWithoutCustomerInput = {
@@ -551,14 +485,6 @@ export type EnumConversationStatusFieldUpdateOperationsInput = {
   set?: $Enums.ConversationStatus
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type ConversationCreateNestedOneWithoutMessagesInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutMessagesInput, Prisma.ConversationUncheckedCreateWithoutMessagesInput>
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutMessagesInput
@@ -573,71 +499,6 @@ export type ConversationUpdateOneRequiredWithoutMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ConversationUpdateToOneWithWhereWithoutMessagesInput, Prisma.ConversationUpdateWithoutMessagesInput>, Prisma.ConversationUncheckedUpdateWithoutMessagesInput>
 }
 
-export type ConversationCreateWithoutAssignedStaffInput = {
-  id?: string
-  channel?: string
-  status?: $Enums.ConversationStatus
-  lastMessageAt?: Date | string | null
-  unreadCount?: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  customer: Prisma.CustomerCreateNestedOneWithoutConversationsInput
-  messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
-}
-
-export type ConversationUncheckedCreateWithoutAssignedStaffInput = {
-  id?: string
-  customerId: string
-  channel?: string
-  status?: $Enums.ConversationStatus
-  lastMessageAt?: Date | string | null
-  unreadCount?: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutConversationInput
-}
-
-export type ConversationCreateOrConnectWithoutAssignedStaffInput = {
-  where: Prisma.ConversationWhereUniqueInput
-  create: Prisma.XOR<Prisma.ConversationCreateWithoutAssignedStaffInput, Prisma.ConversationUncheckedCreateWithoutAssignedStaffInput>
-}
-
-export type ConversationCreateManyAssignedStaffInputEnvelope = {
-  data: Prisma.ConversationCreateManyAssignedStaffInput | Prisma.ConversationCreateManyAssignedStaffInput[]
-  skipDuplicates?: boolean
-}
-
-export type ConversationUpsertWithWhereUniqueWithoutAssignedStaffInput = {
-  where: Prisma.ConversationWhereUniqueInput
-  update: Prisma.XOR<Prisma.ConversationUpdateWithoutAssignedStaffInput, Prisma.ConversationUncheckedUpdateWithoutAssignedStaffInput>
-  create: Prisma.XOR<Prisma.ConversationCreateWithoutAssignedStaffInput, Prisma.ConversationUncheckedCreateWithoutAssignedStaffInput>
-}
-
-export type ConversationUpdateWithWhereUniqueWithoutAssignedStaffInput = {
-  where: Prisma.ConversationWhereUniqueInput
-  data: Prisma.XOR<Prisma.ConversationUpdateWithoutAssignedStaffInput, Prisma.ConversationUncheckedUpdateWithoutAssignedStaffInput>
-}
-
-export type ConversationUpdateManyWithWhereWithoutAssignedStaffInput = {
-  where: Prisma.ConversationScalarWhereInput
-  data: Prisma.XOR<Prisma.ConversationUpdateManyMutationInput, Prisma.ConversationUncheckedUpdateManyWithoutAssignedStaffInput>
-}
-
-export type ConversationScalarWhereInput = {
-  AND?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
-  OR?: Prisma.ConversationScalarWhereInput[]
-  NOT?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
-  id?: Prisma.UuidFilter<"Conversation"> | string
-  customerId?: Prisma.UuidFilter<"Conversation"> | string
-  channel?: Prisma.StringFilter<"Conversation"> | string
-  status?: Prisma.EnumConversationStatusFilter<"Conversation"> | $Enums.ConversationStatus
-  assignedStaffId?: Prisma.UuidNullableFilter<"Conversation"> | string | null
-  lastMessageAt?: Prisma.DateTimeNullableFilter<"Conversation"> | Date | string | null
-  unreadCount?: Prisma.IntFilter<"Conversation"> | number
-  createdAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
-}
-
 export type ConversationCreateWithoutCustomerInput = {
   id?: string
   channel?: string
@@ -646,7 +507,6 @@ export type ConversationCreateWithoutCustomerInput = {
   unreadCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutConversationsInput
   messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
 }
 
@@ -654,7 +514,6 @@ export type ConversationUncheckedCreateWithoutCustomerInput = {
   id?: string
   channel?: string
   status?: $Enums.ConversationStatus
-  assignedStaffId?: string | null
   lastMessageAt?: Date | string | null
   unreadCount?: number
   createdAt?: Date | string
@@ -688,6 +547,20 @@ export type ConversationUpdateManyWithWhereWithoutCustomerInput = {
   data: Prisma.XOR<Prisma.ConversationUpdateManyMutationInput, Prisma.ConversationUncheckedUpdateManyWithoutCustomerInput>
 }
 
+export type ConversationScalarWhereInput = {
+  AND?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
+  OR?: Prisma.ConversationScalarWhereInput[]
+  NOT?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
+  id?: Prisma.UuidFilter<"Conversation"> | string
+  customerId?: Prisma.UuidFilter<"Conversation"> | string
+  channel?: Prisma.StringFilter<"Conversation"> | string
+  status?: Prisma.EnumConversationStatusFilter<"Conversation"> | $Enums.ConversationStatus
+  lastMessageAt?: Prisma.DateTimeNullableFilter<"Conversation"> | Date | string | null
+  unreadCount?: Prisma.IntFilter<"Conversation"> | number
+  createdAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
+}
+
 export type ConversationCreateWithoutMessagesInput = {
   id?: string
   channel?: string
@@ -697,7 +570,6 @@ export type ConversationCreateWithoutMessagesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutConversationsInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutConversationsInput
 }
 
 export type ConversationUncheckedCreateWithoutMessagesInput = {
@@ -705,7 +577,6 @@ export type ConversationUncheckedCreateWithoutMessagesInput = {
   customerId: string
   channel?: string
   status?: $Enums.ConversationStatus
-  assignedStaffId?: string | null
   lastMessageAt?: Date | string | null
   unreadCount?: number
   createdAt?: Date | string
@@ -737,57 +608,9 @@ export type ConversationUpdateWithoutMessagesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutConversationsNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutConversationsNestedInput
 }
 
 export type ConversationUncheckedUpdateWithoutMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  customerId?: Prisma.StringFieldUpdateOperationsInput | string
-  channel?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  unreadCount?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ConversationCreateManyAssignedStaffInput = {
-  id?: string
-  customerId: string
-  channel?: string
-  status?: $Enums.ConversationStatus
-  lastMessageAt?: Date | string | null
-  unreadCount?: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type ConversationUpdateWithoutAssignedStaffInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  channel?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-  lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  unreadCount?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  customer?: Prisma.CustomerUpdateOneRequiredWithoutConversationsNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
-}
-
-export type ConversationUncheckedUpdateWithoutAssignedStaffInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  customerId?: Prisma.StringFieldUpdateOperationsInput | string
-  channel?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-  lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  unreadCount?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutConversationNestedInput
-}
-
-export type ConversationUncheckedUpdateManyWithoutAssignedStaffInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
@@ -802,7 +625,6 @@ export type ConversationCreateManyCustomerInput = {
   id?: string
   channel?: string
   status?: $Enums.ConversationStatus
-  assignedStaffId?: string | null
   lastMessageAt?: Date | string | null
   unreadCount?: number
   createdAt?: Date | string
@@ -817,7 +639,6 @@ export type ConversationUpdateWithoutCustomerInput = {
   unreadCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  assignedStaff?: Prisma.UserUpdateOneWithoutConversationsNestedInput
   messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
 }
 
@@ -825,7 +646,6 @@ export type ConversationUncheckedUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   unreadCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -837,7 +657,6 @@ export type ConversationUncheckedUpdateManyWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   unreadCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -880,13 +699,11 @@ export type ConversationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   customerId?: boolean
   channel?: boolean
   status?: boolean
-  assignedStaffId?: boolean
   lastMessageAt?: boolean
   unreadCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Conversation$assignedStaffArgs<ExtArgs>
   messages?: boolean | Prisma.Conversation$messagesArgs<ExtArgs>
   _count?: boolean | Prisma.ConversationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["conversation"]>
@@ -896,13 +713,11 @@ export type ConversationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   customerId?: boolean
   channel?: boolean
   status?: boolean
-  assignedStaffId?: boolean
   lastMessageAt?: boolean
   unreadCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Conversation$assignedStaffArgs<ExtArgs>
 }, ExtArgs["result"]["conversation"]>
 
 export type ConversationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -910,13 +725,11 @@ export type ConversationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   customerId?: boolean
   channel?: boolean
   status?: boolean
-  assignedStaffId?: boolean
   lastMessageAt?: boolean
   unreadCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Conversation$assignedStaffArgs<ExtArgs>
 }, ExtArgs["result"]["conversation"]>
 
 export type ConversationSelectScalar = {
@@ -924,34 +737,29 @@ export type ConversationSelectScalar = {
   customerId?: boolean
   channel?: boolean
   status?: boolean
-  assignedStaffId?: boolean
   lastMessageAt?: boolean
   unreadCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ConversationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "channel" | "status" | "assignedStaffId" | "lastMessageAt" | "unreadCount" | "createdAt" | "updatedAt", ExtArgs["result"]["conversation"]>
+export type ConversationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "channel" | "status" | "lastMessageAt" | "unreadCount" | "createdAt" | "updatedAt", ExtArgs["result"]["conversation"]>
 export type ConversationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Conversation$assignedStaffArgs<ExtArgs>
   messages?: boolean | Prisma.Conversation$messagesArgs<ExtArgs>
   _count?: boolean | Prisma.ConversationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ConversationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Conversation$assignedStaffArgs<ExtArgs>
 }
 export type ConversationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Conversation$assignedStaffArgs<ExtArgs>
 }
 
 export type $ConversationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Conversation"
   objects: {
     customer: Prisma.$CustomerPayload<ExtArgs>
-    assignedStaff: Prisma.$UserPayload<ExtArgs> | null
     messages: Prisma.$MessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -959,7 +767,6 @@ export type $ConversationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     customerId: string
     channel: string
     status: $Enums.ConversationStatus
-    assignedStaffId: string | null
     lastMessageAt: Date | null
     unreadCount: number
     createdAt: Date
@@ -1359,7 +1166,6 @@ readonly fields: ConversationFieldRefs;
 export interface Prisma__ConversationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   customer<T extends Prisma.CustomerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CustomerDefaultArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  assignedStaff<T extends Prisma.Conversation$assignedStaffArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Conversation$assignedStaffArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   messages<T extends Prisma.Conversation$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Conversation$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1394,7 +1200,6 @@ export interface ConversationFieldRefs {
   readonly customerId: Prisma.FieldRef<"Conversation", 'String'>
   readonly channel: Prisma.FieldRef<"Conversation", 'String'>
   readonly status: Prisma.FieldRef<"Conversation", 'ConversationStatus'>
-  readonly assignedStaffId: Prisma.FieldRef<"Conversation", 'String'>
   readonly lastMessageAt: Prisma.FieldRef<"Conversation", 'DateTime'>
   readonly unreadCount: Prisma.FieldRef<"Conversation", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Conversation", 'DateTime'>
@@ -1797,25 +1602,6 @@ export type ConversationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many Conversations to delete.
    */
   limit?: number
-}
-
-/**
- * Conversation.assignedStaff
- */
-export type Conversation$assignedStaffArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
 }
 
 /**

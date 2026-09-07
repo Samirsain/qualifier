@@ -30,18 +30,12 @@ export type CustomerMinAggregateOutputType = {
   phoneE164: string | null
   email: string | null
   location: string | null
-  sourceId: string | null
-  sourceDetail: string | null
-  campaignId: string | null
-  customerType: string | null
-  interestStatus: $Enums.InterestStatus | null
-  customerStatus: string | null
-  assignedStaffId: string | null
-  nextFollowUpAt: Date | null
-  lastInteractionAt: Date | null
-  outcome: string | null
-  conversionStatus: string | null
+  status: $Enums.CustomerStatus | null
+  batchId: string | null
   optedOutAt: Date | null
+  lastInteractionAt: Date | null
+  qualifiedAt: Date | null
+  exportedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,18 +46,12 @@ export type CustomerMaxAggregateOutputType = {
   phoneE164: string | null
   email: string | null
   location: string | null
-  sourceId: string | null
-  sourceDetail: string | null
-  campaignId: string | null
-  customerType: string | null
-  interestStatus: $Enums.InterestStatus | null
-  customerStatus: string | null
-  assignedStaffId: string | null
-  nextFollowUpAt: Date | null
-  lastInteractionAt: Date | null
-  outcome: string | null
-  conversionStatus: string | null
+  status: $Enums.CustomerStatus | null
+  batchId: string | null
   optedOutAt: Date | null
+  lastInteractionAt: Date | null
+  qualifiedAt: Date | null
+  exportedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -74,19 +62,12 @@ export type CustomerCountAggregateOutputType = {
   phoneE164: number
   email: number
   location: number
-  sourceId: number
-  sourceDetail: number
-  campaignId: number
-  customerType: number
-  interestStatus: number
-  customerStatus: number
-  assignedStaffId: number
-  nextFollowUpAt: number
-  lastInteractionAt: number
-  requirements: number
-  outcome: number
-  conversionStatus: number
+  status: number
+  batchId: number
   optedOutAt: number
+  lastInteractionAt: number
+  qualifiedAt: number
+  exportedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -99,18 +80,12 @@ export type CustomerMinAggregateInputType = {
   phoneE164?: true
   email?: true
   location?: true
-  sourceId?: true
-  sourceDetail?: true
-  campaignId?: true
-  customerType?: true
-  interestStatus?: true
-  customerStatus?: true
-  assignedStaffId?: true
-  nextFollowUpAt?: true
-  lastInteractionAt?: true
-  outcome?: true
-  conversionStatus?: true
+  status?: true
+  batchId?: true
   optedOutAt?: true
+  lastInteractionAt?: true
+  qualifiedAt?: true
+  exportedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -121,18 +96,12 @@ export type CustomerMaxAggregateInputType = {
   phoneE164?: true
   email?: true
   location?: true
-  sourceId?: true
-  sourceDetail?: true
-  campaignId?: true
-  customerType?: true
-  interestStatus?: true
-  customerStatus?: true
-  assignedStaffId?: true
-  nextFollowUpAt?: true
-  lastInteractionAt?: true
-  outcome?: true
-  conversionStatus?: true
+  status?: true
+  batchId?: true
   optedOutAt?: true
+  lastInteractionAt?: true
+  qualifiedAt?: true
+  exportedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -143,19 +112,12 @@ export type CustomerCountAggregateInputType = {
   phoneE164?: true
   email?: true
   location?: true
-  sourceId?: true
-  sourceDetail?: true
-  campaignId?: true
-  customerType?: true
-  interestStatus?: true
-  customerStatus?: true
-  assignedStaffId?: true
-  nextFollowUpAt?: true
-  lastInteractionAt?: true
-  requirements?: true
-  outcome?: true
-  conversionStatus?: true
+  status?: true
+  batchId?: true
   optedOutAt?: true
+  lastInteractionAt?: true
+  qualifiedAt?: true
+  exportedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -235,23 +197,16 @@ export type CustomerGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type CustomerGroupByOutputType = {
   id: string
-  name: string
+  name: string | null
   phoneE164: string
   email: string | null
   location: string | null
-  sourceId: string
-  sourceDetail: string | null
-  campaignId: string | null
-  customerType: string | null
-  interestStatus: $Enums.InterestStatus
-  customerStatus: string | null
-  assignedStaffId: string | null
-  nextFollowUpAt: Date | null
-  lastInteractionAt: Date | null
-  requirements: runtime.JsonValue | null
-  outcome: string | null
-  conversionStatus: string | null
+  status: $Enums.CustomerStatus
+  batchId: string | null
   optedOutAt: Date | null
+  lastInteractionAt: Date | null
+  qualifiedAt: Date | null
+  exportedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: CustomerCountAggregateOutputType | null
@@ -279,82 +234,48 @@ export type CustomerWhereInput = {
   OR?: Prisma.CustomerWhereInput[]
   NOT?: Prisma.CustomerWhereInput | Prisma.CustomerWhereInput[]
   id?: Prisma.UuidFilter<"Customer"> | string
-  name?: Prisma.StringFilter<"Customer"> | string
+  name?: Prisma.StringNullableFilter<"Customer"> | string | null
   phoneE164?: Prisma.StringFilter<"Customer"> | string
   email?: Prisma.StringNullableFilter<"Customer"> | string | null
   location?: Prisma.StringNullableFilter<"Customer"> | string | null
-  sourceId?: Prisma.UuidFilter<"Customer"> | string
-  sourceDetail?: Prisma.StringNullableFilter<"Customer"> | string | null
-  campaignId?: Prisma.UuidNullableFilter<"Customer"> | string | null
-  customerType?: Prisma.StringNullableFilter<"Customer"> | string | null
-  interestStatus?: Prisma.EnumInterestStatusFilter<"Customer"> | $Enums.InterestStatus
-  customerStatus?: Prisma.StringNullableFilter<"Customer"> | string | null
-  assignedStaffId?: Prisma.UuidNullableFilter<"Customer"> | string | null
-  nextFollowUpAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
-  lastInteractionAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
-  requirements?: Prisma.JsonNullableFilter<"Customer">
-  outcome?: Prisma.StringNullableFilter<"Customer"> | string | null
-  conversionStatus?: Prisma.StringNullableFilter<"Customer"> | string | null
+  status?: Prisma.EnumCustomerStatusFilter<"Customer"> | $Enums.CustomerStatus
+  batchId?: Prisma.UuidNullableFilter<"Customer"> | string | null
   optedOutAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  lastInteractionAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  qualifiedAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  exportedAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
-  source?: Prisma.XOR<Prisma.SourceScalarRelationFilter, Prisma.SourceWhereInput>
-  campaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
-  assignedStaff?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  tags?: Prisma.CustomerTagListRelationFilter
+  batch?: Prisma.XOR<Prisma.BatchNullableScalarRelationFilter, Prisma.BatchWhereInput> | null
+  batchMembers?: Prisma.BatchMemberListRelationFilter
   conversations?: Prisma.ConversationListRelationFilter
   messages?: Prisma.MessageListRelationFilter
-  lead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
   responses?: Prisma.CustomerResponseListRelationFilter
-  followUps?: Prisma.FollowUpListRelationFilter
-  calls?: Prisma.CallListRelationFilter
-  meetings?: Prisma.MeetingListRelationFilter
-  assignments?: Prisma.StaffAssignmentListRelationFilter
   runs?: Prisma.AutomationRunListRelationFilter
-  audiences?: Prisma.CampaignAudienceListRelationFilter
-  deliveries?: Prisma.CampaignDeliveryListRelationFilter
   activityLogs?: Prisma.ActivityLogListRelationFilter
-  templateUsages?: Prisma.TemplateUsageListRelationFilter
 }
 
 export type CustomerOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneE164?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
-  sourceId?: Prisma.SortOrder
-  sourceDetail?: Prisma.SortOrderInput | Prisma.SortOrder
-  campaignId?: Prisma.SortOrderInput | Prisma.SortOrder
-  customerType?: Prisma.SortOrderInput | Prisma.SortOrder
-  interestStatus?: Prisma.SortOrder
-  customerStatus?: Prisma.SortOrderInput | Prisma.SortOrder
-  assignedStaffId?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextFollowUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  lastInteractionAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  requirements?: Prisma.SortOrderInput | Prisma.SortOrder
-  outcome?: Prisma.SortOrderInput | Prisma.SortOrder
-  conversionStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  batchId?: Prisma.SortOrderInput | Prisma.SortOrder
   optedOutAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastInteractionAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  qualifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  exportedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  source?: Prisma.SourceOrderByWithRelationInput
-  campaign?: Prisma.CampaignOrderByWithRelationInput
-  assignedStaff?: Prisma.UserOrderByWithRelationInput
-  tags?: Prisma.CustomerTagOrderByRelationAggregateInput
+  batch?: Prisma.BatchOrderByWithRelationInput
+  batchMembers?: Prisma.BatchMemberOrderByRelationAggregateInput
   conversations?: Prisma.ConversationOrderByRelationAggregateInput
   messages?: Prisma.MessageOrderByRelationAggregateInput
-  lead?: Prisma.LeadOrderByWithRelationInput
   responses?: Prisma.CustomerResponseOrderByRelationAggregateInput
-  followUps?: Prisma.FollowUpOrderByRelationAggregateInput
-  calls?: Prisma.CallOrderByRelationAggregateInput
-  meetings?: Prisma.MeetingOrderByRelationAggregateInput
-  assignments?: Prisma.StaffAssignmentOrderByRelationAggregateInput
   runs?: Prisma.AutomationRunOrderByRelationAggregateInput
-  audiences?: Prisma.CampaignAudienceOrderByRelationAggregateInput
-  deliveries?: Prisma.CampaignDeliveryOrderByRelationAggregateInput
   activityLogs?: Prisma.ActivityLogOrderByRelationAggregateInput
-  templateUsages?: Prisma.TemplateUsageOrderByRelationAggregateInput
 }
 
 export type CustomerWhereUniqueInput = Prisma.AtLeast<{
@@ -363,62 +284,38 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.CustomerWhereInput | Prisma.CustomerWhereInput[]
   OR?: Prisma.CustomerWhereInput[]
   NOT?: Prisma.CustomerWhereInput | Prisma.CustomerWhereInput[]
-  name?: Prisma.StringFilter<"Customer"> | string
+  name?: Prisma.StringNullableFilter<"Customer"> | string | null
   email?: Prisma.StringNullableFilter<"Customer"> | string | null
   location?: Prisma.StringNullableFilter<"Customer"> | string | null
-  sourceId?: Prisma.UuidFilter<"Customer"> | string
-  sourceDetail?: Prisma.StringNullableFilter<"Customer"> | string | null
-  campaignId?: Prisma.UuidNullableFilter<"Customer"> | string | null
-  customerType?: Prisma.StringNullableFilter<"Customer"> | string | null
-  interestStatus?: Prisma.EnumInterestStatusFilter<"Customer"> | $Enums.InterestStatus
-  customerStatus?: Prisma.StringNullableFilter<"Customer"> | string | null
-  assignedStaffId?: Prisma.UuidNullableFilter<"Customer"> | string | null
-  nextFollowUpAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
-  lastInteractionAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
-  requirements?: Prisma.JsonNullableFilter<"Customer">
-  outcome?: Prisma.StringNullableFilter<"Customer"> | string | null
-  conversionStatus?: Prisma.StringNullableFilter<"Customer"> | string | null
+  status?: Prisma.EnumCustomerStatusFilter<"Customer"> | $Enums.CustomerStatus
+  batchId?: Prisma.UuidNullableFilter<"Customer"> | string | null
   optedOutAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  lastInteractionAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  qualifiedAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  exportedAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
-  source?: Prisma.XOR<Prisma.SourceScalarRelationFilter, Prisma.SourceWhereInput>
-  campaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
-  assignedStaff?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  tags?: Prisma.CustomerTagListRelationFilter
+  batch?: Prisma.XOR<Prisma.BatchNullableScalarRelationFilter, Prisma.BatchWhereInput> | null
+  batchMembers?: Prisma.BatchMemberListRelationFilter
   conversations?: Prisma.ConversationListRelationFilter
   messages?: Prisma.MessageListRelationFilter
-  lead?: Prisma.XOR<Prisma.LeadNullableScalarRelationFilter, Prisma.LeadWhereInput> | null
   responses?: Prisma.CustomerResponseListRelationFilter
-  followUps?: Prisma.FollowUpListRelationFilter
-  calls?: Prisma.CallListRelationFilter
-  meetings?: Prisma.MeetingListRelationFilter
-  assignments?: Prisma.StaffAssignmentListRelationFilter
   runs?: Prisma.AutomationRunListRelationFilter
-  audiences?: Prisma.CampaignAudienceListRelationFilter
-  deliveries?: Prisma.CampaignDeliveryListRelationFilter
   activityLogs?: Prisma.ActivityLogListRelationFilter
-  templateUsages?: Prisma.TemplateUsageListRelationFilter
 }, "id" | "phoneE164">
 
 export type CustomerOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneE164?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
-  sourceId?: Prisma.SortOrder
-  sourceDetail?: Prisma.SortOrderInput | Prisma.SortOrder
-  campaignId?: Prisma.SortOrderInput | Prisma.SortOrder
-  customerType?: Prisma.SortOrderInput | Prisma.SortOrder
-  interestStatus?: Prisma.SortOrder
-  customerStatus?: Prisma.SortOrderInput | Prisma.SortOrder
-  assignedStaffId?: Prisma.SortOrderInput | Prisma.SortOrder
-  nextFollowUpAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  lastInteractionAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  requirements?: Prisma.SortOrderInput | Prisma.SortOrder
-  outcome?: Prisma.SortOrderInput | Prisma.SortOrder
-  conversionStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  batchId?: Prisma.SortOrderInput | Prisma.SortOrder
   optedOutAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastInteractionAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  qualifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  exportedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CustomerCountOrderByAggregateInput
@@ -431,237 +328,151 @@ export type CustomerScalarWhereWithAggregatesInput = {
   OR?: Prisma.CustomerScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CustomerScalarWhereWithAggregatesInput | Prisma.CustomerScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Customer"> | string
-  name?: Prisma.StringWithAggregatesFilter<"Customer"> | string
+  name?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   phoneE164?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   location?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
-  sourceId?: Prisma.UuidWithAggregatesFilter<"Customer"> | string
-  sourceDetail?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
-  campaignId?: Prisma.UuidNullableWithAggregatesFilter<"Customer"> | string | null
-  customerType?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
-  interestStatus?: Prisma.EnumInterestStatusWithAggregatesFilter<"Customer"> | $Enums.InterestStatus
-  customerStatus?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
-  assignedStaffId?: Prisma.UuidNullableWithAggregatesFilter<"Customer"> | string | null
-  nextFollowUpAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
-  lastInteractionAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
-  requirements?: Prisma.JsonNullableWithAggregatesFilter<"Customer">
-  outcome?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
-  conversionStatus?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  status?: Prisma.EnumCustomerStatusWithAggregatesFilter<"Customer"> | $Enums.CustomerStatus
+  batchId?: Prisma.UuidNullableWithAggregatesFilter<"Customer"> | string | null
   optedOutAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
+  lastInteractionAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
+  qualifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
+  exportedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Customer"> | Date | string
 }
 
 export type CustomerCreateInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
+  batch?: Prisma.BatchCreateNestedOneWithoutCustomersInput
+  batchMembers?: Prisma.BatchMemberCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
+  batchId?: string | null
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
+  batchMembers?: Prisma.BatchMemberUncheckedCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
+  batch?: Prisma.BatchUpdateOneWithoutCustomersNestedInput
+  batchMembers?: Prisma.BatchMemberUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
+  batchMembers?: Prisma.BatchMemberUncheckedUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
+  batchId?: string | null
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CustomerUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CustomerUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -676,25 +487,23 @@ export type CustomerOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type CustomerScalarRelationFilter = {
+  is?: Prisma.CustomerWhereInput
+  isNot?: Prisma.CustomerWhereInput
+}
+
 export type CustomerCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phoneE164?: Prisma.SortOrder
   email?: Prisma.SortOrder
   location?: Prisma.SortOrder
-  sourceId?: Prisma.SortOrder
-  sourceDetail?: Prisma.SortOrder
-  campaignId?: Prisma.SortOrder
-  customerType?: Prisma.SortOrder
-  interestStatus?: Prisma.SortOrder
-  customerStatus?: Prisma.SortOrder
-  assignedStaffId?: Prisma.SortOrder
-  nextFollowUpAt?: Prisma.SortOrder
-  lastInteractionAt?: Prisma.SortOrder
-  requirements?: Prisma.SortOrder
-  outcome?: Prisma.SortOrder
-  conversionStatus?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
   optedOutAt?: Prisma.SortOrder
+  lastInteractionAt?: Prisma.SortOrder
+  qualifiedAt?: Prisma.SortOrder
+  exportedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -705,18 +514,12 @@ export type CustomerMaxOrderByAggregateInput = {
   phoneE164?: Prisma.SortOrder
   email?: Prisma.SortOrder
   location?: Prisma.SortOrder
-  sourceId?: Prisma.SortOrder
-  sourceDetail?: Prisma.SortOrder
-  campaignId?: Prisma.SortOrder
-  customerType?: Prisma.SortOrder
-  interestStatus?: Prisma.SortOrder
-  customerStatus?: Prisma.SortOrder
-  assignedStaffId?: Prisma.SortOrder
-  nextFollowUpAt?: Prisma.SortOrder
-  lastInteractionAt?: Prisma.SortOrder
-  outcome?: Prisma.SortOrder
-  conversionStatus?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
   optedOutAt?: Prisma.SortOrder
+  lastInteractionAt?: Prisma.SortOrder
+  qualifiedAt?: Prisma.SortOrder
+  exportedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -727,25 +530,14 @@ export type CustomerMinOrderByAggregateInput = {
   phoneE164?: Prisma.SortOrder
   email?: Prisma.SortOrder
   location?: Prisma.SortOrder
-  sourceId?: Prisma.SortOrder
-  sourceDetail?: Prisma.SortOrder
-  campaignId?: Prisma.SortOrder
-  customerType?: Prisma.SortOrder
-  interestStatus?: Prisma.SortOrder
-  customerStatus?: Prisma.SortOrder
-  assignedStaffId?: Prisma.SortOrder
-  nextFollowUpAt?: Prisma.SortOrder
-  lastInteractionAt?: Prisma.SortOrder
-  outcome?: Prisma.SortOrder
-  conversionStatus?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
   optedOutAt?: Prisma.SortOrder
+  lastInteractionAt?: Prisma.SortOrder
+  qualifiedAt?: Prisma.SortOrder
+  exportedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type CustomerScalarRelationFilter = {
-  is?: Prisma.CustomerWhereInput
-  isNot?: Prisma.CustomerWhereInput
 }
 
 export type CustomerNullableScalarRelationFilter = {
@@ -753,106 +545,64 @@ export type CustomerNullableScalarRelationFilter = {
   isNot?: Prisma.CustomerWhereInput | null
 }
 
-export type CustomerCreateNestedManyWithoutAssignedStaffInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutAssignedStaffInput, Prisma.CustomerUncheckedCreateWithoutAssignedStaffInput> | Prisma.CustomerCreateWithoutAssignedStaffInput[] | Prisma.CustomerUncheckedCreateWithoutAssignedStaffInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutAssignedStaffInput | Prisma.CustomerCreateOrConnectWithoutAssignedStaffInput[]
-  createMany?: Prisma.CustomerCreateManyAssignedStaffInputEnvelope
+export type CustomerCreateNestedManyWithoutBatchInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutBatchInput, Prisma.CustomerUncheckedCreateWithoutBatchInput> | Prisma.CustomerCreateWithoutBatchInput[] | Prisma.CustomerUncheckedCreateWithoutBatchInput[]
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutBatchInput | Prisma.CustomerCreateOrConnectWithoutBatchInput[]
+  createMany?: Prisma.CustomerCreateManyBatchInputEnvelope
   connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
 }
 
-export type CustomerUncheckedCreateNestedManyWithoutAssignedStaffInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutAssignedStaffInput, Prisma.CustomerUncheckedCreateWithoutAssignedStaffInput> | Prisma.CustomerCreateWithoutAssignedStaffInput[] | Prisma.CustomerUncheckedCreateWithoutAssignedStaffInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutAssignedStaffInput | Prisma.CustomerCreateOrConnectWithoutAssignedStaffInput[]
-  createMany?: Prisma.CustomerCreateManyAssignedStaffInputEnvelope
+export type CustomerUncheckedCreateNestedManyWithoutBatchInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutBatchInput, Prisma.CustomerUncheckedCreateWithoutBatchInput> | Prisma.CustomerCreateWithoutBatchInput[] | Prisma.CustomerUncheckedCreateWithoutBatchInput[]
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutBatchInput | Prisma.CustomerCreateOrConnectWithoutBatchInput[]
+  createMany?: Prisma.CustomerCreateManyBatchInputEnvelope
   connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
 }
 
-export type CustomerUpdateManyWithoutAssignedStaffNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutAssignedStaffInput, Prisma.CustomerUncheckedCreateWithoutAssignedStaffInput> | Prisma.CustomerCreateWithoutAssignedStaffInput[] | Prisma.CustomerUncheckedCreateWithoutAssignedStaffInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutAssignedStaffInput | Prisma.CustomerCreateOrConnectWithoutAssignedStaffInput[]
-  upsert?: Prisma.CustomerUpsertWithWhereUniqueWithoutAssignedStaffInput | Prisma.CustomerUpsertWithWhereUniqueWithoutAssignedStaffInput[]
-  createMany?: Prisma.CustomerCreateManyAssignedStaffInputEnvelope
+export type CustomerUpdateManyWithoutBatchNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutBatchInput, Prisma.CustomerUncheckedCreateWithoutBatchInput> | Prisma.CustomerCreateWithoutBatchInput[] | Prisma.CustomerUncheckedCreateWithoutBatchInput[]
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutBatchInput | Prisma.CustomerCreateOrConnectWithoutBatchInput[]
+  upsert?: Prisma.CustomerUpsertWithWhereUniqueWithoutBatchInput | Prisma.CustomerUpsertWithWhereUniqueWithoutBatchInput[]
+  createMany?: Prisma.CustomerCreateManyBatchInputEnvelope
   set?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
   disconnect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
   delete?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
   connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  update?: Prisma.CustomerUpdateWithWhereUniqueWithoutAssignedStaffInput | Prisma.CustomerUpdateWithWhereUniqueWithoutAssignedStaffInput[]
-  updateMany?: Prisma.CustomerUpdateManyWithWhereWithoutAssignedStaffInput | Prisma.CustomerUpdateManyWithWhereWithoutAssignedStaffInput[]
+  update?: Prisma.CustomerUpdateWithWhereUniqueWithoutBatchInput | Prisma.CustomerUpdateWithWhereUniqueWithoutBatchInput[]
+  updateMany?: Prisma.CustomerUpdateManyWithWhereWithoutBatchInput | Prisma.CustomerUpdateManyWithWhereWithoutBatchInput[]
   deleteMany?: Prisma.CustomerScalarWhereInput | Prisma.CustomerScalarWhereInput[]
 }
 
-export type CustomerUncheckedUpdateManyWithoutAssignedStaffNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutAssignedStaffInput, Prisma.CustomerUncheckedCreateWithoutAssignedStaffInput> | Prisma.CustomerCreateWithoutAssignedStaffInput[] | Prisma.CustomerUncheckedCreateWithoutAssignedStaffInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutAssignedStaffInput | Prisma.CustomerCreateOrConnectWithoutAssignedStaffInput[]
-  upsert?: Prisma.CustomerUpsertWithWhereUniqueWithoutAssignedStaffInput | Prisma.CustomerUpsertWithWhereUniqueWithoutAssignedStaffInput[]
-  createMany?: Prisma.CustomerCreateManyAssignedStaffInputEnvelope
+export type CustomerUncheckedUpdateManyWithoutBatchNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutBatchInput, Prisma.CustomerUncheckedCreateWithoutBatchInput> | Prisma.CustomerCreateWithoutBatchInput[] | Prisma.CustomerUncheckedCreateWithoutBatchInput[]
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutBatchInput | Prisma.CustomerCreateOrConnectWithoutBatchInput[]
+  upsert?: Prisma.CustomerUpsertWithWhereUniqueWithoutBatchInput | Prisma.CustomerUpsertWithWhereUniqueWithoutBatchInput[]
+  createMany?: Prisma.CustomerCreateManyBatchInputEnvelope
   set?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
   disconnect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
   delete?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
   connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  update?: Prisma.CustomerUpdateWithWhereUniqueWithoutAssignedStaffInput | Prisma.CustomerUpdateWithWhereUniqueWithoutAssignedStaffInput[]
-  updateMany?: Prisma.CustomerUpdateManyWithWhereWithoutAssignedStaffInput | Prisma.CustomerUpdateManyWithWhereWithoutAssignedStaffInput[]
+  update?: Prisma.CustomerUpdateWithWhereUniqueWithoutBatchInput | Prisma.CustomerUpdateWithWhereUniqueWithoutBatchInput[]
+  updateMany?: Prisma.CustomerUpdateManyWithWhereWithoutBatchInput | Prisma.CustomerUpdateManyWithWhereWithoutBatchInput[]
   deleteMany?: Prisma.CustomerScalarWhereInput | Prisma.CustomerScalarWhereInput[]
 }
 
-export type CustomerCreateNestedManyWithoutSourceInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutSourceInput, Prisma.CustomerUncheckedCreateWithoutSourceInput> | Prisma.CustomerCreateWithoutSourceInput[] | Prisma.CustomerUncheckedCreateWithoutSourceInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutSourceInput | Prisma.CustomerCreateOrConnectWithoutSourceInput[]
-  createMany?: Prisma.CustomerCreateManySourceInputEnvelope
-  connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-}
-
-export type CustomerUncheckedCreateNestedManyWithoutSourceInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutSourceInput, Prisma.CustomerUncheckedCreateWithoutSourceInput> | Prisma.CustomerCreateWithoutSourceInput[] | Prisma.CustomerUncheckedCreateWithoutSourceInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutSourceInput | Prisma.CustomerCreateOrConnectWithoutSourceInput[]
-  createMany?: Prisma.CustomerCreateManySourceInputEnvelope
-  connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-}
-
-export type CustomerUpdateManyWithoutSourceNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutSourceInput, Prisma.CustomerUncheckedCreateWithoutSourceInput> | Prisma.CustomerCreateWithoutSourceInput[] | Prisma.CustomerUncheckedCreateWithoutSourceInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutSourceInput | Prisma.CustomerCreateOrConnectWithoutSourceInput[]
-  upsert?: Prisma.CustomerUpsertWithWhereUniqueWithoutSourceInput | Prisma.CustomerUpsertWithWhereUniqueWithoutSourceInput[]
-  createMany?: Prisma.CustomerCreateManySourceInputEnvelope
-  set?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  disconnect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  delete?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  update?: Prisma.CustomerUpdateWithWhereUniqueWithoutSourceInput | Prisma.CustomerUpdateWithWhereUniqueWithoutSourceInput[]
-  updateMany?: Prisma.CustomerUpdateManyWithWhereWithoutSourceInput | Prisma.CustomerUpdateManyWithWhereWithoutSourceInput[]
-  deleteMany?: Prisma.CustomerScalarWhereInput | Prisma.CustomerScalarWhereInput[]
-}
-
-export type CustomerUncheckedUpdateManyWithoutSourceNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutSourceInput, Prisma.CustomerUncheckedCreateWithoutSourceInput> | Prisma.CustomerCreateWithoutSourceInput[] | Prisma.CustomerUncheckedCreateWithoutSourceInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutSourceInput | Prisma.CustomerCreateOrConnectWithoutSourceInput[]
-  upsert?: Prisma.CustomerUpsertWithWhereUniqueWithoutSourceInput | Prisma.CustomerUpsertWithWhereUniqueWithoutSourceInput[]
-  createMany?: Prisma.CustomerCreateManySourceInputEnvelope
-  set?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  disconnect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  delete?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  update?: Prisma.CustomerUpdateWithWhereUniqueWithoutSourceInput | Prisma.CustomerUpdateWithWhereUniqueWithoutSourceInput[]
-  updateMany?: Prisma.CustomerUpdateManyWithWhereWithoutSourceInput | Prisma.CustomerUpdateManyWithWhereWithoutSourceInput[]
-  deleteMany?: Prisma.CustomerScalarWhereInput | Prisma.CustomerScalarWhereInput[]
-}
-
-export type EnumInterestStatusFieldUpdateOperationsInput = {
-  set?: $Enums.InterestStatus
-}
-
-export type CustomerCreateNestedOneWithoutTagsInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutTagsInput, Prisma.CustomerUncheckedCreateWithoutTagsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutTagsInput
+export type CustomerCreateNestedOneWithoutBatchMembersInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutBatchMembersInput, Prisma.CustomerUncheckedCreateWithoutBatchMembersInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutBatchMembersInput
   connect?: Prisma.CustomerWhereUniqueInput
 }
 
-export type CustomerUpdateOneRequiredWithoutTagsNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutTagsInput, Prisma.CustomerUncheckedCreateWithoutTagsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutTagsInput
-  upsert?: Prisma.CustomerUpsertWithoutTagsInput
+export type CustomerUpdateOneRequiredWithoutBatchMembersNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutBatchMembersInput, Prisma.CustomerUncheckedCreateWithoutBatchMembersInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutBatchMembersInput
+  upsert?: Prisma.CustomerUpsertWithoutBatchMembersInput
   connect?: Prisma.CustomerWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutTagsInput, Prisma.CustomerUpdateWithoutTagsInput>, Prisma.CustomerUncheckedUpdateWithoutTagsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutBatchMembersInput, Prisma.CustomerUpdateWithoutBatchMembersInput>, Prisma.CustomerUncheckedUpdateWithoutBatchMembersInput>
+}
+
+export type EnumCustomerStatusFieldUpdateOperationsInput = {
+  set?: $Enums.CustomerStatus
 }
 
 export type CustomerCreateNestedOneWithoutConversationsInput = {
@@ -883,92 +633,6 @@ export type CustomerUpdateOneRequiredWithoutMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutMessagesInput, Prisma.CustomerUpdateWithoutMessagesInput>, Prisma.CustomerUncheckedUpdateWithoutMessagesInput>
 }
 
-export type CustomerCreateNestedOneWithoutTemplateUsagesInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutTemplateUsagesInput, Prisma.CustomerUncheckedCreateWithoutTemplateUsagesInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutTemplateUsagesInput
-  connect?: Prisma.CustomerWhereUniqueInput
-}
-
-export type CustomerUpdateOneWithoutTemplateUsagesNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutTemplateUsagesInput, Prisma.CustomerUncheckedCreateWithoutTemplateUsagesInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutTemplateUsagesInput
-  upsert?: Prisma.CustomerUpsertWithoutTemplateUsagesInput
-  disconnect?: Prisma.CustomerWhereInput | boolean
-  delete?: Prisma.CustomerWhereInput | boolean
-  connect?: Prisma.CustomerWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutTemplateUsagesInput, Prisma.CustomerUpdateWithoutTemplateUsagesInput>, Prisma.CustomerUncheckedUpdateWithoutTemplateUsagesInput>
-}
-
-export type CustomerCreateNestedManyWithoutCampaignInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutCampaignInput, Prisma.CustomerUncheckedCreateWithoutCampaignInput> | Prisma.CustomerCreateWithoutCampaignInput[] | Prisma.CustomerUncheckedCreateWithoutCampaignInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutCampaignInput | Prisma.CustomerCreateOrConnectWithoutCampaignInput[]
-  createMany?: Prisma.CustomerCreateManyCampaignInputEnvelope
-  connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-}
-
-export type CustomerUncheckedCreateNestedManyWithoutCampaignInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutCampaignInput, Prisma.CustomerUncheckedCreateWithoutCampaignInput> | Prisma.CustomerCreateWithoutCampaignInput[] | Prisma.CustomerUncheckedCreateWithoutCampaignInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutCampaignInput | Prisma.CustomerCreateOrConnectWithoutCampaignInput[]
-  createMany?: Prisma.CustomerCreateManyCampaignInputEnvelope
-  connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-}
-
-export type CustomerUpdateManyWithoutCampaignNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutCampaignInput, Prisma.CustomerUncheckedCreateWithoutCampaignInput> | Prisma.CustomerCreateWithoutCampaignInput[] | Prisma.CustomerUncheckedCreateWithoutCampaignInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutCampaignInput | Prisma.CustomerCreateOrConnectWithoutCampaignInput[]
-  upsert?: Prisma.CustomerUpsertWithWhereUniqueWithoutCampaignInput | Prisma.CustomerUpsertWithWhereUniqueWithoutCampaignInput[]
-  createMany?: Prisma.CustomerCreateManyCampaignInputEnvelope
-  set?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  disconnect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  delete?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  update?: Prisma.CustomerUpdateWithWhereUniqueWithoutCampaignInput | Prisma.CustomerUpdateWithWhereUniqueWithoutCampaignInput[]
-  updateMany?: Prisma.CustomerUpdateManyWithWhereWithoutCampaignInput | Prisma.CustomerUpdateManyWithWhereWithoutCampaignInput[]
-  deleteMany?: Prisma.CustomerScalarWhereInput | Prisma.CustomerScalarWhereInput[]
-}
-
-export type CustomerUncheckedUpdateManyWithoutCampaignNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutCampaignInput, Prisma.CustomerUncheckedCreateWithoutCampaignInput> | Prisma.CustomerCreateWithoutCampaignInput[] | Prisma.CustomerUncheckedCreateWithoutCampaignInput[]
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutCampaignInput | Prisma.CustomerCreateOrConnectWithoutCampaignInput[]
-  upsert?: Prisma.CustomerUpsertWithWhereUniqueWithoutCampaignInput | Prisma.CustomerUpsertWithWhereUniqueWithoutCampaignInput[]
-  createMany?: Prisma.CustomerCreateManyCampaignInputEnvelope
-  set?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  disconnect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  delete?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  connect?: Prisma.CustomerWhereUniqueInput | Prisma.CustomerWhereUniqueInput[]
-  update?: Prisma.CustomerUpdateWithWhereUniqueWithoutCampaignInput | Prisma.CustomerUpdateWithWhereUniqueWithoutCampaignInput[]
-  updateMany?: Prisma.CustomerUpdateManyWithWhereWithoutCampaignInput | Prisma.CustomerUpdateManyWithWhereWithoutCampaignInput[]
-  deleteMany?: Prisma.CustomerScalarWhereInput | Prisma.CustomerScalarWhereInput[]
-}
-
-export type CustomerCreateNestedOneWithoutAudiencesInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutAudiencesInput, Prisma.CustomerUncheckedCreateWithoutAudiencesInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutAudiencesInput
-  connect?: Prisma.CustomerWhereUniqueInput
-}
-
-export type CustomerUpdateOneRequiredWithoutAudiencesNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutAudiencesInput, Prisma.CustomerUncheckedCreateWithoutAudiencesInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutAudiencesInput
-  upsert?: Prisma.CustomerUpsertWithoutAudiencesInput
-  connect?: Prisma.CustomerWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutAudiencesInput, Prisma.CustomerUpdateWithoutAudiencesInput>, Prisma.CustomerUncheckedUpdateWithoutAudiencesInput>
-}
-
-export type CustomerCreateNestedOneWithoutDeliveriesInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutDeliveriesInput, Prisma.CustomerUncheckedCreateWithoutDeliveriesInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutDeliveriesInput
-  connect?: Prisma.CustomerWhereUniqueInput
-}
-
-export type CustomerUpdateOneRequiredWithoutDeliveriesNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutDeliveriesInput, Prisma.CustomerUncheckedCreateWithoutDeliveriesInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutDeliveriesInput
-  upsert?: Prisma.CustomerUpsertWithoutDeliveriesInput
-  connect?: Prisma.CustomerWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutDeliveriesInput, Prisma.CustomerUpdateWithoutDeliveriesInput>, Prisma.CustomerUncheckedUpdateWithoutDeliveriesInput>
-}
-
 export type CustomerCreateNestedOneWithoutRunsInput = {
   create?: Prisma.XOR<Prisma.CustomerCreateWithoutRunsInput, Prisma.CustomerUncheckedCreateWithoutRunsInput>
   connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutRunsInput
@@ -997,76 +661,6 @@ export type CustomerUpdateOneRequiredWithoutResponsesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutResponsesInput, Prisma.CustomerUpdateWithoutResponsesInput>, Prisma.CustomerUncheckedUpdateWithoutResponsesInput>
 }
 
-export type CustomerCreateNestedOneWithoutLeadInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutLeadInput, Prisma.CustomerUncheckedCreateWithoutLeadInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutLeadInput
-  connect?: Prisma.CustomerWhereUniqueInput
-}
-
-export type CustomerUpdateOneRequiredWithoutLeadNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutLeadInput, Prisma.CustomerUncheckedCreateWithoutLeadInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutLeadInput
-  upsert?: Prisma.CustomerUpsertWithoutLeadInput
-  connect?: Prisma.CustomerWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutLeadInput, Prisma.CustomerUpdateWithoutLeadInput>, Prisma.CustomerUncheckedUpdateWithoutLeadInput>
-}
-
-export type CustomerCreateNestedOneWithoutFollowUpsInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutFollowUpsInput, Prisma.CustomerUncheckedCreateWithoutFollowUpsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutFollowUpsInput
-  connect?: Prisma.CustomerWhereUniqueInput
-}
-
-export type CustomerUpdateOneRequiredWithoutFollowUpsNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutFollowUpsInput, Prisma.CustomerUncheckedCreateWithoutFollowUpsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutFollowUpsInput
-  upsert?: Prisma.CustomerUpsertWithoutFollowUpsInput
-  connect?: Prisma.CustomerWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutFollowUpsInput, Prisma.CustomerUpdateWithoutFollowUpsInput>, Prisma.CustomerUncheckedUpdateWithoutFollowUpsInput>
-}
-
-export type CustomerCreateNestedOneWithoutCallsInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutCallsInput, Prisma.CustomerUncheckedCreateWithoutCallsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutCallsInput
-  connect?: Prisma.CustomerWhereUniqueInput
-}
-
-export type CustomerUpdateOneRequiredWithoutCallsNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutCallsInput, Prisma.CustomerUncheckedCreateWithoutCallsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutCallsInput
-  upsert?: Prisma.CustomerUpsertWithoutCallsInput
-  connect?: Prisma.CustomerWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutCallsInput, Prisma.CustomerUpdateWithoutCallsInput>, Prisma.CustomerUncheckedUpdateWithoutCallsInput>
-}
-
-export type CustomerCreateNestedOneWithoutMeetingsInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutMeetingsInput, Prisma.CustomerUncheckedCreateWithoutMeetingsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutMeetingsInput
-  connect?: Prisma.CustomerWhereUniqueInput
-}
-
-export type CustomerUpdateOneRequiredWithoutMeetingsNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutMeetingsInput, Prisma.CustomerUncheckedCreateWithoutMeetingsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutMeetingsInput
-  upsert?: Prisma.CustomerUpsertWithoutMeetingsInput
-  connect?: Prisma.CustomerWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutMeetingsInput, Prisma.CustomerUpdateWithoutMeetingsInput>, Prisma.CustomerUncheckedUpdateWithoutMeetingsInput>
-}
-
-export type CustomerCreateNestedOneWithoutAssignmentsInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutAssignmentsInput, Prisma.CustomerUncheckedCreateWithoutAssignmentsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutAssignmentsInput
-  connect?: Prisma.CustomerWhereUniqueInput
-}
-
-export type CustomerUpdateOneRequiredWithoutAssignmentsNestedInput = {
-  create?: Prisma.XOR<Prisma.CustomerCreateWithoutAssignmentsInput, Prisma.CustomerUncheckedCreateWithoutAssignmentsInput>
-  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutAssignmentsInput
-  upsert?: Prisma.CustomerUpsertWithoutAssignmentsInput
-  connect?: Prisma.CustomerWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutAssignmentsInput, Prisma.CustomerUpdateWithoutAssignmentsInput>, Prisma.CustomerUncheckedUpdateWithoutAssignmentsInput>
-}
-
 export type CustomerCreateNestedOneWithoutActivityLogsInput = {
   create?: Prisma.XOR<Prisma.CustomerCreateWithoutActivityLogsInput, Prisma.CustomerUncheckedCreateWithoutActivityLogsInput>
   connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutActivityLogsInput
@@ -1083,102 +677,72 @@ export type CustomerUpdateOneWithoutActivityLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutActivityLogsInput, Prisma.CustomerUpdateWithoutActivityLogsInput>, Prisma.CustomerUncheckedUpdateWithoutActivityLogsInput>
 }
 
-export type CustomerCreateWithoutAssignedStaffInput = {
+export type CustomerCreateWithoutBatchInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
+  batchMembers?: Prisma.BatchMemberCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
 }
 
-export type CustomerUncheckedCreateWithoutAssignedStaffInput = {
+export type CustomerUncheckedCreateWithoutBatchInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
+  batchMembers?: Prisma.BatchMemberUncheckedCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
 }
 
-export type CustomerCreateOrConnectWithoutAssignedStaffInput = {
+export type CustomerCreateOrConnectWithoutBatchInput = {
   where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutAssignedStaffInput, Prisma.CustomerUncheckedCreateWithoutAssignedStaffInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutBatchInput, Prisma.CustomerUncheckedCreateWithoutBatchInput>
 }
 
-export type CustomerCreateManyAssignedStaffInputEnvelope = {
-  data: Prisma.CustomerCreateManyAssignedStaffInput | Prisma.CustomerCreateManyAssignedStaffInput[]
+export type CustomerCreateManyBatchInputEnvelope = {
+  data: Prisma.CustomerCreateManyBatchInput | Prisma.CustomerCreateManyBatchInput[]
   skipDuplicates?: boolean
 }
 
-export type CustomerUpsertWithWhereUniqueWithoutAssignedStaffInput = {
+export type CustomerUpsertWithWhereUniqueWithoutBatchInput = {
   where: Prisma.CustomerWhereUniqueInput
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutAssignedStaffInput, Prisma.CustomerUncheckedUpdateWithoutAssignedStaffInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutAssignedStaffInput, Prisma.CustomerUncheckedCreateWithoutAssignedStaffInput>
+  update: Prisma.XOR<Prisma.CustomerUpdateWithoutBatchInput, Prisma.CustomerUncheckedUpdateWithoutBatchInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutBatchInput, Prisma.CustomerUncheckedCreateWithoutBatchInput>
 }
 
-export type CustomerUpdateWithWhereUniqueWithoutAssignedStaffInput = {
+export type CustomerUpdateWithWhereUniqueWithoutBatchInput = {
   where: Prisma.CustomerWhereUniqueInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutAssignedStaffInput, Prisma.CustomerUncheckedUpdateWithoutAssignedStaffInput>
+  data: Prisma.XOR<Prisma.CustomerUpdateWithoutBatchInput, Prisma.CustomerUncheckedUpdateWithoutBatchInput>
 }
 
-export type CustomerUpdateManyWithWhereWithoutAssignedStaffInput = {
+export type CustomerUpdateManyWithWhereWithoutBatchInput = {
   where: Prisma.CustomerScalarWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateManyMutationInput, Prisma.CustomerUncheckedUpdateManyWithoutAssignedStaffInput>
+  data: Prisma.XOR<Prisma.CustomerUpdateManyMutationInput, Prisma.CustomerUncheckedUpdateManyWithoutBatchInput>
 }
 
 export type CustomerScalarWhereInput = {
@@ -1186,355 +750,160 @@ export type CustomerScalarWhereInput = {
   OR?: Prisma.CustomerScalarWhereInput[]
   NOT?: Prisma.CustomerScalarWhereInput | Prisma.CustomerScalarWhereInput[]
   id?: Prisma.UuidFilter<"Customer"> | string
-  name?: Prisma.StringFilter<"Customer"> | string
+  name?: Prisma.StringNullableFilter<"Customer"> | string | null
   phoneE164?: Prisma.StringFilter<"Customer"> | string
   email?: Prisma.StringNullableFilter<"Customer"> | string | null
   location?: Prisma.StringNullableFilter<"Customer"> | string | null
-  sourceId?: Prisma.UuidFilter<"Customer"> | string
-  sourceDetail?: Prisma.StringNullableFilter<"Customer"> | string | null
-  campaignId?: Prisma.UuidNullableFilter<"Customer"> | string | null
-  customerType?: Prisma.StringNullableFilter<"Customer"> | string | null
-  interestStatus?: Prisma.EnumInterestStatusFilter<"Customer"> | $Enums.InterestStatus
-  customerStatus?: Prisma.StringNullableFilter<"Customer"> | string | null
-  assignedStaffId?: Prisma.UuidNullableFilter<"Customer"> | string | null
-  nextFollowUpAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
-  lastInteractionAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
-  requirements?: Prisma.JsonNullableFilter<"Customer">
-  outcome?: Prisma.StringNullableFilter<"Customer"> | string | null
-  conversionStatus?: Prisma.StringNullableFilter<"Customer"> | string | null
+  status?: Prisma.EnumCustomerStatusFilter<"Customer"> | $Enums.CustomerStatus
+  batchId?: Prisma.UuidNullableFilter<"Customer"> | string | null
   optedOutAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  lastInteractionAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  qualifiedAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  exportedAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
 }
 
-export type CustomerCreateWithoutSourceInput = {
+export type CustomerCreateWithoutBatchMembersInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
+  batch?: Prisma.BatchCreateNestedOneWithoutCustomersInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
 }
 
-export type CustomerUncheckedCreateWithoutSourceInput = {
+export type CustomerUncheckedCreateWithoutBatchMembersInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
+  batchId?: string | null
   optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerCreateOrConnectWithoutSourceInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutSourceInput, Prisma.CustomerUncheckedCreateWithoutSourceInput>
-}
-
-export type CustomerCreateManySourceInputEnvelope = {
-  data: Prisma.CustomerCreateManySourceInput | Prisma.CustomerCreateManySourceInput[]
-  skipDuplicates?: boolean
-}
-
-export type CustomerUpsertWithWhereUniqueWithoutSourceInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutSourceInput, Prisma.CustomerUncheckedUpdateWithoutSourceInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutSourceInput, Prisma.CustomerUncheckedCreateWithoutSourceInput>
-}
-
-export type CustomerUpdateWithWhereUniqueWithoutSourceInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutSourceInput, Prisma.CustomerUncheckedUpdateWithoutSourceInput>
-}
-
-export type CustomerUpdateManyWithWhereWithoutSourceInput = {
-  where: Prisma.CustomerScalarWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateManyMutationInput, Prisma.CustomerUncheckedUpdateManyWithoutSourceInput>
-}
-
-export type CustomerCreateWithoutTagsInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
   lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerUncheckedCreateWithoutTagsInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
 }
 
-export type CustomerCreateOrConnectWithoutTagsInput = {
+export type CustomerCreateOrConnectWithoutBatchMembersInput = {
   where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutTagsInput, Prisma.CustomerUncheckedCreateWithoutTagsInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutBatchMembersInput, Prisma.CustomerUncheckedCreateWithoutBatchMembersInput>
 }
 
-export type CustomerUpsertWithoutTagsInput = {
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutTagsInput, Prisma.CustomerUncheckedUpdateWithoutTagsInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutTagsInput, Prisma.CustomerUncheckedCreateWithoutTagsInput>
+export type CustomerUpsertWithoutBatchMembersInput = {
+  update: Prisma.XOR<Prisma.CustomerUpdateWithoutBatchMembersInput, Prisma.CustomerUncheckedUpdateWithoutBatchMembersInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutBatchMembersInput, Prisma.CustomerUncheckedCreateWithoutBatchMembersInput>
   where?: Prisma.CustomerWhereInput
 }
 
-export type CustomerUpdateToOneWithWhereWithoutTagsInput = {
+export type CustomerUpdateToOneWithWhereWithoutBatchMembersInput = {
   where?: Prisma.CustomerWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutTagsInput, Prisma.CustomerUncheckedUpdateWithoutTagsInput>
+  data: Prisma.XOR<Prisma.CustomerUpdateWithoutBatchMembersInput, Prisma.CustomerUncheckedUpdateWithoutBatchMembersInput>
 }
 
-export type CustomerUpdateWithoutTagsInput = {
+export type CustomerUpdateWithoutBatchMembersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
+  batch?: Prisma.BatchUpdateOneWithoutCustomersNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
 }
 
-export type CustomerUncheckedUpdateWithoutTagsInput = {
+export type CustomerUncheckedUpdateWithoutBatchMembersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutConversationsInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
+  batch?: Prisma.BatchCreateNestedOneWithoutCustomersInput
+  batchMembers?: Prisma.BatchMemberCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutConversationsInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
+  batchId?: string | null
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
+  batchMembers?: Prisma.BatchMemberUncheckedCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutConversationsInput = {
@@ -1555,146 +924,86 @@ export type CustomerUpdateToOneWithWhereWithoutConversationsInput = {
 
 export type CustomerUpdateWithoutConversationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
+  batch?: Prisma.BatchUpdateOneWithoutCustomersNestedInput
+  batchMembers?: Prisma.BatchMemberUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutConversationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
+  batchMembers?: Prisma.BatchMemberUncheckedUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutMessagesInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
+  batch?: Prisma.BatchCreateNestedOneWithoutCustomersInput
+  batchMembers?: Prisma.BatchMemberCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutMessagesInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
+  batchId?: string | null
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
+  batchMembers?: Prisma.BatchMemberUncheckedCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutMessagesInput = {
@@ -1715,724 +1024,86 @@ export type CustomerUpdateToOneWithWhereWithoutMessagesInput = {
 
 export type CustomerUpdateWithoutMessagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
+  batch?: Prisma.BatchUpdateOneWithoutCustomersNestedInput
+  batchMembers?: Prisma.BatchMemberUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutMessagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
+  batchMembers?: Prisma.BatchMemberUncheckedUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerCreateWithoutTemplateUsagesInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerUncheckedCreateWithoutTemplateUsagesInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerCreateOrConnectWithoutTemplateUsagesInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutTemplateUsagesInput, Prisma.CustomerUncheckedCreateWithoutTemplateUsagesInput>
-}
-
-export type CustomerUpsertWithoutTemplateUsagesInput = {
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutTemplateUsagesInput, Prisma.CustomerUncheckedUpdateWithoutTemplateUsagesInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutTemplateUsagesInput, Prisma.CustomerUncheckedCreateWithoutTemplateUsagesInput>
-  where?: Prisma.CustomerWhereInput
-}
-
-export type CustomerUpdateToOneWithWhereWithoutTemplateUsagesInput = {
-  where?: Prisma.CustomerWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutTemplateUsagesInput, Prisma.CustomerUncheckedUpdateWithoutTemplateUsagesInput>
-}
-
-export type CustomerUpdateWithoutTemplateUsagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateWithoutTemplateUsagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerCreateWithoutCampaignInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerUncheckedCreateWithoutCampaignInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerCreateOrConnectWithoutCampaignInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutCampaignInput, Prisma.CustomerUncheckedCreateWithoutCampaignInput>
-}
-
-export type CustomerCreateManyCampaignInputEnvelope = {
-  data: Prisma.CustomerCreateManyCampaignInput | Prisma.CustomerCreateManyCampaignInput[]
-  skipDuplicates?: boolean
-}
-
-export type CustomerUpsertWithWhereUniqueWithoutCampaignInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutCampaignInput, Prisma.CustomerUncheckedUpdateWithoutCampaignInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutCampaignInput, Prisma.CustomerUncheckedCreateWithoutCampaignInput>
-}
-
-export type CustomerUpdateWithWhereUniqueWithoutCampaignInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutCampaignInput, Prisma.CustomerUncheckedUpdateWithoutCampaignInput>
-}
-
-export type CustomerUpdateManyWithWhereWithoutCampaignInput = {
-  where: Prisma.CustomerScalarWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateManyMutationInput, Prisma.CustomerUncheckedUpdateManyWithoutCampaignInput>
-}
-
-export type CustomerCreateWithoutAudiencesInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerUncheckedCreateWithoutAudiencesInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerCreateOrConnectWithoutAudiencesInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutAudiencesInput, Prisma.CustomerUncheckedCreateWithoutAudiencesInput>
-}
-
-export type CustomerUpsertWithoutAudiencesInput = {
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutAudiencesInput, Prisma.CustomerUncheckedUpdateWithoutAudiencesInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutAudiencesInput, Prisma.CustomerUncheckedCreateWithoutAudiencesInput>
-  where?: Prisma.CustomerWhereInput
-}
-
-export type CustomerUpdateToOneWithWhereWithoutAudiencesInput = {
-  where?: Prisma.CustomerWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutAudiencesInput, Prisma.CustomerUncheckedUpdateWithoutAudiencesInput>
-}
-
-export type CustomerUpdateWithoutAudiencesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateWithoutAudiencesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerCreateWithoutDeliveriesInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerUncheckedCreateWithoutDeliveriesInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerCreateOrConnectWithoutDeliveriesInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutDeliveriesInput, Prisma.CustomerUncheckedCreateWithoutDeliveriesInput>
-}
-
-export type CustomerUpsertWithoutDeliveriesInput = {
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutDeliveriesInput, Prisma.CustomerUncheckedUpdateWithoutDeliveriesInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutDeliveriesInput, Prisma.CustomerUncheckedCreateWithoutDeliveriesInput>
-  where?: Prisma.CustomerWhereInput
-}
-
-export type CustomerUpdateToOneWithWhereWithoutDeliveriesInput = {
-  where?: Prisma.CustomerWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutDeliveriesInput, Prisma.CustomerUncheckedUpdateWithoutDeliveriesInput>
-}
-
-export type CustomerUpdateWithoutDeliveriesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateWithoutDeliveriesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutRunsInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
+  batch?: Prisma.BatchCreateNestedOneWithoutCustomersInput
+  batchMembers?: Prisma.BatchMemberCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutRunsInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
+  batchId?: string | null
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
+  batchMembers?: Prisma.BatchMemberUncheckedCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutRunsInput = {
@@ -2453,146 +1124,86 @@ export type CustomerUpdateToOneWithWhereWithoutRunsInput = {
 
 export type CustomerUpdateWithoutRunsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
+  batch?: Prisma.BatchUpdateOneWithoutCustomersNestedInput
+  batchMembers?: Prisma.BatchMemberUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutRunsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
+  batchMembers?: Prisma.BatchMemberUncheckedUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutResponsesInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
+  batch?: Prisma.BatchCreateNestedOneWithoutCustomersInput
+  batchMembers?: Prisma.BatchMemberCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutResponsesInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
+  batchId?: string | null
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
+  batchMembers?: Prisma.BatchMemberUncheckedCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutResponsesInput = {
@@ -2613,946 +1224,86 @@ export type CustomerUpdateToOneWithWhereWithoutResponsesInput = {
 
 export type CustomerUpdateWithoutResponsesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
+  batch?: Prisma.BatchUpdateOneWithoutCustomersNestedInput
+  batchMembers?: Prisma.BatchMemberUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutResponsesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
+  batchMembers?: Prisma.BatchMemberUncheckedUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerCreateWithoutLeadInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerUncheckedCreateWithoutLeadInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerCreateOrConnectWithoutLeadInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutLeadInput, Prisma.CustomerUncheckedCreateWithoutLeadInput>
-}
-
-export type CustomerUpsertWithoutLeadInput = {
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutLeadInput, Prisma.CustomerUncheckedUpdateWithoutLeadInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutLeadInput, Prisma.CustomerUncheckedCreateWithoutLeadInput>
-  where?: Prisma.CustomerWhereInput
-}
-
-export type CustomerUpdateToOneWithWhereWithoutLeadInput = {
-  where?: Prisma.CustomerWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutLeadInput, Prisma.CustomerUncheckedUpdateWithoutLeadInput>
-}
-
-export type CustomerUpdateWithoutLeadInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateWithoutLeadInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerCreateWithoutFollowUpsInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerUncheckedCreateWithoutFollowUpsInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerCreateOrConnectWithoutFollowUpsInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutFollowUpsInput, Prisma.CustomerUncheckedCreateWithoutFollowUpsInput>
-}
-
-export type CustomerUpsertWithoutFollowUpsInput = {
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutFollowUpsInput, Prisma.CustomerUncheckedUpdateWithoutFollowUpsInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutFollowUpsInput, Prisma.CustomerUncheckedCreateWithoutFollowUpsInput>
-  where?: Prisma.CustomerWhereInput
-}
-
-export type CustomerUpdateToOneWithWhereWithoutFollowUpsInput = {
-  where?: Prisma.CustomerWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutFollowUpsInput, Prisma.CustomerUncheckedUpdateWithoutFollowUpsInput>
-}
-
-export type CustomerUpdateWithoutFollowUpsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateWithoutFollowUpsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerCreateWithoutCallsInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerUncheckedCreateWithoutCallsInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerCreateOrConnectWithoutCallsInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutCallsInput, Prisma.CustomerUncheckedCreateWithoutCallsInput>
-}
-
-export type CustomerUpsertWithoutCallsInput = {
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutCallsInput, Prisma.CustomerUncheckedUpdateWithoutCallsInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutCallsInput, Prisma.CustomerUncheckedCreateWithoutCallsInput>
-  where?: Prisma.CustomerWhereInput
-}
-
-export type CustomerUpdateToOneWithWhereWithoutCallsInput = {
-  where?: Prisma.CustomerWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutCallsInput, Prisma.CustomerUncheckedUpdateWithoutCallsInput>
-}
-
-export type CustomerUpdateWithoutCallsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateWithoutCallsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerCreateWithoutMeetingsInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerUncheckedCreateWithoutMeetingsInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerCreateOrConnectWithoutMeetingsInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutMeetingsInput, Prisma.CustomerUncheckedCreateWithoutMeetingsInput>
-}
-
-export type CustomerUpsertWithoutMeetingsInput = {
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutMeetingsInput, Prisma.CustomerUncheckedUpdateWithoutMeetingsInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutMeetingsInput, Prisma.CustomerUncheckedCreateWithoutMeetingsInput>
-  where?: Prisma.CustomerWhereInput
-}
-
-export type CustomerUpdateToOneWithWhereWithoutMeetingsInput = {
-  where?: Prisma.CustomerWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutMeetingsInput, Prisma.CustomerUncheckedUpdateWithoutMeetingsInput>
-}
-
-export type CustomerUpdateWithoutMeetingsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateWithoutMeetingsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerCreateWithoutAssignmentsInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerUncheckedCreateWithoutAssignmentsInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
-  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
-  responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
-  activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
-}
-
-export type CustomerCreateOrConnectWithoutAssignmentsInput = {
-  where: Prisma.CustomerWhereUniqueInput
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutAssignmentsInput, Prisma.CustomerUncheckedCreateWithoutAssignmentsInput>
-}
-
-export type CustomerUpsertWithoutAssignmentsInput = {
-  update: Prisma.XOR<Prisma.CustomerUpdateWithoutAssignmentsInput, Prisma.CustomerUncheckedUpdateWithoutAssignmentsInput>
-  create: Prisma.XOR<Prisma.CustomerCreateWithoutAssignmentsInput, Prisma.CustomerUncheckedCreateWithoutAssignmentsInput>
-  where?: Prisma.CustomerWhereInput
-}
-
-export type CustomerUpdateToOneWithWhereWithoutAssignmentsInput = {
-  where?: Prisma.CustomerWhereInput
-  data: Prisma.XOR<Prisma.CustomerUpdateWithoutAssignmentsInput, Prisma.CustomerUncheckedUpdateWithoutAssignmentsInput>
-}
-
-export type CustomerUpdateWithoutAssignmentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateWithoutAssignmentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutActivityLogsInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  source: Prisma.SourceCreateNestedOneWithoutCustomersInput
-  campaign?: Prisma.CampaignCreateNestedOneWithoutOriginCustomersInput
-  assignedStaff?: Prisma.UserCreateNestedOneWithoutAssignedCustomersInput
-  tags?: Prisma.CustomerTagCreateNestedManyWithoutCustomerInput
+  batch?: Prisma.BatchCreateNestedOneWithoutCustomersInput
+  batchMembers?: Prisma.BatchMemberCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutActivityLogsInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
+  batchId?: string | null
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tags?: Prisma.CustomerTagUncheckedCreateNestedManyWithoutCustomerInput
+  batchMembers?: Prisma.BatchMemberUncheckedCreateNestedManyWithoutCustomerInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
-  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutCustomerInput
   responses?: Prisma.CustomerResponseUncheckedCreateNestedManyWithoutCustomerInput
-  followUps?: Prisma.FollowUpUncheckedCreateNestedManyWithoutCustomerInput
-  calls?: Prisma.CallUncheckedCreateNestedManyWithoutCustomerInput
-  meetings?: Prisma.MeetingUncheckedCreateNestedManyWithoutCustomerInput
-  assignments?: Prisma.StaffAssignmentUncheckedCreateNestedManyWithoutCustomerInput
   runs?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutCustomerInput
-  audiences?: Prisma.CampaignAudienceUncheckedCreateNestedManyWithoutCustomerInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedCreateNestedManyWithoutCustomerInput
-  templateUsages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutActivityLogsInput = {
@@ -3573,420 +1324,114 @@ export type CustomerUpdateToOneWithWhereWithoutActivityLogsInput = {
 
 export type CustomerUpdateWithoutActivityLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
+  batch?: Prisma.BatchUpdateOneWithoutCustomersNestedInput
+  batchMembers?: Prisma.BatchMemberUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutActivityLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
+  batchMembers?: Prisma.BatchMemberUncheckedUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
-export type CustomerCreateManyAssignedStaffInput = {
+export type CustomerCreateManyBatchInput = {
   id?: string
-  name: string
+  name?: string | null
   phoneE164: string
   email?: string | null
   location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
+  status?: $Enums.CustomerStatus
   optedOutAt?: Date | string | null
+  lastInteractionAt?: Date | string | null
+  qualifiedAt?: Date | string | null
+  exportedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type CustomerUpdateWithoutAssignedStaffInput = {
+export type CustomerUpdateWithoutBatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
+  batchMembers?: Prisma.BatchMemberUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
 }
 
-export type CustomerUncheckedUpdateWithoutAssignedStaffInput = {
+export type CustomerUncheckedUpdateWithoutBatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
+  batchMembers?: Prisma.BatchMemberUncheckedUpdateManyWithoutCustomerNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
   responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
   runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
-export type CustomerUncheckedUpdateManyWithoutAssignedStaffInput = {
+export type CustomerUncheckedUpdateManyWithoutBatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCustomerStatusFieldUpdateOperationsInput | $Enums.CustomerStatus
   optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type CustomerCreateManySourceInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceDetail?: string | null
-  campaignId?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type CustomerUpdateWithoutSourceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  campaign?: Prisma.CampaignUpdateOneWithoutOriginCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateWithoutSourceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateManyWithoutSourceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type CustomerCreateManyCampaignInput = {
-  id?: string
-  name: string
-  phoneE164: string
-  email?: string | null
-  location?: string | null
-  sourceId: string
-  sourceDetail?: string | null
-  customerType?: string | null
-  interestStatus?: $Enums.InterestStatus
-  customerStatus?: string | null
-  assignedStaffId?: string | null
-  nextFollowUpAt?: Date | string | null
-  lastInteractionAt?: Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: string | null
-  conversionStatus?: string | null
-  optedOutAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type CustomerUpdateWithoutCampaignInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  source?: Prisma.SourceUpdateOneRequiredWithoutCustomersNestedInput
-  assignedStaff?: Prisma.UserUpdateOneWithoutAssignedCustomersNestedInput
-  tags?: Prisma.CustomerTagUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateWithoutCampaignInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.CustomerTagUncheckedUpdateManyWithoutCustomerNestedInput
-  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCustomerNestedInput
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
-  lead?: Prisma.LeadUncheckedUpdateOneWithoutCustomerNestedInput
-  responses?: Prisma.CustomerResponseUncheckedUpdateManyWithoutCustomerNestedInput
-  followUps?: Prisma.FollowUpUncheckedUpdateManyWithoutCustomerNestedInput
-  calls?: Prisma.CallUncheckedUpdateManyWithoutCustomerNestedInput
-  meetings?: Prisma.MeetingUncheckedUpdateManyWithoutCustomerNestedInput
-  assignments?: Prisma.StaffAssignmentUncheckedUpdateManyWithoutCustomerNestedInput
-  runs?: Prisma.AutomationRunUncheckedUpdateManyWithoutCustomerNestedInput
-  audiences?: Prisma.CampaignAudienceUncheckedUpdateManyWithoutCustomerNestedInput
-  deliveries?: Prisma.CampaignDeliveryUncheckedUpdateManyWithoutCustomerNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutCustomerNestedInput
-  templateUsages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutCustomerNestedInput
-}
-
-export type CustomerUncheckedUpdateManyWithoutCampaignInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phoneE164?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestStatus?: Prisma.EnumInterestStatusFieldUpdateOperationsInput | $Enums.InterestStatus
-  customerStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assignedStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  nextFollowUpAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastInteractionAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requirements?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  outcome?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  conversionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  optedOutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  qualifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exportedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -3997,35 +1442,21 @@ export type CustomerUncheckedUpdateManyWithoutCampaignInput = {
  */
 
 export type CustomerCountOutputType = {
-  tags: number
+  batchMembers: number
   conversations: number
   messages: number
   responses: number
-  followUps: number
-  calls: number
-  meetings: number
-  assignments: number
   runs: number
-  audiences: number
-  deliveries: number
   activityLogs: number
-  templateUsages: number
 }
 
 export type CustomerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tags?: boolean | CustomerCountOutputTypeCountTagsArgs
+  batchMembers?: boolean | CustomerCountOutputTypeCountBatchMembersArgs
   conversations?: boolean | CustomerCountOutputTypeCountConversationsArgs
   messages?: boolean | CustomerCountOutputTypeCountMessagesArgs
   responses?: boolean | CustomerCountOutputTypeCountResponsesArgs
-  followUps?: boolean | CustomerCountOutputTypeCountFollowUpsArgs
-  calls?: boolean | CustomerCountOutputTypeCountCallsArgs
-  meetings?: boolean | CustomerCountOutputTypeCountMeetingsArgs
-  assignments?: boolean | CustomerCountOutputTypeCountAssignmentsArgs
   runs?: boolean | CustomerCountOutputTypeCountRunsArgs
-  audiences?: boolean | CustomerCountOutputTypeCountAudiencesArgs
-  deliveries?: boolean | CustomerCountOutputTypeCountDeliveriesArgs
   activityLogs?: boolean | CustomerCountOutputTypeCountActivityLogsArgs
-  templateUsages?: boolean | CustomerCountOutputTypeCountTemplateUsagesArgs
 }
 
 /**
@@ -4041,8 +1472,8 @@ export type CustomerCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
 /**
  * CustomerCountOutputType without action
  */
-export type CustomerCountOutputTypeCountTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CustomerTagWhereInput
+export type CustomerCountOutputTypeCountBatchMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BatchMemberWhereInput
 }
 
 /**
@@ -4069,50 +1500,8 @@ export type CustomerCountOutputTypeCountResponsesArgs<ExtArgs extends runtime.Ty
 /**
  * CustomerCountOutputType without action
  */
-export type CustomerCountOutputTypeCountFollowUpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.FollowUpWhereInput
-}
-
-/**
- * CustomerCountOutputType without action
- */
-export type CustomerCountOutputTypeCountCallsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CallWhereInput
-}
-
-/**
- * CustomerCountOutputType without action
- */
-export type CustomerCountOutputTypeCountMeetingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.MeetingWhereInput
-}
-
-/**
- * CustomerCountOutputType without action
- */
-export type CustomerCountOutputTypeCountAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StaffAssignmentWhereInput
-}
-
-/**
- * CustomerCountOutputType without action
- */
 export type CustomerCountOutputTypeCountRunsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AutomationRunWhereInput
-}
-
-/**
- * CustomerCountOutputType without action
- */
-export type CustomerCountOutputTypeCountAudiencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CampaignAudienceWhereInput
-}
-
-/**
- * CustomerCountOutputType without action
- */
-export type CustomerCountOutputTypeCountDeliveriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CampaignDeliveryWhereInput
 }
 
 /**
@@ -4122,13 +1511,6 @@ export type CustomerCountOutputTypeCountActivityLogsArgs<ExtArgs extends runtime
   where?: Prisma.ActivityLogWhereInput
 }
 
-/**
- * CustomerCountOutputType without action
- */
-export type CustomerCountOutputTypeCountTemplateUsagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TemplateUsageWhereInput
-}
-
 
 export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -4136,38 +1518,21 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   phoneE164?: boolean
   email?: boolean
   location?: boolean
-  sourceId?: boolean
-  sourceDetail?: boolean
-  campaignId?: boolean
-  customerType?: boolean
-  interestStatus?: boolean
-  customerStatus?: boolean
-  assignedStaffId?: boolean
-  nextFollowUpAt?: boolean
-  lastInteractionAt?: boolean
-  requirements?: boolean
-  outcome?: boolean
-  conversionStatus?: boolean
+  status?: boolean
+  batchId?: boolean
   optedOutAt?: boolean
+  lastInteractionAt?: boolean
+  qualifiedAt?: boolean
+  exportedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  source?: boolean | Prisma.SourceDefaultArgs<ExtArgs>
-  campaign?: boolean | Prisma.Customer$campaignArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Customer$assignedStaffArgs<ExtArgs>
-  tags?: boolean | Prisma.Customer$tagsArgs<ExtArgs>
+  batch?: boolean | Prisma.Customer$batchArgs<ExtArgs>
+  batchMembers?: boolean | Prisma.Customer$batchMembersArgs<ExtArgs>
   conversations?: boolean | Prisma.Customer$conversationsArgs<ExtArgs>
   messages?: boolean | Prisma.Customer$messagesArgs<ExtArgs>
-  lead?: boolean | Prisma.Customer$leadArgs<ExtArgs>
   responses?: boolean | Prisma.Customer$responsesArgs<ExtArgs>
-  followUps?: boolean | Prisma.Customer$followUpsArgs<ExtArgs>
-  calls?: boolean | Prisma.Customer$callsArgs<ExtArgs>
-  meetings?: boolean | Prisma.Customer$meetingsArgs<ExtArgs>
-  assignments?: boolean | Prisma.Customer$assignmentsArgs<ExtArgs>
   runs?: boolean | Prisma.Customer$runsArgs<ExtArgs>
-  audiences?: boolean | Prisma.Customer$audiencesArgs<ExtArgs>
-  deliveries?: boolean | Prisma.Customer$deliveriesArgs<ExtArgs>
   activityLogs?: boolean | Prisma.Customer$activityLogsArgs<ExtArgs>
-  templateUsages?: boolean | Prisma.Customer$templateUsagesArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
 
@@ -4177,24 +1542,15 @@ export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   phoneE164?: boolean
   email?: boolean
   location?: boolean
-  sourceId?: boolean
-  sourceDetail?: boolean
-  campaignId?: boolean
-  customerType?: boolean
-  interestStatus?: boolean
-  customerStatus?: boolean
-  assignedStaffId?: boolean
-  nextFollowUpAt?: boolean
-  lastInteractionAt?: boolean
-  requirements?: boolean
-  outcome?: boolean
-  conversionStatus?: boolean
+  status?: boolean
+  batchId?: boolean
   optedOutAt?: boolean
+  lastInteractionAt?: boolean
+  qualifiedAt?: boolean
+  exportedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  source?: boolean | Prisma.SourceDefaultArgs<ExtArgs>
-  campaign?: boolean | Prisma.Customer$campaignArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Customer$assignedStaffArgs<ExtArgs>
+  batch?: boolean | Prisma.Customer$batchArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
 
 export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -4203,24 +1559,15 @@ export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   phoneE164?: boolean
   email?: boolean
   location?: boolean
-  sourceId?: boolean
-  sourceDetail?: boolean
-  campaignId?: boolean
-  customerType?: boolean
-  interestStatus?: boolean
-  customerStatus?: boolean
-  assignedStaffId?: boolean
-  nextFollowUpAt?: boolean
-  lastInteractionAt?: boolean
-  requirements?: boolean
-  outcome?: boolean
-  conversionStatus?: boolean
+  status?: boolean
+  batchId?: boolean
   optedOutAt?: boolean
+  lastInteractionAt?: boolean
+  qualifiedAt?: boolean
+  exportedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  source?: boolean | Prisma.SourceDefaultArgs<ExtArgs>
-  campaign?: boolean | Prisma.Customer$campaignArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Customer$assignedStaffArgs<ExtArgs>
+  batch?: boolean | Prisma.Customer$batchArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
 
 export type CustomerSelectScalar = {
@@ -4229,95 +1576,57 @@ export type CustomerSelectScalar = {
   phoneE164?: boolean
   email?: boolean
   location?: boolean
-  sourceId?: boolean
-  sourceDetail?: boolean
-  campaignId?: boolean
-  customerType?: boolean
-  interestStatus?: boolean
-  customerStatus?: boolean
-  assignedStaffId?: boolean
-  nextFollowUpAt?: boolean
-  lastInteractionAt?: boolean
-  requirements?: boolean
-  outcome?: boolean
-  conversionStatus?: boolean
+  status?: boolean
+  batchId?: boolean
   optedOutAt?: boolean
+  lastInteractionAt?: boolean
+  qualifiedAt?: boolean
+  exportedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phoneE164" | "email" | "location" | "sourceId" | "sourceDetail" | "campaignId" | "customerType" | "interestStatus" | "customerStatus" | "assignedStaffId" | "nextFollowUpAt" | "lastInteractionAt" | "requirements" | "outcome" | "conversionStatus" | "optedOutAt" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
+export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phoneE164" | "email" | "location" | "status" | "batchId" | "optedOutAt" | "lastInteractionAt" | "qualifiedAt" | "exportedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
 export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  source?: boolean | Prisma.SourceDefaultArgs<ExtArgs>
-  campaign?: boolean | Prisma.Customer$campaignArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Customer$assignedStaffArgs<ExtArgs>
-  tags?: boolean | Prisma.Customer$tagsArgs<ExtArgs>
+  batch?: boolean | Prisma.Customer$batchArgs<ExtArgs>
+  batchMembers?: boolean | Prisma.Customer$batchMembersArgs<ExtArgs>
   conversations?: boolean | Prisma.Customer$conversationsArgs<ExtArgs>
   messages?: boolean | Prisma.Customer$messagesArgs<ExtArgs>
-  lead?: boolean | Prisma.Customer$leadArgs<ExtArgs>
   responses?: boolean | Prisma.Customer$responsesArgs<ExtArgs>
-  followUps?: boolean | Prisma.Customer$followUpsArgs<ExtArgs>
-  calls?: boolean | Prisma.Customer$callsArgs<ExtArgs>
-  meetings?: boolean | Prisma.Customer$meetingsArgs<ExtArgs>
-  assignments?: boolean | Prisma.Customer$assignmentsArgs<ExtArgs>
   runs?: boolean | Prisma.Customer$runsArgs<ExtArgs>
-  audiences?: boolean | Prisma.Customer$audiencesArgs<ExtArgs>
-  deliveries?: boolean | Prisma.Customer$deliveriesArgs<ExtArgs>
   activityLogs?: boolean | Prisma.Customer$activityLogsArgs<ExtArgs>
-  templateUsages?: boolean | Prisma.Customer$templateUsagesArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CustomerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  source?: boolean | Prisma.SourceDefaultArgs<ExtArgs>
-  campaign?: boolean | Prisma.Customer$campaignArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Customer$assignedStaffArgs<ExtArgs>
+  batch?: boolean | Prisma.Customer$batchArgs<ExtArgs>
 }
 export type CustomerIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  source?: boolean | Prisma.SourceDefaultArgs<ExtArgs>
-  campaign?: boolean | Prisma.Customer$campaignArgs<ExtArgs>
-  assignedStaff?: boolean | Prisma.Customer$assignedStaffArgs<ExtArgs>
+  batch?: boolean | Prisma.Customer$batchArgs<ExtArgs>
 }
 
 export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Customer"
   objects: {
-    source: Prisma.$SourcePayload<ExtArgs>
-    campaign: Prisma.$CampaignPayload<ExtArgs> | null
-    assignedStaff: Prisma.$UserPayload<ExtArgs> | null
-    tags: Prisma.$CustomerTagPayload<ExtArgs>[]
+    batch: Prisma.$BatchPayload<ExtArgs> | null
+    batchMembers: Prisma.$BatchMemberPayload<ExtArgs>[]
     conversations: Prisma.$ConversationPayload<ExtArgs>[]
     messages: Prisma.$MessagePayload<ExtArgs>[]
-    lead: Prisma.$LeadPayload<ExtArgs> | null
     responses: Prisma.$CustomerResponsePayload<ExtArgs>[]
-    followUps: Prisma.$FollowUpPayload<ExtArgs>[]
-    calls: Prisma.$CallPayload<ExtArgs>[]
-    meetings: Prisma.$MeetingPayload<ExtArgs>[]
-    assignments: Prisma.$StaffAssignmentPayload<ExtArgs>[]
     runs: Prisma.$AutomationRunPayload<ExtArgs>[]
-    audiences: Prisma.$CampaignAudiencePayload<ExtArgs>[]
-    deliveries: Prisma.$CampaignDeliveryPayload<ExtArgs>[]
     activityLogs: Prisma.$ActivityLogPayload<ExtArgs>[]
-    templateUsages: Prisma.$TemplateUsagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    name: string
+    name: string | null
     phoneE164: string
     email: string | null
     location: string | null
-    sourceId: string
-    sourceDetail: string | null
-    campaignId: string | null
-    customerType: string | null
-    interestStatus: $Enums.InterestStatus
-    customerStatus: string | null
-    assignedStaffId: string | null
-    nextFollowUpAt: Date | null
-    lastInteractionAt: Date | null
-    requirements: runtime.JsonValue | null
-    outcome: string | null
-    conversionStatus: string | null
+    status: $Enums.CustomerStatus
+    batchId: string | null
     optedOutAt: Date | null
+    lastInteractionAt: Date | null
+    qualifiedAt: Date | null
+    exportedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["customer"]>
@@ -4714,23 +2023,13 @@ readonly fields: CustomerFieldRefs;
  */
 export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  source<T extends Prisma.SourceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SourceDefaultArgs<ExtArgs>>): Prisma.Prisma__SourceClient<runtime.Types.Result.GetResult<Prisma.$SourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  campaign<T extends Prisma.Customer$campaignArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$campaignArgs<ExtArgs>>): Prisma.Prisma__CampaignClient<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  assignedStaff<T extends Prisma.Customer$assignedStaffArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$assignedStaffArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  tags<T extends Prisma.Customer$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  batch<T extends Prisma.Customer$batchArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$batchArgs<ExtArgs>>): Prisma.Prisma__BatchClient<runtime.Types.Result.GetResult<Prisma.$BatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  batchMembers<T extends Prisma.Customer$batchMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$batchMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BatchMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   conversations<T extends Prisma.Customer$conversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   messages<T extends Prisma.Customer$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  lead<T extends Prisma.Customer$leadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$leadArgs<ExtArgs>>): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   responses<T extends Prisma.Customer$responsesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$responsesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  followUps<T extends Prisma.Customer$followUpsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$followUpsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  calls<T extends Prisma.Customer$callsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$callsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CallPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  meetings<T extends Prisma.Customer$meetingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$meetingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MeetingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  assignments<T extends Prisma.Customer$assignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   runs<T extends Prisma.Customer$runsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$runsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  audiences<T extends Prisma.Customer$audiencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$audiencesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CampaignAudiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  deliveries<T extends Prisma.Customer$deliveriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$deliveriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CampaignDeliveryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   activityLogs<T extends Prisma.Customer$activityLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$activityLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  templateUsages<T extends Prisma.Customer$templateUsagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$templateUsagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TemplateUsagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4765,19 +2064,12 @@ export interface CustomerFieldRefs {
   readonly phoneE164: Prisma.FieldRef<"Customer", 'String'>
   readonly email: Prisma.FieldRef<"Customer", 'String'>
   readonly location: Prisma.FieldRef<"Customer", 'String'>
-  readonly sourceId: Prisma.FieldRef<"Customer", 'String'>
-  readonly sourceDetail: Prisma.FieldRef<"Customer", 'String'>
-  readonly campaignId: Prisma.FieldRef<"Customer", 'String'>
-  readonly customerType: Prisma.FieldRef<"Customer", 'String'>
-  readonly interestStatus: Prisma.FieldRef<"Customer", 'InterestStatus'>
-  readonly customerStatus: Prisma.FieldRef<"Customer", 'String'>
-  readonly assignedStaffId: Prisma.FieldRef<"Customer", 'String'>
-  readonly nextFollowUpAt: Prisma.FieldRef<"Customer", 'DateTime'>
-  readonly lastInteractionAt: Prisma.FieldRef<"Customer", 'DateTime'>
-  readonly requirements: Prisma.FieldRef<"Customer", 'Json'>
-  readonly outcome: Prisma.FieldRef<"Customer", 'String'>
-  readonly conversionStatus: Prisma.FieldRef<"Customer", 'String'>
+  readonly status: Prisma.FieldRef<"Customer", 'CustomerStatus'>
+  readonly batchId: Prisma.FieldRef<"Customer", 'String'>
   readonly optedOutAt: Prisma.FieldRef<"Customer", 'DateTime'>
+  readonly lastInteractionAt: Prisma.FieldRef<"Customer", 'DateTime'>
+  readonly qualifiedAt: Prisma.FieldRef<"Customer", 'DateTime'>
+  readonly exportedAt: Prisma.FieldRef<"Customer", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Customer", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Customer", 'DateTime'>
 }
@@ -5181,65 +2473,46 @@ export type CustomerDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Customer.campaign
+ * Customer.batch
  */
-export type Customer$campaignArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Customer$batchArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Campaign
+   * Select specific fields to fetch from the Batch
    */
-  select?: Prisma.CampaignSelect<ExtArgs> | null
+  select?: Prisma.BatchSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Campaign
+   * Omit specific fields from the Batch
    */
-  omit?: Prisma.CampaignOmit<ExtArgs> | null
+  omit?: Prisma.BatchOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.CampaignInclude<ExtArgs> | null
-  where?: Prisma.CampaignWhereInput
+  include?: Prisma.BatchInclude<ExtArgs> | null
+  where?: Prisma.BatchWhereInput
 }
 
 /**
- * Customer.assignedStaff
+ * Customer.batchMembers
  */
-export type Customer$assignedStaffArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Customer$batchMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the User
+   * Select specific fields to fetch from the BatchMember
    */
-  select?: Prisma.UserSelect<ExtArgs> | null
+  select?: Prisma.BatchMemberSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the User
+   * Omit specific fields from the BatchMember
    */
-  omit?: Prisma.UserOmit<ExtArgs> | null
+  omit?: Prisma.BatchMemberOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
- * Customer.tags
- */
-export type Customer$tagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CustomerTag
-   */
-  select?: Prisma.CustomerTagSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the CustomerTag
-   */
-  omit?: Prisma.CustomerTagOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CustomerTagInclude<ExtArgs> | null
-  where?: Prisma.CustomerTagWhereInput
-  orderBy?: Prisma.CustomerTagOrderByWithRelationInput | Prisma.CustomerTagOrderByWithRelationInput[]
-  cursor?: Prisma.CustomerTagWhereUniqueInput
+  include?: Prisma.BatchMemberInclude<ExtArgs> | null
+  where?: Prisma.BatchMemberWhereInput
+  orderBy?: Prisma.BatchMemberOrderByWithRelationInput | Prisma.BatchMemberOrderByWithRelationInput[]
+  cursor?: Prisma.BatchMemberWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.CustomerTagScalarFieldEnum | Prisma.CustomerTagScalarFieldEnum[]
+  distinct?: Prisma.BatchMemberScalarFieldEnum | Prisma.BatchMemberScalarFieldEnum[]
 }
 
 /**
@@ -5291,25 +2564,6 @@ export type Customer$messagesArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Customer.lead
- */
-export type Customer$leadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Lead
-   */
-  select?: Prisma.LeadSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Lead
-   */
-  omit?: Prisma.LeadOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LeadInclude<ExtArgs> | null
-  where?: Prisma.LeadWhereInput
-}
-
-/**
  * Customer.responses
  */
 export type Customer$responsesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5331,102 +2585,6 @@ export type Customer$responsesArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.CustomerResponseScalarFieldEnum | Prisma.CustomerResponseScalarFieldEnum[]
-}
-
-/**
- * Customer.followUps
- */
-export type Customer$followUpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the FollowUp
-   */
-  select?: Prisma.FollowUpSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the FollowUp
-   */
-  omit?: Prisma.FollowUpOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FollowUpInclude<ExtArgs> | null
-  where?: Prisma.FollowUpWhereInput
-  orderBy?: Prisma.FollowUpOrderByWithRelationInput | Prisma.FollowUpOrderByWithRelationInput[]
-  cursor?: Prisma.FollowUpWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.FollowUpScalarFieldEnum | Prisma.FollowUpScalarFieldEnum[]
-}
-
-/**
- * Customer.calls
- */
-export type Customer$callsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Call
-   */
-  select?: Prisma.CallSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Call
-   */
-  omit?: Prisma.CallOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CallInclude<ExtArgs> | null
-  where?: Prisma.CallWhereInput
-  orderBy?: Prisma.CallOrderByWithRelationInput | Prisma.CallOrderByWithRelationInput[]
-  cursor?: Prisma.CallWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CallScalarFieldEnum | Prisma.CallScalarFieldEnum[]
-}
-
-/**
- * Customer.meetings
- */
-export type Customer$meetingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Meeting
-   */
-  select?: Prisma.MeetingSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Meeting
-   */
-  omit?: Prisma.MeetingOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MeetingInclude<ExtArgs> | null
-  where?: Prisma.MeetingWhereInput
-  orderBy?: Prisma.MeetingOrderByWithRelationInput | Prisma.MeetingOrderByWithRelationInput[]
-  cursor?: Prisma.MeetingWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.MeetingScalarFieldEnum | Prisma.MeetingScalarFieldEnum[]
-}
-
-/**
- * Customer.assignments
- */
-export type Customer$assignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the StaffAssignment
-   */
-  select?: Prisma.StaffAssignmentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the StaffAssignment
-   */
-  omit?: Prisma.StaffAssignmentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.StaffAssignmentInclude<ExtArgs> | null
-  where?: Prisma.StaffAssignmentWhereInput
-  orderBy?: Prisma.StaffAssignmentOrderByWithRelationInput | Prisma.StaffAssignmentOrderByWithRelationInput[]
-  cursor?: Prisma.StaffAssignmentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.StaffAssignmentScalarFieldEnum | Prisma.StaffAssignmentScalarFieldEnum[]
 }
 
 /**
@@ -5454,54 +2612,6 @@ export type Customer$runsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
- * Customer.audiences
- */
-export type Customer$audiencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CampaignAudience
-   */
-  select?: Prisma.CampaignAudienceSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the CampaignAudience
-   */
-  omit?: Prisma.CampaignAudienceOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CampaignAudienceInclude<ExtArgs> | null
-  where?: Prisma.CampaignAudienceWhereInput
-  orderBy?: Prisma.CampaignAudienceOrderByWithRelationInput | Prisma.CampaignAudienceOrderByWithRelationInput[]
-  cursor?: Prisma.CampaignAudienceWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CampaignAudienceScalarFieldEnum | Prisma.CampaignAudienceScalarFieldEnum[]
-}
-
-/**
- * Customer.deliveries
- */
-export type Customer$deliveriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CampaignDelivery
-   */
-  select?: Prisma.CampaignDeliverySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the CampaignDelivery
-   */
-  omit?: Prisma.CampaignDeliveryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CampaignDeliveryInclude<ExtArgs> | null
-  where?: Prisma.CampaignDeliveryWhereInput
-  orderBy?: Prisma.CampaignDeliveryOrderByWithRelationInput | Prisma.CampaignDeliveryOrderByWithRelationInput[]
-  cursor?: Prisma.CampaignDeliveryWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CampaignDeliveryScalarFieldEnum | Prisma.CampaignDeliveryScalarFieldEnum[]
-}
-
-/**
  * Customer.activityLogs
  */
 export type Customer$activityLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5523,30 +2633,6 @@ export type Customer$activityLogsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.ActivityLogScalarFieldEnum | Prisma.ActivityLogScalarFieldEnum[]
-}
-
-/**
- * Customer.templateUsages
- */
-export type Customer$templateUsagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the TemplateUsage
-   */
-  select?: Prisma.TemplateUsageSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the TemplateUsage
-   */
-  omit?: Prisma.TemplateUsageOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TemplateUsageInclude<ExtArgs> | null
-  where?: Prisma.TemplateUsageWhereInput
-  orderBy?: Prisma.TemplateUsageOrderByWithRelationInput | Prisma.TemplateUsageOrderByWithRelationInput[]
-  cursor?: Prisma.TemplateUsageWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TemplateUsageScalarFieldEnum | Prisma.TemplateUsageScalarFieldEnum[]
 }
 
 /**

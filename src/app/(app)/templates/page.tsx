@@ -19,11 +19,7 @@ import type { Prisma } from "@/generated/prisma/client";
 
 export const dynamic = "force-dynamic";
 
-/**
- * UI-015 Templates + UI-016 Template Editor (BR-22, BR-23).
- * Usage visibility is the `template_usages` count, so management can see
- * where each template is used and how often.
- */
+/** UI-015 Templates + UI-016 Template Editor (BR-22, BR-23). */
 export default async function TemplatesPage({
   searchParams,
 }: PageProps<"/templates">) {
@@ -50,7 +46,6 @@ export default async function TemplatesPage({
     prisma.template.findMany({
       where,
       orderBy: [{ category: "asc" }, { name: "asc" }],
-      include: { _count: { select: { usages: true } } },
     }),
     prisma.template.findMany({
       distinct: ["category"],
@@ -68,7 +63,7 @@ export default async function TemplatesPage({
     <>
       <PageHeader
         title="Templates"
-        description="Reusable, categorised messages for campaigns and automations."
+        description="Reusable, categorised messages for funnels and replies."
       />
 
       <div className="grid gap-4 xl:grid-cols-[1fr_24rem]">
@@ -135,7 +130,6 @@ export default async function TemplatesPage({
                   "Category",
                   "Provider key",
                   "Approval",
-                  "Used",
                   "State",
                   ...(manage ? ["Actions"] : []),
                 ]}
@@ -156,7 +150,6 @@ export default async function TemplatesPage({
                       {/* GAP-027: lifecycle states are provider/business defined. */}
                       {t.approvalStatus ?? "Not recorded"}
                     </Cell>
-                    <Cell className="tabular-nums">{t._count.usages}</Cell>
                     <Cell>
                       {t.archivedAt ? (
                         <Badge tone="neutral">Archived</Badge>

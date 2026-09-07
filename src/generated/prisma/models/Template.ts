@@ -235,8 +235,6 @@ export type TemplateWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Template"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Template"> | Date | string
   messages?: Prisma.MessageListRelationFilter
-  campaigns?: Prisma.CampaignListRelationFilter
-  usages?: Prisma.TemplateUsageListRelationFilter
 }
 
 export type TemplateOrderByWithRelationInput = {
@@ -253,8 +251,6 @@ export type TemplateOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   messages?: Prisma.MessageOrderByRelationAggregateInput
-  campaigns?: Prisma.CampaignOrderByRelationAggregateInput
-  usages?: Prisma.TemplateUsageOrderByRelationAggregateInput
 }
 
 export type TemplateWhereUniqueInput = Prisma.AtLeast<{
@@ -274,8 +270,6 @@ export type TemplateWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Template"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Template"> | Date | string
   messages?: Prisma.MessageListRelationFilter
-  campaigns?: Prisma.CampaignListRelationFilter
-  usages?: Prisma.TemplateUsageListRelationFilter
 }, "id" | "name">
 
 export type TemplateOrderByWithAggregationInput = {
@@ -328,8 +322,6 @@ export type TemplateCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messages?: Prisma.MessageCreateNestedManyWithoutTemplateInput
-  campaigns?: Prisma.CampaignCreateNestedManyWithoutTemplateInput
-  usages?: Prisma.TemplateUsageCreateNestedManyWithoutTemplateInput
 }
 
 export type TemplateUncheckedCreateInput = {
@@ -346,8 +338,6 @@ export type TemplateUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutTemplateInput
-  campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutTemplateInput
-  usages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutTemplateInput
 }
 
 export type TemplateUpdateInput = {
@@ -364,8 +354,6 @@ export type TemplateUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messages?: Prisma.MessageUpdateManyWithoutTemplateNestedInput
-  campaigns?: Prisma.CampaignUpdateManyWithoutTemplateNestedInput
-  usages?: Prisma.TemplateUsageUpdateManyWithoutTemplateNestedInput
 }
 
 export type TemplateUncheckedUpdateInput = {
@@ -382,8 +370,6 @@ export type TemplateUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messages?: Prisma.MessageUncheckedUpdateManyWithoutTemplateNestedInput
-  campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutTemplateNestedInput
-  usages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutTemplateNestedInput
 }
 
 export type TemplateCreateManyInput = {
@@ -479,11 +465,6 @@ export type TemplateMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type TemplateScalarRelationFilter = {
-  is?: Prisma.TemplateWhereInput
-  isNot?: Prisma.TemplateWhereInput
-}
-
 export type TemplateCreateNestedOneWithoutMessagesInput = {
   create?: Prisma.XOR<Prisma.TemplateCreateWithoutMessagesInput, Prisma.TemplateUncheckedCreateWithoutMessagesInput>
   connectOrCreate?: Prisma.TemplateCreateOrConnectWithoutMessagesInput
@@ -500,32 +481,8 @@ export type TemplateUpdateOneWithoutMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TemplateUpdateToOneWithWhereWithoutMessagesInput, Prisma.TemplateUpdateWithoutMessagesInput>, Prisma.TemplateUncheckedUpdateWithoutMessagesInput>
 }
 
-export type TemplateCreateNestedOneWithoutUsagesInput = {
-  create?: Prisma.XOR<Prisma.TemplateCreateWithoutUsagesInput, Prisma.TemplateUncheckedCreateWithoutUsagesInput>
-  connectOrCreate?: Prisma.TemplateCreateOrConnectWithoutUsagesInput
-  connect?: Prisma.TemplateWhereUniqueInput
-}
-
-export type TemplateUpdateOneRequiredWithoutUsagesNestedInput = {
-  create?: Prisma.XOR<Prisma.TemplateCreateWithoutUsagesInput, Prisma.TemplateUncheckedCreateWithoutUsagesInput>
-  connectOrCreate?: Prisma.TemplateCreateOrConnectWithoutUsagesInput
-  upsert?: Prisma.TemplateUpsertWithoutUsagesInput
-  connect?: Prisma.TemplateWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TemplateUpdateToOneWithWhereWithoutUsagesInput, Prisma.TemplateUpdateWithoutUsagesInput>, Prisma.TemplateUncheckedUpdateWithoutUsagesInput>
-}
-
-export type TemplateCreateNestedOneWithoutCampaignsInput = {
-  create?: Prisma.XOR<Prisma.TemplateCreateWithoutCampaignsInput, Prisma.TemplateUncheckedCreateWithoutCampaignsInput>
-  connectOrCreate?: Prisma.TemplateCreateOrConnectWithoutCampaignsInput
-  connect?: Prisma.TemplateWhereUniqueInput
-}
-
-export type TemplateUpdateOneRequiredWithoutCampaignsNestedInput = {
-  create?: Prisma.XOR<Prisma.TemplateCreateWithoutCampaignsInput, Prisma.TemplateUncheckedCreateWithoutCampaignsInput>
-  connectOrCreate?: Prisma.TemplateCreateOrConnectWithoutCampaignsInput
-  upsert?: Prisma.TemplateUpsertWithoutCampaignsInput
-  connect?: Prisma.TemplateWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TemplateUpdateToOneWithWhereWithoutCampaignsInput, Prisma.TemplateUpdateWithoutCampaignsInput>, Prisma.TemplateUncheckedUpdateWithoutCampaignsInput>
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type TemplateCreateWithoutMessagesInput = {
@@ -541,8 +498,6 @@ export type TemplateCreateWithoutMessagesInput = {
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  campaigns?: Prisma.CampaignCreateNestedManyWithoutTemplateInput
-  usages?: Prisma.TemplateUsageCreateNestedManyWithoutTemplateInput
 }
 
 export type TemplateUncheckedCreateWithoutMessagesInput = {
@@ -558,8 +513,6 @@ export type TemplateUncheckedCreateWithoutMessagesInput = {
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutTemplateInput
-  usages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutTemplateInput
 }
 
 export type TemplateCreateOrConnectWithoutMessagesInput = {
@@ -591,8 +544,6 @@ export type TemplateUpdateWithoutMessagesInput = {
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  campaigns?: Prisma.CampaignUpdateManyWithoutTemplateNestedInput
-  usages?: Prisma.TemplateUsageUpdateManyWithoutTemplateNestedInput
 }
 
 export type TemplateUncheckedUpdateWithoutMessagesInput = {
@@ -608,176 +559,6 @@ export type TemplateUncheckedUpdateWithoutMessagesInput = {
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutTemplateNestedInput
-  usages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutTemplateNestedInput
-}
-
-export type TemplateCreateWithoutUsagesInput = {
-  id?: string
-  name: string
-  category: string
-  providerTemplateKey?: string | null
-  language?: string | null
-  approvalStatus?: string | null
-  body: string
-  structure?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  active?: boolean
-  archivedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  messages?: Prisma.MessageCreateNestedManyWithoutTemplateInput
-  campaigns?: Prisma.CampaignCreateNestedManyWithoutTemplateInput
-}
-
-export type TemplateUncheckedCreateWithoutUsagesInput = {
-  id?: string
-  name: string
-  category: string
-  providerTemplateKey?: string | null
-  language?: string | null
-  approvalStatus?: string | null
-  body: string
-  structure?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  active?: boolean
-  archivedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutTemplateInput
-  campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutTemplateInput
-}
-
-export type TemplateCreateOrConnectWithoutUsagesInput = {
-  where: Prisma.TemplateWhereUniqueInput
-  create: Prisma.XOR<Prisma.TemplateCreateWithoutUsagesInput, Prisma.TemplateUncheckedCreateWithoutUsagesInput>
-}
-
-export type TemplateUpsertWithoutUsagesInput = {
-  update: Prisma.XOR<Prisma.TemplateUpdateWithoutUsagesInput, Prisma.TemplateUncheckedUpdateWithoutUsagesInput>
-  create: Prisma.XOR<Prisma.TemplateCreateWithoutUsagesInput, Prisma.TemplateUncheckedCreateWithoutUsagesInput>
-  where?: Prisma.TemplateWhereInput
-}
-
-export type TemplateUpdateToOneWithWhereWithoutUsagesInput = {
-  where?: Prisma.TemplateWhereInput
-  data: Prisma.XOR<Prisma.TemplateUpdateWithoutUsagesInput, Prisma.TemplateUncheckedUpdateWithoutUsagesInput>
-}
-
-export type TemplateUpdateWithoutUsagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.StringFieldUpdateOperationsInput | string
-  providerTemplateKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  body?: Prisma.StringFieldUpdateOperationsInput | string
-  structure?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  messages?: Prisma.MessageUpdateManyWithoutTemplateNestedInput
-  campaigns?: Prisma.CampaignUpdateManyWithoutTemplateNestedInput
-}
-
-export type TemplateUncheckedUpdateWithoutUsagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.StringFieldUpdateOperationsInput | string
-  providerTemplateKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  body?: Prisma.StringFieldUpdateOperationsInput | string
-  structure?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutTemplateNestedInput
-  campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutTemplateNestedInput
-}
-
-export type TemplateCreateWithoutCampaignsInput = {
-  id?: string
-  name: string
-  category: string
-  providerTemplateKey?: string | null
-  language?: string | null
-  approvalStatus?: string | null
-  body: string
-  structure?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  active?: boolean
-  archivedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  messages?: Prisma.MessageCreateNestedManyWithoutTemplateInput
-  usages?: Prisma.TemplateUsageCreateNestedManyWithoutTemplateInput
-}
-
-export type TemplateUncheckedCreateWithoutCampaignsInput = {
-  id?: string
-  name: string
-  category: string
-  providerTemplateKey?: string | null
-  language?: string | null
-  approvalStatus?: string | null
-  body: string
-  structure?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  active?: boolean
-  archivedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutTemplateInput
-  usages?: Prisma.TemplateUsageUncheckedCreateNestedManyWithoutTemplateInput
-}
-
-export type TemplateCreateOrConnectWithoutCampaignsInput = {
-  where: Prisma.TemplateWhereUniqueInput
-  create: Prisma.XOR<Prisma.TemplateCreateWithoutCampaignsInput, Prisma.TemplateUncheckedCreateWithoutCampaignsInput>
-}
-
-export type TemplateUpsertWithoutCampaignsInput = {
-  update: Prisma.XOR<Prisma.TemplateUpdateWithoutCampaignsInput, Prisma.TemplateUncheckedUpdateWithoutCampaignsInput>
-  create: Prisma.XOR<Prisma.TemplateCreateWithoutCampaignsInput, Prisma.TemplateUncheckedCreateWithoutCampaignsInput>
-  where?: Prisma.TemplateWhereInput
-}
-
-export type TemplateUpdateToOneWithWhereWithoutCampaignsInput = {
-  where?: Prisma.TemplateWhereInput
-  data: Prisma.XOR<Prisma.TemplateUpdateWithoutCampaignsInput, Prisma.TemplateUncheckedUpdateWithoutCampaignsInput>
-}
-
-export type TemplateUpdateWithoutCampaignsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.StringFieldUpdateOperationsInput | string
-  providerTemplateKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  body?: Prisma.StringFieldUpdateOperationsInput | string
-  structure?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  messages?: Prisma.MessageUpdateManyWithoutTemplateNestedInput
-  usages?: Prisma.TemplateUsageUpdateManyWithoutTemplateNestedInput
-}
-
-export type TemplateUncheckedUpdateWithoutCampaignsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.StringFieldUpdateOperationsInput | string
-  providerTemplateKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  body?: Prisma.StringFieldUpdateOperationsInput | string
-  structure?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutTemplateNestedInput
-  usages?: Prisma.TemplateUsageUncheckedUpdateManyWithoutTemplateNestedInput
 }
 
 
@@ -787,14 +568,10 @@ export type TemplateUncheckedUpdateWithoutCampaignsInput = {
 
 export type TemplateCountOutputType = {
   messages: number
-  campaigns: number
-  usages: number
 }
 
 export type TemplateCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   messages?: boolean | TemplateCountOutputTypeCountMessagesArgs
-  campaigns?: boolean | TemplateCountOutputTypeCountCampaignsArgs
-  usages?: boolean | TemplateCountOutputTypeCountUsagesArgs
 }
 
 /**
@@ -814,20 +591,6 @@ export type TemplateCountOutputTypeCountMessagesArgs<ExtArgs extends runtime.Typ
   where?: Prisma.MessageWhereInput
 }
 
-/**
- * TemplateCountOutputType without action
- */
-export type TemplateCountOutputTypeCountCampaignsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CampaignWhereInput
-}
-
-/**
- * TemplateCountOutputType without action
- */
-export type TemplateCountOutputTypeCountUsagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TemplateUsageWhereInput
-}
-
 
 export type TemplateSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -843,8 +606,6 @@ export type TemplateSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   messages?: boolean | Prisma.Template$messagesArgs<ExtArgs>
-  campaigns?: boolean | Prisma.Template$campaignsArgs<ExtArgs>
-  usages?: boolean | Prisma.Template$usagesArgs<ExtArgs>
   _count?: boolean | Prisma.TemplateCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["template"]>
 
@@ -896,8 +657,6 @@ export type TemplateSelectScalar = {
 export type TemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "category" | "providerTemplateKey" | "language" | "approvalStatus" | "body" | "structure" | "active" | "archivedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["template"]>
 export type TemplateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   messages?: boolean | Prisma.Template$messagesArgs<ExtArgs>
-  campaigns?: boolean | Prisma.Template$campaignsArgs<ExtArgs>
-  usages?: boolean | Prisma.Template$usagesArgs<ExtArgs>
   _count?: boolean | Prisma.TemplateCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TemplateIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -907,8 +666,6 @@ export type $TemplatePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Template"
   objects: {
     messages: Prisma.$MessagePayload<ExtArgs>[]
-    campaigns: Prisma.$CampaignPayload<ExtArgs>[]
-    usages: Prisma.$TemplateUsagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1318,8 +1075,6 @@ readonly fields: TemplateFieldRefs;
 export interface Prisma__TemplateClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   messages<T extends Prisma.Template$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Template$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  campaigns<T extends Prisma.Template$campaignsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Template$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  usages<T extends Prisma.Template$usagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Template$usagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TemplateUsagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1775,54 +1530,6 @@ export type Template$messagesArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
-}
-
-/**
- * Template.campaigns
- */
-export type Template$campaignsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Campaign
-   */
-  select?: Prisma.CampaignSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Campaign
-   */
-  omit?: Prisma.CampaignOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CampaignInclude<ExtArgs> | null
-  where?: Prisma.CampaignWhereInput
-  orderBy?: Prisma.CampaignOrderByWithRelationInput | Prisma.CampaignOrderByWithRelationInput[]
-  cursor?: Prisma.CampaignWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CampaignScalarFieldEnum | Prisma.CampaignScalarFieldEnum[]
-}
-
-/**
- * Template.usages
- */
-export type Template$usagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the TemplateUsage
-   */
-  select?: Prisma.TemplateUsageSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the TemplateUsage
-   */
-  omit?: Prisma.TemplateUsageOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TemplateUsageInclude<ExtArgs> | null
-  where?: Prisma.TemplateUsageWhereInput
-  orderBy?: Prisma.TemplateUsageOrderByWithRelationInput | Prisma.TemplateUsageOrderByWithRelationInput[]
-  cursor?: Prisma.TemplateUsageWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TemplateUsageScalarFieldEnum | Prisma.TemplateUsageScalarFieldEnum[]
 }
 
 /**

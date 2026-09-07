@@ -10,13 +10,7 @@ import { prisma } from "@/lib/prisma";
  * escalation priority is assigned.
  */
 
-export type NotifiableEvent =
-  | "call.requested"
-  | "meeting.requested"
-  | "customer.assigned"
-  | "followup.due"
-  | "followup.overdue"
-  | "automation.handoff";
+export type NotifiableEvent = "customer.qualified";
 
 export async function notify(entry: {
   userId: string | null | undefined;
@@ -42,6 +36,8 @@ export async function notify(entry: {
 /** Where a notification should take the user (F-019 "navigation to object"). */
 export function notificationHref(relatedType: string): string {
   switch (relatedType) {
+    case "customer":
+      return "/qualified";
     case "conversation":
       return "/inbox";
     default:
