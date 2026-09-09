@@ -1,0 +1,6 @@
+# npm ci refuses this lockfile on Linux: the wasm32-wasi optional dependency
+# tree that Tailwind's oxide pulls in resolves differently on Windows, where
+# the lockfile is generated, so two @emnapi packages are always "missing".
+# npm install reconciles it instead of failing the build.
+[phases.install]
+cmds = ["npm install --no-audit --no-fund"]
