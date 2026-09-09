@@ -52,6 +52,23 @@ test("production refuses development placeholder secrets", () => {
   );
 });
 
+test("production insists the database connection is encrypted or private", () => {
+  // A public host with no sslmode is the case the check exists for.
+  assert.ok(
+    keysOf({ ...PROD_OK, DATABASE_URL: "postgresql://u:p@db.example.com:5432/app" }).includes(
+      "DATABASE_URL",
+    ),
+  );
+  // A platform's internal network never leaves the platform, like loopback.
+  assert.deepEqual(
+    keysOf({
+      ...PROD_OK,
+      DATABASE_URL: "postgresql://u:p@postgres.railway.internal:5432/railway",
+    }),
+    [],
+  );
+});
+
 test("production refuses a short session secret", () => {
   assert.ok(keysOf({ ...PROD_OK, AUTH_SECRET: "short" }).includes("AUTH_SECRET"));
 });

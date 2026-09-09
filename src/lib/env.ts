@@ -84,7 +84,11 @@ export function validateConfig(
     "is required, otherwise the timer worker endpoint cannot be driven",
   );
 
-  if (env.DATABASE_URL && !/sslmode=|supabase\.|\.rds\.|localhost|127\.0\.0\.1/.test(env.DATABASE_URL)) {
+  // Exempt private networks the connection never leaves: loopback, and a
+  // platform's internal DNS (Railway hands out postgres.railway.internal).
+  const PRIVATE_DB_HOST =
+    /sslmode=|supabase\.|\.rds\.|localhost|127\.0\.0\.1|\.railway\.internal/;
+  if (env.DATABASE_URL && !PRIVATE_DB_HOST.test(env.DATABASE_URL)) {
     problems.push({
       key: "DATABASE_URL",
       message:
