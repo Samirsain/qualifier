@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Installed tooling ships its own bundled JS; it is not ours to lint.
+    ".claude/**",
   ]),
 ]);
 

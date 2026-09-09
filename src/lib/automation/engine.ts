@@ -34,13 +34,8 @@ export type AdvanceResult = {
   stopped?: string;
 };
 
-/** Resolve a wait config to milliseconds. Returns null when undecided. */
-export async function resolveWaitMs(config: WaitConfig): Promise<number | null> {
-  if (config.settingKey) {
-    const value = await getSetting(config.settingKey);
-    if (typeof value !== "number") return null; // still TBD — do not guess
-    return value * 60 * 60 * 1000; // settings store hours
-  }
+/** Resolve a wait config to milliseconds. */
+export function resolveWaitMs(config: WaitConfig): number {
   const days = config.days ?? 0;
   const hours = config.hours ?? 0;
   return (days * 24 + hours) * 60 * 60 * 1000;
@@ -155,16 +150,7 @@ export async function advanceRun(runId: string): Promise<AdvanceResult> {
         await failRun(runId, step.stepKey, "Invalid wait configuration");
         return { runId, state: "FAILED", steps: executed };
       }
-      const ms = await resolveWaitMs(parsed.data);
-      if (ms === null) {
-        // The business value is still TBD. Park rather than invent a duration.
-        await failRun(
-          runId,
-          step.stepKey,
-          `Wait duration "${parsed.data.settingKey}" is not configured yet`,
-        );
-        return { runId, state: "FAILED", steps: executed };
-      }
+      const ms = resolveWaitMs(parsed.data);
       const dueAt = new Date(Date.now() + ms);
       await prisma.automationRun.update({
         where: { id: runId },
@@ -250,8 +236,7 @@ export async function advanceRun(runId: string): Promise<AdvanceResult> {
 
       let timeoutAt: Date | null = null;
       if (parsed.data.timeout && parsed.data.timeoutStepKey) {
-        const ms = await resolveWaitMs(parsed.data.timeout);
-        if (ms !== null) timeoutAt = new Date(Date.now() + ms);
+        timeoutAt = new Date(Date.now() + resolveWaitMs(parsed.data.timeout));
       }
 
       await prisma.automationRun.update({
@@ -528,6 +513,22 @@ async function executeAction(
       return "ok";
 
     case "stop_journey":
+      // The run ending is not the same as the number being answered for. A
+      // stop without a status leaves it reading "In funnel" forever.
+      if (config.status) {
+        await prisma.customer.update({
+          where: { id: customerId },
+          data: { status: config.status },
+        });
+        await logActivity({
+          eventType: "customer.status_changed",
+          objectType: "customer",
+          objectId: customerId,
+          customerId,
+          after: { status: config.status },
+          metadata: { by: "automation", runId, reason: config.reason },
+        });
+      }
       await stopRun(runId, config.reason);
       return "stopped";
   }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 /**
@@ -41,28 +42,40 @@ export function Card({
   children,
   className,
   actions,
+  flush,
+  footer,
 }: {
   title?: string;
   children: ReactNode;
   className?: string;
   actions?: ReactNode;
+  /** A table fills its card to the edges; padding would fight the rules. */
+  flush?: boolean;
+  footer?: ReactNode;
 }) {
   return (
     <section
       className={cx(
-        "rounded-[var(--radius-md)] border border-[color:var(--color-border-default)] bg-[color:var(--color-surface)] shadow-[var(--shadow-surface)]",
+        "overflow-hidden rounded-[var(--radius-md)] border border-[color:var(--color-border-default)] bg-[color:var(--color-surface)] shadow-[var(--shadow-surface)]",
         className,
       )}
     >
       {(title || actions) && (
-        <div className="flex items-center justify-between gap-3 border-b border-[color:var(--color-border-default)] px-4 py-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[color:var(--color-border-default)] px-4 py-3">
           {title && (
-            <h2 className="text-[length:var(--text-h3)] font-medium">{title}</h2>
+            <h2 className="text-[length:var(--text-h3)] font-semibold">
+              {title}
+            </h2>
           )}
           {actions}
         </div>
       )}
-      <div className="p-4">{children}</div>
+      <div className={flush ? undefined : "p-4"}>{children}</div>
+      {footer && (
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[color:var(--color-border-default)] bg-[color:var(--color-surface-muted)] px-4 py-2.5 text-[length:var(--text-small)] text-[color:var(--color-text-secondary)]">
+          {footer}
+        </div>
+      )}
     </section>
   );
 }
@@ -115,23 +128,131 @@ const TONE_CLASS: Record<Tone, string> = {
   info: "border-[color:var(--color-status-info)] text-[color:var(--color-status-info)]",
 };
 
+const DOT_CLASS: Record<Tone, string> = {
+  neutral: "bg-[color:var(--color-text-secondary)]",
+  success: "bg-[color:var(--color-status-success)]",
+  warning: "bg-[color:var(--color-status-warning)]",
+  error: "bg-[color:var(--color-status-error)]",
+  info: "bg-[color:var(--color-status-info)]",
+};
+
 /** §2: badges always carry text, so color is never the only status carrier. */
 export function Badge({
   children,
   tone = "neutral",
+  dot,
 }: {
   children: ReactNode;
   tone?: Tone;
+  /** A state a number is *in*, rather than a label — reads at a glance. */
+  dot?: boolean;
 }) {
   return (
     <span
       className={cx(
-        "inline-flex items-center gap-1 rounded-[var(--radius-sm)] border px-2 py-0.5 text-[length:var(--text-small)] font-medium whitespace-nowrap",
+        "inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border px-2 py-0.5 text-[length:var(--text-small)] font-medium whitespace-nowrap",
         TONE_CLASS[tone],
       )}
     >
+      {dot && (
+        <span
+          aria-hidden
+          className={cx("h-1.5 w-1.5 shrink-0 rounded-full", DOT_CLASS[tone])}
+        />
+      )}
       {children}
     </span>
+  );
+}
+
+/**
+ * One bar for how a list splits across states.
+ *
+ * Five equal tiles say how many; one bar says the shape — which is the
+ * question someone opening a batch is actually asking.
+ */
+export function DistributionBar({
+  segments,
+  className,
+}: {
+  segments: { label: string; value: number; color: string }[];
+  className?: string;
+}) {
+  const total = segments.reduce((sum, s) => sum + s.value, 0);
+  if (total === 0) return null;
+
+  return (
+    // One continuous rounded rule: the shape of the split, not five bar charts.
+    <div
+      className={cx(
+        "flex h-1.5 gap-px overflow-hidden rounded-full bg-[color:var(--color-surface-muted)]",
+        className,
+      )}
+    >
+      {segments
+        .filter((s) => s.value > 0)
+        .map((s) => (
+          <div
+            key={s.label}
+            title={`${s.label}: ${s.value}`}
+            style={{ width: `${(s.value / total) * 100}%`, background: s.color }}
+          />
+        ))}
+    </div>
+  );
+}
+
+/** How far along a funnel one number is: filled bars out of the total. */
+export function StepMeter({
+  done,
+  total,
+  color,
+}: {
+  done: number;
+  total: number;
+  color: string;
+}) {
+  return (
+    <div aria-hidden className="flex gap-[3px]">
+      {Array.from({ length: total }, (_, i) => (
+        <span
+          key={i}
+          className="h-1 w-6 rounded-[2px]"
+          style={{
+            background: i < done ? color : "var(--color-border-default)",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/** A count-carrying filter that is a link, so the filter lives in the URL. */
+export function FilterChip({
+  href,
+  label,
+  count,
+  active,
+}: {
+  href: string;
+  label: string;
+  count: number;
+  active?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      aria-current={active ? "true" : undefined}
+      className={cx(
+        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[length:var(--text-small)] whitespace-nowrap transition-colors",
+        active
+          ? "border-[color:var(--color-action-primary)] bg-[color:var(--color-action-primary)]/8 font-semibold text-[color:var(--color-action-primary)]"
+          : "border-[color:var(--color-border-default)] hover:bg-[color:var(--color-surface-muted)]",
+      )}
+    >
+      {label}
+      <span className="tabular-nums opacity-70">{count}</span>
+    </Link>
   );
 }
 
@@ -150,12 +271,12 @@ export function Table({
       <table className="w-full min-w-[40rem] border-collapse text-left">
         {caption && <caption className="sr-only">{caption}</caption>}
         <thead>
-          <tr className="border-b border-[color:var(--color-border-default)]">
+          <tr className="border-b border-[color:var(--color-border-default)] bg-[color:var(--color-surface-muted)]">
             {head.map((h, i) => (
               <th
                 key={i}
                 scope="col"
-                className="px-3 py-2 text-[length:var(--text-small)] font-medium text-[color:var(--color-text-secondary)]"
+                className="px-4 py-2.5 text-[11px] font-semibold tracking-[0.03em] text-[color:var(--color-text-secondary)] uppercase"
               >
                 {h}
               </th>
@@ -183,7 +304,7 @@ export function Cell({
   children: ReactNode;
   className?: string;
 }) {
-  return <td className={cx("px-3 py-2 align-middle", className)}>{children}</td>;
+  return <td className={cx("px-4 py-3 align-middle", className)}>{children}</td>;
 }
 
 export function EmptyState({

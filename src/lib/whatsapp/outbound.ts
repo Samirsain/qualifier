@@ -1,6 +1,10 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
 import { whatsapp, type SendResult } from "@/lib/whatsapp/adapter";
+import {
+  fillPlaceholders,
+  unfilledPlaceholders,
+} from "@/lib/whatsapp/placeholders";
 
 /**
  * Outbound flow (doc 10 §8): validate eligibility → persist send intent →
@@ -22,7 +26,7 @@ export async function sendToCustomer(input: {
 }): Promise<SendOutcome> {
   const customer = await prisma.customer.findUnique({
     where: { id: input.customerId },
-    select: { id: true, phoneE164: true, optedOutAt: true },
+    select: { id: true, phoneE164: true, optedOutAt: true, name: true },
   });
   if (!customer) return { ok: false, reason: "Customer not found." };
 
@@ -53,8 +57,20 @@ export async function sendToCustomer(input: {
     return { ok: false, reason: "That template is archived or inactive." };
   }
 
-  const text = template?.body ?? input.body?.trim();
-  if (!text) return { ok: false, reason: "Message body is empty." };
+  const raw = template?.body ?? input.body?.trim();
+  if (!raw) return { ok: false, reason: "Message body is empty." };
+
+  const text = fillPlaceholders(raw, { name: customer.name });
+  // A leftover {{placeholder}} would go out to a real person as-is. Refusing is
+  // the only honest option: the message is wrong, and half-sending it is worse
+  // than not sending it.
+  const unfilled = unfilledPlaceholders(text);
+  if (unfilled.length > 0) {
+    return {
+      ok: false,
+      reason: `Message still contains ${unfilled.join(", ")}. Fill it in or remove it from the template.`,
+    };
+  }
 
   const conversation =
     (await prisma.conversation.findFirst({

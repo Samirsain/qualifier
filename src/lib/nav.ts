@@ -1,17 +1,24 @@
 import type { Permission } from "@/lib/rbac";
 
-/** Six screens. The system narrows a list; it does not manage customers. */
+/**
+ * Five screens in two groups: what is running now, and what it runs on.
+ * The split is the daily rhythm — batches and their output are visited every
+ * day, funnels and templates only when something changes.
+ */
+export type NavIcon = "batches" | "qualified" | "funnels" | "templates" | "settings";
+
 export type NavItem = {
   href: string;
   label: string;
   permission: Permission;
+  icon: NavIcon;
+  group: "Running" | "Set up";
 };
 
 export const NAV: NavItem[] = [
-  { href: "/batches", label: "Batches", permission: "batch:read" },
-  { href: "/qualified", label: "Qualified", permission: "qualified:read" },
-  { href: "/funnels", label: "Funnels", permission: "funnel:read" },
-  { href: "/templates", label: "Templates", permission: "template:read" },
-  { href: "/inbox", label: "Inbox", permission: "conversation:read" },
-  { href: "/settings", label: "Settings", permission: "settings:read" },
+  { href: "/batches", label: "Batches", permission: "batch:read", icon: "batches", group: "Running" },
+  { href: "/qualified", label: "Qualified", permission: "qualified:read", icon: "qualified", group: "Running" },
+  { href: "/funnels", label: "Funnels", permission: "funnel:read", icon: "funnels", group: "Set up" },
+  { href: "/templates", label: "Templates", permission: "template:read", icon: "templates", group: "Set up" },
+  { href: "/settings", label: "Settings", permission: "settings:read", icon: "settings", group: "Set up" },
 ];

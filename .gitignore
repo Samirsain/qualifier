@@ -42,3 +42,7 @@ next-env.d.ts
 
 # keep the example committed
 !.env.example
+
+# local tooling and generated design exports
+/.claude/
+/design/three-percent-club-screens.html

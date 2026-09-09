@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
+import { seedDemoData } from "./demo-data";
 import { STARTER_FUNNEL } from "./starter-funnel";
 import { toEngineSteps } from "../src/lib/funnels/steps";
 
@@ -9,14 +10,10 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-  // Business configuration for still-open decisions. Nothing here is a
-  // production value — each is a placeholder the business must approve.
+  // The only two settings any code reads.
   const settings: Record<string, unknown> = {
     "automation.pause_all": false,
-    "automation.no_response_wait_hours": null, // decision pending
-    "numbers.default_country": "IN", // decided
-    "reporting.timezone": null, // decision pending
-    "optout.keywords": [], // decision pending
+    "optout.keywords": [], // no word opts anyone out until one is set
   };
   for (const [key, value] of Object.entries(settings)) {
     await prisma.systemSetting.upsert({
@@ -40,51 +37,122 @@ async function main() {
     },
   });
 
-  // One template per message step, so the starter funnel is usable immediately.
-  const introTemplate = await prisma.template.upsert({
-    where: { name: "Starter — introduction" },
-    update: {},
-    create: {
+  /*
+   * One template per step, not one for the whole funnel: the tracking screen
+   * names the step by its template, so sharing one made every message step
+   * read "Starter — introduction" and the journey unreadable.
+   */
+  const COPY: Record<string, { name: string; body: string }> = {
+    intro: {
       name: "Starter — introduction",
-      category: "Starter",
-      body: "Hello {{name}}, thanks for your interest. May we tell you more?",
+      body: "Hello {{name}}, thanks for your interest in the 3% Club.",
     },
-  });
+    ask_more: {
+      name: "Starter — know more?",
+      body: "Would you like to know more? Reply YES or NO.",
+    },
+    details: {
+      name: "Starter — the details",
+      body:
+        "Here is how it works: we share the details, answer your questions, and if it looks right for you, someone from our team calls. Replace this with your own wording.",
+    },
+    ask_call: {
+      name: "Starter — call request",
+      body: "Would you like someone to call you? Reply YES or NO.",
+    },
+    declined: {
+      name: "Starter — no thank you",
+      body: "Understood — we will not message you about this again.",
+    },
+  };
 
-  const existing = await prisma.automation.findFirst({
+  const templateIds: Record<string, string> = {};
+  for (const [stepKey, copy] of Object.entries(COPY)) {
+    const template = await prisma.template.upsert({
+      where: { name: copy.name },
+      update: {},
+      create: { name: copy.name, category: "Starter", body: copy.body },
+    });
+    templateIds[stepKey] = template.id;
+  }
+
+  let starter = await prisma.automation.findFirst({
     where: { name: STARTER_FUNNEL.name },
-    select: { id: true },
+    select: { id: true, version: true },
   });
 
-  if (!existing) {
-    const withTemplate = STARTER_FUNNEL.steps.map((s) =>
-      s.kind === "message" || s.kind === "question"
-        ? { ...s, templateId: introTemplate.id }
-        : s,
-    );
-    await prisma.automation.create({
+  const stepsFor = () =>
+    toEngineSteps(
+      STARTER_FUNNEL.steps.map((step) =>
+        step.kind === "message" || step.kind === "question"
+          ? { ...step, templateId: templateIds[step.key] ?? templateIds.intro }
+          : step,
+      ),
+    ).map((r) => ({
+      version: 1,
+      stepKey: r.stepKey,
+      stepType: r.stepType,
+      config: r.config as never,
+      nextStepKey: r.nextStepKey,
+      sortOrder: r.sortOrder,
+    }));
+
+  // A funnel seeded before the no-reply path existed cannot show a silent
+  // number going anywhere, so refresh its steps rather than leave it stale.
+  if (starter) {
+    const current = await prisma.automationStep.findMany({
+      where: { automationId: starter.id },
+      select: { stepKey: true, config: true },
+    });
+    const wanted = stepsFor();
+    const stale =
+      current.length !== wanted.length ||
+      wanted.some((step) => {
+        const match = current.find((c) => c.stepKey === step.stepKey);
+        if (!match) return true;
+        const before = (match.config as { templateId?: string })?.templateId;
+        const after = (step.config as { templateId?: string })?.templateId;
+        return before !== after;
+      });
+
+    if (stale) {
+      await prisma.automationStep.deleteMany({ where: { automationId: starter.id } });
+      await prisma.automationStep.createMany({
+        data: wanted.map((step) => ({ ...step, automationId: starter!.id })),
+      });
+      console.log("Starter funnel refreshed: steps and per-step templates.");
+    }
+  }
+
+  if (!starter) {
+    starter = await prisma.automation.create({
+      select: { id: true, version: true },
       data: {
         name: STARTER_FUNNEL.name,
         type: STARTER_FUNNEL.type,
-        status: "DRAFT",
+        // Live, because a demo batch has to run against something.
+        status: "ACTIVE",
+        activatedAt: new Date(),
         version: 1,
         description: STARTER_FUNNEL.description,
         createdById: admin.id,
-        steps: {
-          create: toEngineSteps(withTemplate).map((r) => ({
-            version: 1,
-            stepKey: r.stepKey,
-            stepType: r.stepType,
-            config: r.config as never,
-            nextStepKey: r.nextStepKey,
-            sortOrder: r.sortOrder,
-          })),
-        },
+        steps: { create: stepsFor() },
       },
     });
   }
 
-  console.log(`Seed complete. Admin: ${adminEmail} / ${adminPassword}`);
+  const demo = await seedDemoData(prisma, {
+    adminId: admin.id,
+    automationId: starter.id,
+    automationVersion: starter.version,
+  });
+
+  console.log(
+    `Seed complete. Admin: ${adminEmail} / ${adminPassword}` +
+      (demo.created > 0
+        ? ` — ${demo.created} demo numbers across ${3} batches.`
+        : " — batches already exist, demo data skipped."),
+  );
 }
 
 main()

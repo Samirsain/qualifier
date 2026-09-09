@@ -10,6 +10,7 @@ import {
   buttonClass,
   inputClass,
 } from "@/components/ui";
+import { formatDateTime } from "@/lib/format";
 import { prisma } from "@/lib/prisma";
 import { requirePermission } from "@/lib/session";
 import type { Prisma } from "@/generated/prisma/client";
@@ -139,7 +140,7 @@ export default async function ActivityPage({
                 <Row key={e.id}>
                   <Cell className="whitespace-nowrap tabular-nums">
                     <time dateTime={e.occurredAt.toISOString()}>
-                      {e.occurredAt.toLocaleString()}
+                      {formatDateTime(e.occurredAt)}
                     </time>
                   </Cell>
                   <Cell>

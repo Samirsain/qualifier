@@ -64,12 +64,7 @@ export async function validateAutomation(automationId: string): Promise<string[]
           problems.push(`step "${step.stepKey}": invalid wait configuration`);
           break;
         }
-        const ms = await resolveWaitMs(parsed.data);
-        if (ms === null) {
-          problems.push(
-            `step "${step.stepKey}": wait duration "${parsed.data.settingKey}" is not configured yet`,
-          );
-        } else if (ms <= 0 && !parsed.data.settingKey) {
+        if (resolveWaitMs(parsed.data) <= 0) {
           problems.push(`step "${step.stepKey}": wait is zero-length`);
         }
         break;
@@ -108,21 +103,14 @@ export async function validateAutomation(automationId: string): Promise<string[]
         if (parsed.data.timeout && !parsed.data.timeoutStepKey) {
           problems.push(`step "${step.stepKey}": timeout has no target step`);
         }
-        if (parsed.data.timeout) {
+        if (parsed.data.timeout && resolveWaitMs(parsed.data.timeout) <= 0) {
           /*
            * A branch timeout is a wait, so §16 "invalid/empty waits" applies to
-           * it too. An unresolvable duration would leave the run parked with no
-           * timer at all and the no-response branch would never fire — inert
-           * rather than obviously broken, which is worse.
+           * it too. A zero-length one would leave the run parked with no timer
+           * at all and the no-response branch would never fire — inert rather
+           * than obviously broken, which is worse.
            */
-          const ms = await resolveWaitMs(parsed.data.timeout);
-          if (ms === null) {
-            problems.push(
-              `step "${step.stepKey}": the no-response wait "${parsed.data.timeout.settingKey}" is not configured yet, so this branch would never time out`,
-            );
-          } else if (ms <= 0) {
-            problems.push(`step "${step.stepKey}": the no-response wait is zero-length`);
-          }
+          problems.push(`step "${step.stepKey}": the no-response wait is zero-length`);
         }
         if (parsed.data.timeoutStepKey) {
           if (!keys.has(parsed.data.timeoutStepKey)) {

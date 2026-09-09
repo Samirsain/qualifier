@@ -81,7 +81,7 @@ export function Builder({
         case "qualify":
           return [...s, { kind, key }];
         case "stop":
-          return [...s, { kind, key, reason: "" }];
+          return [...s, { kind, key, reason: "", status: null }];
         case "question":
           return [
             ...s,
@@ -94,6 +94,8 @@ export function Builder({
               yesKey: null,
               noKey: null,
               otherKey: null,
+              noReplyDays: 0,
+              noReplyKey: null,
             },
           ];
       }
@@ -211,16 +213,37 @@ export function Builder({
               )}
 
               {step.kind === "stop" && (
-                <Field
-                  label="Reason"
-                  hint="Recorded against the run, so the stop is explainable later."
-                >
-                  <input
-                    className={inputClass}
-                    value={step.reason}
-                    onChange={(e) => update(i, { ...step, reason: e.target.value })}
-                  />
-                </Field>
+                <>
+                  <Field
+                    label="Reason"
+                    hint="Recorded against the run, so the stop is explainable later."
+                  >
+                    <input
+                      className={inputClass}
+                      value={step.reason}
+                      onChange={(e) => update(i, { ...step, reason: e.target.value })}
+                    />
+                  </Field>
+                  <Field
+                    label="Leave the number as"
+                    hint="This is what the batch counters and the number's status show afterwards."
+                  >
+                    <select
+                      className={inputClass}
+                      value={step.status ?? ""}
+                      onChange={(e) =>
+                        update(i, {
+                          ...step,
+                          status: (e.target.value || null) as typeof step.status,
+                        })
+                      }
+                    >
+                      <option value="">Leave it unchanged</option>
+                      <option value="NOT_INTERESTED">Not interested</option>
+                      <option value="NO_RESPONSE">No response</option>
+                    </select>
+                  </Field>
+                </>
               )}
 
               {step.kind === "qualify" && (
@@ -292,6 +315,39 @@ export function Builder({
                       </select>
                     </Field>
                   ))}
+                  <Field
+                    label="If there is no reply for (days)"
+                    hint="0 waits forever, which parks the number on this question with nothing to show for it."
+                  >
+                    <input
+                      type="number"
+                      min={0}
+                      max={365}
+                      className={inputClass}
+                      value={step.noReplyDays}
+                      onChange={(e) =>
+                        update(i, { ...step, noReplyDays: Number(e.target.value) || 0 })
+                      }
+                    />
+                  </Field>
+                  <Field label="Then go to">
+                    <select
+                      className={inputClass}
+                      value={step.noReplyKey ?? ""}
+                      onChange={(e) =>
+                        update(i, { ...step, noReplyKey: e.target.value || null })
+                      }
+                    >
+                      <option value="">Nowhere — keep waiting</option>
+                      {steps.map((t, ti) =>
+                        t.key === step.key ? null : (
+                          <option key={t.key} value={t.key}>
+                            {ti + 1}. {KIND_LABELS[t.kind]}
+                          </option>
+                        ),
+                      )}
+                    </select>
+                  </Field>
                 </>
               )}
             </div>

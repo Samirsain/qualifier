@@ -1,48 +1,53 @@
+import Link from "next/link";
 import { setPauseAllFromSettings } from "./actions";
-import { SettingsForm } from "./form";
+import { OptOutForm } from "./form";
 import { Badge, Card, PageHeader, buttonClass } from "@/components/ui";
 import { prisma } from "@/lib/prisma";
 import { can } from "@/lib/rbac";
 import { requirePermission } from "@/lib/session";
-import { getSettings } from "@/lib/settings";
-import { SETTING_SPECS, toFieldValue } from "@/lib/setting-specs";
+import { getSetting } from "@/lib/settings";
 
 export const dynamic = "force-dynamic";
 
 /**
- * UI-026 — Settings (F-022, BR-39).
+ * Two controls, because two are all the code reads: the emergency stop
+ * (`engine.ts`) and the opt-out words (`whatsapp/inbound.ts`).
  *
- * Two things live here: the emergency controls, and the business decisions the
- * documentation leaves open. Putting them on one screen is deliberate — an
- * operator dealing with an incident and an operator recording an approved
- * decision are the same person, and both need to see what is currently unset.
+ * The screen used to offer four more — a no-response wait, a reporting
+ * timezone, a send window, a default country. Nothing read any of them: waits
+ * live in the funnel's own Wait step, the analytics screens are gone, and the
+ * phone parser hardcodes India. A setting nobody reads is not a decision, it
+ * is a question with no effect, so it is gone.
  */
 export default async function SettingsPage() {
   const user = await requirePermission("settings:read");
 
-  const keys = SETTING_SPECS.map((s) => s.key);
-  const [stored, pauseAll, activeAutomations] = await Promise.all([
-    getSettings([...keys]),
-    prisma.systemSetting.findUnique({ where: { key: "automation.pause_all" } }),
+  const [pauseAll, keywords, activeAutomations] = await Promise.all([
+    getSetting("automation.pause_all"),
+    getSetting("optout.keywords"),
     prisma.automation.count({ where: { status: "ACTIVE" } }),
   ]);
 
-  const isPaused = pauseAll?.value === true;
+  const isPaused = pauseAll === true;
   const canManage = can(user.roles, "settings:manage");
   const canPauseAll = can(user.roles, "automation:pause_all");
-
-  const unresolved = SETTING_SPECS.filter(
-    (s) => stored[s.key] === null || stored[s.key] === undefined,
-  );
+  const current = Array.isArray(keywords)
+    ? keywords.filter((k): k is string => typeof k === "string").join(", ")
+    : "";
 
   return (
     <>
       <PageHeader
         title="Settings"
-        description="Emergency controls and the business decisions this system is waiting on."
+        description="The emergency stop, and the words that opt a number out."
+        actions={
+          <Link href="/activity" className={buttonClass.secondary}>
+            Activity log
+          </Link>
+        }
       />
 
-      <Card title="Emergency controls" className="mb-4">
+      <Card title="Emergency stop" className="mb-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="font-medium">
@@ -54,13 +59,12 @@ export default async function SettingsPage() {
               )}
             </p>
             <p className="mt-1 text-[color:var(--color-text-secondary)]">
-              {activeAutomations} active automation
-              {activeAutomations === 1 ? "" : "s"}.
+              {activeAutomations} active funnel{activeAutomations === 1 ? "" : "s"}.
             </p>
             <p className="mt-1 text-[length:var(--text-small)] text-[color:var(--color-text-secondary)]">
-              Pausing everything stops all journeys advancing and all timers
-              firing. Nothing is lost — runs keep their state and resume where
-              they stopped.
+              Pausing stops every funnel advancing and every timer firing.
+              Nothing is lost — each number keeps its place and carries on from
+              there when you resume.
             </p>
           </div>
 
@@ -71,7 +75,7 @@ export default async function SettingsPage() {
                 type="submit"
                 className={isPaused ? buttonClass.primary : buttonClass.danger}
               >
-                {isPaused ? "Resume all automations" : "Pause all automations"}
+                {isPaused ? "Resume all funnels" : "Pause all funnels"}
               </button>
             </form>
           ) : (
@@ -82,43 +86,13 @@ export default async function SettingsPage() {
         </div>
       </Card>
 
-      <Card title="Open business decisions" className="mb-4">
-        {unresolved.length === 0 ? (
-          <p className="text-[color:var(--color-status-success)]">
-            Every decision this screen tracks has been recorded.
-          </p>
-        ) : (
-          <>
-            <p className="mb-3">
-              <Badge tone="warning">{unresolved.length} unresolved</Badge>
-            </p>
-            <ul className="flex flex-col gap-2">
-              {unresolved.map((s) => (
-                <li key={s.key}>
-                  <span className="font-medium">{s.label}</span>{" "}
-                  <span className="text-[color:var(--color-text-secondary)]">
-                    ({s.gap})
-                  </span>
-                  <p className="text-[length:var(--text-small)] text-[color:var(--color-text-secondary)]">
-                    While unset: {s.whileUnset}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-      </Card>
-
-      <Card title="Business configuration">
+      <Card title="Opt-out words">
         {canManage ? (
-          <SettingsForm
-            values={Object.fromEntries(
-              SETTING_SPECS.map((s) => [s.key, toFieldValue(stored[s.key])]),
-            )}
-          />
+          <OptOutForm value={current} />
         ) : (
           <p className="text-[color:var(--color-text-secondary)]">
-            You can see these values but not change them. Ask an administrator.
+            {current || "No words set, so nothing opts a number out."} You can
+            see this but not change it. Ask an administrator.
           </p>
         )}
       </Card>

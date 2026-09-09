@@ -9,6 +9,15 @@ export const CUSTOMER_STATUS_LABELS = {
 
 export type CustomerStatusKey = keyof typeof CUSTOMER_STATUS_LABELS;
 
+/** The colour each status carries in bars and meters, matching its badge. */
+export const CUSTOMER_STATUS_COLOR: Record<CustomerStatusKey, string> = {
+  NOT_STARTED: "var(--color-border-default)",
+  IN_FUNNEL: "var(--color-status-info)",
+  QUALIFIED: "var(--color-status-success)",
+  NOT_INTERESTED: "var(--color-status-error)",
+  NO_RESPONSE: "var(--color-status-warning)",
+};
+
 export const BATCH_STATUS_LABELS = {
   DRAFT: "Draft",
   RUNNING: "Running",

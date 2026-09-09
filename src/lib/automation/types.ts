@@ -34,6 +34,8 @@ export const actionConfig = z.discriminatedUnion("action", [
   z.object({
     action: z.literal("stop_journey"),
     reason: z.string().min(1).max(200),
+    /** The status the number is left in. Omitted leaves it unchanged. */
+    status: z.enum(["NOT_INTERESTED", "NO_RESPONSE"]).optional(),
   }),
 ]);
 
@@ -42,20 +44,19 @@ export type ActionConfig = z.infer<typeof actionConfig>;
 /**
  * WAIT — a durable timer.
  *
- * `days` covers "wait exactly 1 day" (doc 07 §7). `settingKey` reads the
- * duration from `system_settings` so an undecided business value (GAP-002)
- * is configuration, not a constant baked into a journey.
+ * The duration lives on the step itself. It used to be able to point at a
+ * `system_settings` key instead, but nothing produced such a step and the
+ * indirection only meant a funnel could fail at run time on a value nobody
+ * had set.
  */
 export const waitConfig = z
   .object({
     days: z.number().min(0).max(365).optional(),
     hours: z.number().min(0).max(24 * 365).optional(),
-    settingKey: z.string().max(120).optional(),
   })
-  .refine(
-    (v) => v.days !== undefined || v.hours !== undefined || v.settingKey !== undefined,
-    { message: "A wait needs days, hours or a settingKey" },
-  );
+  .refine((v) => v.days !== undefined || v.hours !== undefined, {
+    message: "A wait needs days or hours",
+  });
 
 export type WaitConfig = z.infer<typeof waitConfig>;
 

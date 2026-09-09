@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /*
- * Design tokens per 05_3_Percent_Club_Design_System.md.
- * Semantic names only — brand hex values are a design/brand approval decision
- * (§1), so these are neutral defaults changeable in one place.
+ * Design tokens per 05_3_Percent_Club_Design_System.md §1-§5.
+ * Semantic names only: every screen reads these, so the whole product
+ * repaints from this block alone.
  */
 
 @theme {
@@ -23,7 +23,7 @@
   --color-status-info: oklch(0.6 0.13 240);
   --color-focus: oklch(0.62 0.18 258);
 
-  /* §3 Typography */
+  /* §3 Typography — the interface face is the reader's own system font. */
   --font-sans:
     ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
@@ -47,22 +47,16 @@
   --shadow-modal: 0 16px 40px oklch(0.2 0.02 260 / 0.18);
 }
 
-/* Dark theme: token values swap, roles stay identical. */
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-canvas: oklch(0.19 0.012 262);
-    --color-surface: oklch(0.235 0.014 262);
-    --color-surface-muted: oklch(0.275 0.014 262);
-    --color-text-primary: oklch(0.95 0.005 260);
-    --color-text-secondary: oklch(0.7 0.012 260);
-    --color-border-default: oklch(0.34 0.014 262);
-    --color-action-primary: oklch(0.63 0.15 258);
-    --color-action-primary-hover: oklch(0.7 0.15 258);
-  }
-}
+/*
+ * One theme, and it is the light one the design was drawn in. The dark
+ * variant was a token swap nobody had looked at; a half-checked second theme
+ * is worse than none, so it is gone rather than shipped unseen.
+ */
 
 html,
 body {
+  /* Native controls and scrollbars follow the page, not the OS. */
+  color-scheme: light;
   background: var(--color-canvas);
   color: var(--color-text-primary);
   font-family: var(--font-sans);

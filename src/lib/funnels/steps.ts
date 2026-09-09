@@ -6,11 +6,18 @@
  * existed.
  */
 
+/**
+ * How a number ends up when a Stop step runs. Without this the run stops but
+ * the number stays "In funnel" forever, so the batch counters only ever show
+ * qualified or in-progress.
+ */
+export type StopStatus = "NOT_INTERESTED" | "NO_RESPONSE" | null;
+
 export type BuilderStep =
   | { kind: "message"; key: string; templateId: string }
   | { kind: "wait"; key: string; days: number; hours: number }
   | { kind: "qualify"; key: string }
-  | { kind: "stop"; key: string; reason: string }
+  | { kind: "stop"; key: string; reason: string; status: StopStatus }
   | {
       kind: "question";
       key: string;
@@ -20,6 +27,9 @@ export type BuilderStep =
       yesKey: string | null;
       noKey: string | null;
       otherKey: string | null;
+      /** Days to wait for a reply before giving up. 0 waits forever. */
+      noReplyDays: number;
+      noReplyKey: string | null;
     };
 
 export type EngineStepInput = {
@@ -74,7 +84,11 @@ export function toEngineSteps(steps: BuilderStep[]): EngineStepInput[] {
         return {
           stepKey: step.key,
           stepType: "ACTION",
-          config: { action: "stop_journey", reason: step.reason },
+          config: {
+            action: "stop_journey",
+            reason: step.reason,
+            ...(step.status ? { status: step.status } : {}),
+          },
           nextStepKey: null,
           sortOrder,
         };
@@ -92,6 +106,14 @@ export function toEngineSteps(steps: BuilderStep[]): EngineStepInput[] {
             templateId: step.templateId,
             answers,
             ...(step.otherKey ? { otherStepKey: step.otherKey } : {}),
+            // Both halves or neither: a timeout with no target would leave the
+            // number waiting anyway, which is the bug this exists to stop.
+            ...(step.noReplyKey && step.noReplyDays > 0
+              ? {
+                  timeout: { days: step.noReplyDays },
+                  timeoutStepKey: step.noReplyKey,
+                }
+              : {}),
           },
           // A branch's exits are its answers. An implicit next would be a
           // second path out of the same step.
@@ -124,6 +146,8 @@ export function fromEngineSteps(rows: EngineStepRow[]): BuilderStep[] {
           templateId?: string;
           answers?: Record<string, string>;
           otherStepKey?: string;
+          timeout?: { days?: number };
+          timeoutStepKey?: string;
         };
         return {
           kind: "question",
@@ -134,15 +158,27 @@ export function fromEngineSteps(rows: EngineStepRow[]): BuilderStep[] {
           yesKey: c.answers?.YES ?? null,
           noKey: c.answers?.NO ?? null,
           otherKey: c.otherStepKey ?? null,
+          noReplyDays: c.timeout?.days ?? 0,
+          noReplyKey: c.timeoutStepKey ?? null,
         };
       }
 
-      const c = row.config as { action: string; templateId?: string; reason?: string };
+      const c = row.config as {
+        action: string;
+        templateId?: string;
+        reason?: string;
+        status?: StopStatus;
+      };
       if (c.action === "mark_qualified") {
         return { kind: "qualify", key: row.stepKey };
       }
       if (c.action === "stop_journey") {
-        return { kind: "stop", key: row.stepKey, reason: c.reason ?? "" };
+        return {
+          kind: "stop",
+          key: row.stepKey,
+          reason: c.reason ?? "",
+          status: c.status ?? null,
+        };
       }
       return {
         kind: "message",
@@ -184,10 +220,24 @@ export function validateBuilderSteps(steps: BuilderStep[]): string[] {
       if (!step.yesKey && !step.noKey) {
         problems.push(`Question "${step.key}" has no answers wired up.`);
       }
+      // A question with no time limit parks a silent number forever, and it
+      // never reaches a status anyone can act on.
+      if (step.noReplyDays > 0 && !step.noReplyKey) {
+        problems.push(
+          `Question "${step.key}" waits ${step.noReplyDays} day(s) for a reply but has nowhere to send a number that never answers.`,
+        );
+      }
+      if (step.noReplyKey && step.noReplyDays <= 0) {
+        problems.push(
+          `Question "${step.key}" has a no-reply path but waits zero days, so it would never be taken.`,
+        );
+      }
+
       for (const [label, target] of [
         ["YES", step.yesKey],
         ["NO", step.noKey],
         ["unrecognised reply", step.otherKey],
+        ["no reply", step.noReplyKey],
       ] as const) {
         if (target && !keys.has(target)) {
           problems.push(

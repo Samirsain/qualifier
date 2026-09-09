@@ -3,29 +3,15 @@ import { prisma } from "@/lib/prisma";
 import { logActivity } from "@/lib/activity";
 
 /**
- * Business configuration for decisions the source has not made yet.
+ * The two rows in `system_settings` the product actually reads:
+ * `automation.pause_all` (the emergency stop) and `optout.keywords`.
  *
- * A key seeded to `null` means "still TBD". Callers must treat null as
- * undecided and refuse to act, rather than falling back to a default that
- * would silently become the business rule.
+ * Every write is logged, because both change what happens to real numbers.
  */
 
 export async function getSetting(key: string): Promise<unknown> {
   const row = await prisma.systemSetting.findUnique({ where: { key } });
   return row?.value ?? null;
-}
-
-export async function getSettings(
-  keys: string[],
-): Promise<Record<string, unknown>> {
-  const rows = await prisma.systemSetting.findMany({
-    where: { key: { in: keys } },
-  });
-  const out: Record<string, unknown> = Object.fromEntries(
-    keys.map((k) => [k, null]),
-  );
-  for (const row of rows) out[row.key] = row.value;
-  return out;
 }
 
 export async function setSetting(

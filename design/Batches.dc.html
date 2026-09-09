@@ -1,0 +1,246 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      color: oklch(0.22 0.015 260);
+      background: oklch(0.985 0.002 250);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: oklch(0.52 0.16 258); text-decoration: none; }
+    a:hover { color: oklch(0.46 0.17 258); }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { text-align: left; }
+  </style>
+</helmet>
+
+<div style="display: flex; min-height: 900px; background: oklch(0.985 0.002 250);">
+
+  <nav style="display: flex; flex-direction: column; gap: 24px; width: 232px; flex-shrink: 0; padding: 20px 12px; background: oklch(1 0 0); border-right: 1px solid oklch(0.9 0.006 260);">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 4px 8px;">
+      <div style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: oklch(0.52 0.16 258); color: #fff; font-size: 13px; font-weight: 600; letter-spacing: -0.02em;">3%</div>
+      <div style="display: flex; flex-direction: column;">
+        <span style="font-size: 15px; font-weight: 600; letter-spacing: -0.01em;">3% Club</span>
+        <span style="font-size: 12px; color: oklch(0.52 0.014 260);">Qualification filter</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 2px;">
+      <span style="padding: 0 8px 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: oklch(0.52 0.014 260);">Running</span>
+      <a href="#" style="display: flex; align-items: center; gap: 10px; padding: 8px 8px 8px 10px; border-radius: 6px; background: oklch(0.968 0.003 250); color: oklch(0.22 0.015 260); font-weight: 600; box-shadow: inset 2px 0 0 oklch(0.52 0.16 258);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="oklch(0.52 0.16 258)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="2"></rect><rect x="3" y="14" width="18" height="6" rx="2"></rect></svg>
+        <span>Batches</span>
+        <span style="margin-left: auto; padding: 1px 7px; border-radius: 999px; background: oklch(1 0 0); border: 1px solid oklch(0.9 0.006 260); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; color: oklch(0.52 0.014 260);">3</span>
+      </a>
+      <a href="#" style="display: flex; align-items: center; gap: 10px; padding: 8px 8px 8px 10px; border-radius: 6px; color: oklch(0.22 0.015 260);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="oklch(0.52 0.014 260)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        <span>Qualified</span>
+        <span style="margin-left: auto; padding: 1px 7px; border-radius: 999px; background: oklch(0.58 0.14 152 / 0.12); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; color: oklch(0.44 0.12 152);">202</span>
+      </a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 2px;">
+      <span style="padding: 0 8px 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: oklch(0.52 0.014 260);">Set up</span>
+      <a href="#" style="display: flex; align-items: center; gap: 10px; padding: 8px 8px 8px 10px; border-radius: 6px; color: oklch(0.22 0.015 260);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="oklch(0.52 0.014 260)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4"></path><path d="M12 16v4"></path></svg>
+        <span>Funnels</span>
+      </a>
+      <a href="#" style="display: flex; align-items: center; gap: 10px; padding: 8px 8px 8px 10px; border-radius: 6px; color: oklch(0.22 0.015 260);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="oklch(0.52 0.014 260)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"></path><path d="M4 12h10"></path><path d="M4 18h13"></path></svg>
+        <span>Templates</span>
+      </a>
+      <a href="#" style="display: flex; align-items: center; gap: 10px; padding: 8px 8px 8px 10px; border-radius: 6px; color: oklch(0.22 0.015 260);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="oklch(0.52 0.014 260)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M4.6 15a1.6 1.6 0 0 1-.3 1.8l-.1.1a2 2 0 1 0 2.8 2.8l.1-.1a1.6 1.6 0 0 1 2.7 1.1V21a2 2 0 1 0 4 0v-.1a1.6 1.6 0 0 1 2.7-1.1l.1.1a2 2 0 1 0 2.8-2.8l-.1-.1a1.6 1.6 0 0 1 1.1-2.7H21a2 2 0 1 0 0-4h-.1a1.6 1.6 0 0 1-1.1-2.7l.1-.1a2 2 0 1 0-2.8-2.8l-.1.1A1.6 1.6 0 0 1 15 4.6V4a2 2 0 1 0-4 0v.1A1.6 1.6 0 0 1 9 4.6"></path></svg>
+        <span>Settings</span>
+      </a>
+    </div>
+
+    <div style="margin-top: auto; display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 8px; background: oklch(0.72 0.15 78 / 0.1); border: 1px solid oklch(0.72 0.15 78 / 0.45);">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="oklch(0.52 0.11 78)" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg>
+        <span style="font-size: 13px; font-weight: 600; color: oklch(0.45 0.1 78);">All funnels paused</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.45; color: oklch(0.52 0.014 260);">Nothing is being sent. Numbers keep their place.</span>
+      <button style="padding: 6px 10px; border: 0; border-radius: 6px; background: oklch(0.52 0.16 258); color: #fff; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer;">Resume sending</button>
+    </div>
+  </nav>
+
+  <div style="display: flex; flex-direction: column; flex-grow: 1; min-width: 0;">
+
+    <header style="display: flex; align-items: center; justify-content: flex-end; gap: 16px; height: 56px; padding: 0 28px; background: oklch(1 0 0); border-bottom: 1px solid oklch(0.9 0.006 260);">
+      <a href="#" style="display: flex; align-items: center; gap: 7px; padding: 5px 10px; border-radius: 6px; color: oklch(0.22 0.015 260); font-size: 14px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="oklch(0.52 0.014 260)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 6-3 7-3 7h18s-3-1-3-7"></path><path d="M13.7 20a2 2 0 0 1-3.4 0"></path></svg>
+        <span>Notifications</span>
+        <span style="padding: 1px 6px; border-radius: 999px; background: oklch(0.6 0.13 240 / 0.14); font-size: 12px; font-weight: 600; color: oklch(0.45 0.12 240);">4</span>
+      </a>
+      <div style="width: 1px; height: 22px; background: oklch(0.9 0.006 260);"></div>
+      <div style="display: flex; align-items: center; gap: 9px;">
+        <div style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: oklch(0.968 0.003 250); border: 1px solid oklch(0.9 0.006 260); font-size: 12px; font-weight: 600;">SS</div>
+        <div style="display: flex; flex-direction: column; line-height: 1.25;">
+          <span style="font-size: 13px; font-weight: 600;">Samir Sain</span>
+          <span style="font-size: 12px; color: oklch(0.52 0.014 260);">Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <main style="display: flex; flex-direction: column; gap: 20px; padding: 28px 28px 32px;">
+
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;">
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <h1 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.02em;">Batches</h1>
+          <p style="margin: 0; max-width: 640px; font-size: 14px; line-height: 1.5; color: oklch(0.52 0.014 260);">
+            One batch is one upload of numbers run through one funnel. The funnel version is frozen when the batch starts, so editing a funnel never changes what a running batch sends.
+          </p>
+        </div>
+        <button style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border: 0; border-radius: 4px; background: oklch(0.52 0.16 258); font-family: inherit; font-size: 14px; font-weight: 600; color: #fff; cursor: pointer; white-space: nowrap;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+          Upload numbers
+        </button>
+      </div>
+
+      <section style="display: flex; flex-direction: column; border: 1px solid oklch(0.9 0.006 260); border-radius: 8px; background: oklch(1 0 0); box-shadow: 0 1px 2px oklch(0.2 0.02 260 / 0.06); overflow: hidden;">
+        <table>
+          <thead>
+            <tr style="border-bottom: 1px solid oklch(0.9 0.006 260); background: oklch(0.968 0.003 250);">
+              <th style="padding: 9px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: oklch(0.52 0.014 260);">Batch</th>
+              <th style="padding: 9px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: oklch(0.52 0.014 260); width: 300px;">Progress</th>
+              <th style="padding: 9px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: oklch(0.52 0.014 260);">Qualified</th>
+              <th style="padding: 9px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: oklch(0.52 0.014 260);">Status</th>
+              <th style="padding: 9px 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: oklch(0.52 0.014 260);"></th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr style="border-bottom: 1px solid oklch(0.9 0.006 260);">
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; flex-direction: column; gap: 3px;">
+                  <a href="#" style="font-size: 15px; font-weight: 600;">Diwali list — October</a>
+                  <span style="font-size: 12px; color: oklch(0.52 0.014 260);">Starter funnel <span style="font-family: ui-monospace, 'Cascadia Code', monospace;">v3</span> · 240 numbers · started 4 Sep</span>
+                </div>
+              </td>
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <div style="display: flex; gap: 2px; height: 8px;">
+                    <div style="width: 17%; border-radius: 2px 0 0 2px; background: oklch(0.9 0.006 260);"></div>
+                    <div style="width: 53%; background: oklch(0.6 0.13 240);"></div>
+                    <div style="width: 17%; background: oklch(0.58 0.14 152);"></div>
+                    <div style="width: 8%; background: oklch(0.58 0.2 25);"></div>
+                    <div style="width: 5%; border-radius: 0 2px 2px 0; background: oklch(0.72 0.15 78);"></div>
+                  </div>
+                  <span style="font-size: 12px; font-variant-numeric: tabular-nums; color: oklch(0.52 0.014 260);">128 in funnel · 41 qualified · 31 closed · 40 not started</span>
+                </div>
+              </td>
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; align-items: baseline; gap: 7px;">
+                  <span style="font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; color: oklch(0.44 0.12 152);">41</span>
+                  <span style="font-size: 13px; color: oklch(0.52 0.014 260);">17%</span>
+                </div>
+              </td>
+              <td style="padding: 14px 16px;">
+                <span style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 4px; border: 1px solid oklch(0.72 0.15 78); font-size: 13px; font-weight: 500; color: oklch(0.5 0.12 78); white-space: nowrap;">
+                  <span style="width: 6px; height: 6px; border-radius: 999px; background: oklch(0.72 0.15 78);"></span>
+                  Paused
+                </span>
+              </td>
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                  <button style="padding: 6px 12px; border: 1px solid oklch(0.9 0.006 260); border-radius: 4px; background: oklch(1 0 0); font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer;">Resume</button>
+                  <a href="#" style="display: inline-flex; align-items: center; padding: 6px 4px; font-size: 13px; font-weight: 500;">Open</a>
+                </div>
+              </td>
+            </tr>
+
+            <tr style="border-bottom: 1px solid oklch(0.9 0.006 260);">
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; flex-direction: column; gap: 3px;">
+                  <a href="#" style="font-size: 15px; font-weight: 600;">Sept warm list</a>
+                  <span style="font-size: 12px; color: oklch(0.52 0.014 260);">Starter funnel <span style="font-family: ui-monospace, 'Cascadia Code', monospace;">v2</span> · 610 numbers · started 28 Aug</span>
+                </div>
+              </td>
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <div style="display: flex; gap: 2px; height: 8px;">
+                    <div style="width: 4%; border-radius: 2px 0 0 2px; background: oklch(0.9 0.006 260);"></div>
+                    <div style="width: 21%; background: oklch(0.6 0.13 240);"></div>
+                    <div style="width: 21%; background: oklch(0.58 0.14 152);"></div>
+                    <div style="width: 32%; background: oklch(0.58 0.2 25);"></div>
+                    <div style="width: 22%; border-radius: 0 2px 2px 0; background: oklch(0.72 0.15 78);"></div>
+                  </div>
+                  <span style="font-size: 12px; font-variant-numeric: tabular-nums; color: oklch(0.52 0.014 260);">128 in funnel · 128 qualified · 330 closed · 24 not started</span>
+                </div>
+              </td>
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; align-items: baseline; gap: 7px;">
+                  <span style="font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; color: oklch(0.44 0.12 152);">128</span>
+                  <span style="font-size: 13px; color: oklch(0.52 0.014 260);">21%</span>
+                </div>
+              </td>
+              <td style="padding: 14px 16px;">
+                <span style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 4px; border: 1px solid oklch(0.58 0.14 152); background: oklch(0.58 0.14 152 / 0.1); font-size: 13px; font-weight: 600; color: oklch(0.42 0.12 152); white-space: nowrap;">
+                  <span style="width: 6px; height: 6px; border-radius: 999px; background: oklch(0.58 0.14 152);"></span>
+                  Running
+                </span>
+              </td>
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                  <button style="padding: 6px 12px; border: 1px solid oklch(0.9 0.006 260); border-radius: 4px; background: oklch(1 0 0); font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer;">Pause</button>
+                  <a href="#" style="display: inline-flex; align-items: center; padding: 6px 4px; font-size: 13px; font-weight: 500;">Open</a>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; flex-direction: column; gap: 3px;">
+                  <a href="#" style="font-size: 15px; font-weight: 600;">Referrals — Q3</a>
+                  <span style="font-size: 12px; color: oklch(0.52 0.014 260);">Referral funnel <span style="font-family: ui-monospace, 'Cascadia Code', monospace;">v1</span> · 96 numbers · finished 21 Aug</span>
+                </div>
+              </td>
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <div style="display: flex; gap: 2px; height: 8px;">
+                    <div style="width: 34%; border-radius: 2px 0 0 2px; background: oklch(0.58 0.14 152);"></div>
+                    <div style="width: 41%; background: oklch(0.58 0.2 25);"></div>
+                    <div style="width: 25%; border-radius: 0 2px 2px 0; background: oklch(0.72 0.15 78);"></div>
+                  </div>
+                  <span style="font-size: 12px; font-variant-numeric: tabular-nums; color: oklch(0.52 0.014 260);">33 qualified · 39 not interested · 24 no response</span>
+                </div>
+              </td>
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; align-items: baseline; gap: 7px;">
+                  <span style="font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; color: oklch(0.44 0.12 152);">33</span>
+                  <span style="font-size: 13px; color: oklch(0.52 0.014 260);">34%</span>
+                </div>
+              </td>
+              <td style="padding: 14px 16px;">
+                <span style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 4px; border: 1px solid oklch(0.9 0.006 260); font-size: 13px; font-weight: 500; color: oklch(0.35 0.015 260); white-space: nowrap;">
+                  <span style="width: 6px; height: 6px; border-radius: 999px; background: oklch(0.52 0.014 260);"></span>
+                  Completed
+                </span>
+              </td>
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                  <a href="#" style="display: inline-flex; align-items: center; padding: 6px 4px; font-size: 13px; font-weight: 500;">Open</a>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

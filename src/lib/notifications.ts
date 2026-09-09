@@ -38,8 +38,6 @@ export function notificationHref(relatedType: string): string {
   switch (relatedType) {
     case "customer":
       return "/qualified";
-    case "conversation":
-      return "/inbox";
     default:
       return "/";
   }

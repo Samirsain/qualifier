@@ -43,6 +43,8 @@ test("a question becomes a BRANCH and does not use nextStepKey", () => {
       yesKey: "y1",
       noKey: "n1",
       otherKey: "n1",
+      noReplyDays: 0,
+      noReplyKey: null,
     },
     { kind: "qualify", key: "y1" },
     { kind: "message", key: "n1", templateId: TPL },
@@ -88,6 +90,8 @@ test("validation rejects a branch pointing at a missing step", () => {
       yesKey: "nope",
       noKey: null,
       otherKey: null,
+      noReplyDays: 0,
+      noReplyKey: null,
     },
     { kind: "qualify", key: "z" },
   ]);
@@ -117,9 +121,101 @@ test("an empty funnel is rejected", () => {
 test("a stop step terminates and carries its reason", () => {
   const rows = toEngineSteps([
     { kind: "qualify", key: "q" },
-    { kind: "stop", key: "end", reason: "done" },
+    { kind: "stop", key: "end", reason: "done", status: null },
   ]);
   assert.equal(rows[1].stepType, "ACTION");
   assert.deepEqual(rows[1].config, { action: "stop_journey", reason: "done" });
   assert.equal(rows[1].nextStepKey, null);
+});
+
+test("a stop can leave the number in a final status, and survives a round trip", () => {
+  const steps: BuilderStep[] = [
+    { kind: "qualify", key: "q" },
+    { kind: "stop", key: "end", reason: "said no", status: "NOT_INTERESTED" },
+  ];
+  const rows = toEngineSteps(steps);
+  assert.deepEqual(rows[1].config, {
+    action: "stop_journey",
+    reason: "said no",
+    status: "NOT_INTERESTED",
+  });
+  assert.deepEqual(fromEngineSteps(rows), steps);
+});
+
+test("a question's no-reply path becomes a branch timeout, and comes back", () => {
+  const steps: BuilderStep[] = [
+    {
+      kind: "question",
+      key: "q1",
+      templateId: TPL,
+      prompt: "?",
+      questionKey: "k",
+      yesKey: "y",
+      noKey: "n",
+      otherKey: null,
+      noReplyDays: 3,
+      noReplyKey: "n",
+    },
+    { kind: "qualify", key: "y" },
+    { kind: "stop", key: "n", reason: "silent", status: "NO_RESPONSE" },
+  ];
+  const cfg = toEngineSteps(steps)[0].config as {
+    timeout: { days: number };
+    timeoutStepKey: string;
+  };
+  assert.deepEqual(cfg.timeout, { days: 3 });
+  assert.equal(cfg.timeoutStepKey, "n");
+  assert.deepEqual(fromEngineSteps(toEngineSteps(steps)), steps);
+});
+
+test("no timeout is written when the question waits forever", () => {
+  const cfg = toEngineSteps([
+    {
+      kind: "question",
+      key: "q1",
+      templateId: TPL,
+      prompt: "?",
+      questionKey: "k",
+      yesKey: "y",
+      noKey: null,
+      otherKey: null,
+      noReplyDays: 0,
+      noReplyKey: null,
+    },
+    { kind: "qualify", key: "y" },
+  ])[0].config as Record<string, unknown>;
+  assert.equal("timeout" in cfg, false);
+  assert.equal("timeoutStepKey" in cfg, false);
+});
+
+test("validation rejects half a no-reply path", () => {
+  const base = {
+    kind: "question",
+    key: "q1",
+    templateId: TPL,
+    prompt: "?",
+    questionKey: "k",
+    yesKey: "y",
+    noKey: null,
+    otherKey: null,
+  } as const;
+  const qualify: BuilderStep = { kind: "qualify", key: "y" };
+
+  const daysOnly = validateBuilderSteps([
+    { ...base, noReplyDays: 3, noReplyKey: null },
+    qualify,
+  ]);
+  assert.ok(daysOnly.some((p) => /nowhere to send/i.test(p)), daysOnly.join(" | "));
+
+  const targetOnly = validateBuilderSteps([
+    { ...base, noReplyDays: 0, noReplyKey: "y" },
+    qualify,
+  ]);
+  assert.ok(targetOnly.some((p) => /zero days/i.test(p)), targetOnly.join(" | "));
+
+  const missingTarget = validateBuilderSteps([
+    { ...base, noReplyDays: 3, noReplyKey: "ghost" },
+    qualify,
+  ]);
+  assert.ok(missingTarget.some((p) => /ghost/.test(p)), missingTarget.join(" | "));
 });

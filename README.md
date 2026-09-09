@@ -9,8 +9,10 @@ Spec: `docs/superpowers/specs/2026-09-04-whatsapp-qualification-filter-design.md
 ## The flow
 
 1. **Funnels** — build a sequence: message, question, wait, mark qualified,
-   stop. A funnel cannot go live without a Mark qualified step, because one
-   that cannot qualify anyone produces nothing.
+   stop. A question also says how many days to wait for a reply and where a
+   silent number goes; a stop says what the number is left as (Not interested,
+   No response). A funnel cannot go live without a Mark qualified step, because
+   one that cannot qualify anyone produces nothing.
 2. **Batches** — paste or load a list of numbers, review what was parsed, then
    run it through a live funnel. The funnel version is frozen onto the batch,
    so later edits cannot change what a running batch sends.
@@ -21,12 +23,11 @@ Spec: `docs/superpowers/specs/2026-09-04-whatsapp-qualification-filter-design.md
 
 | Screen | What it is for |
 |---|---|
-| Batches | What is running, and the upload flow |
+| Batches | What is running, the upload flow, and where each number has reached |
 | Qualified | The output list and its CSV export |
 | Funnels | The funnel library and builder |
 | Templates | Approved message templates |
-| Inbox | Conversations, for replies a funnel could not handle |
-| Settings | The open business decisions, and the emergency pause |
+| Settings | The emergency stop, and the words that opt a number out |
 
 ## Stack
 

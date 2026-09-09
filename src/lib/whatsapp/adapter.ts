@@ -111,7 +111,8 @@ const mockAdapter: WhatsAppAdapter = {
 // Meta WhatsApp Business Platform (Cloud API).
 // ---------------------------------------------------------------------------
 
-const GRAPH_VERSION = "v21.0";
+// Matches the version the app's API-testing console issues calls on.
+const GRAPH_VERSION = "v25.0";
 
 type MetaChange = {
   value?: {

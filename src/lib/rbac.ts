@@ -20,8 +20,6 @@ export const PERMISSIONS = [
   "funnel:manage",
   "template:read",
   "template:manage",
-  "conversation:read",
-  "conversation:reply",
   "settings:read",
   "settings:manage",
   "automation:pause_all",
@@ -35,7 +33,6 @@ const VIEWER: Permission[] = [
   "qualified:export",
   "funnel:read",
   "template:read",
-  "conversation:read",
   "settings:read",
 ];
 

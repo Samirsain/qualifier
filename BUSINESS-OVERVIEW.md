@@ -28,9 +28,12 @@ belong to the CRM team's own system. This one has a single job: narrow a list.
 **Step 1 — You build a funnel.**
 A funnel is the conversation, laid out as a list of steps: send a message, ask
 a question, wait, mark them qualified, stop. You choose the wording, the
-questions, and where each answer leads. A funnel cannot go live until it has a
-"Mark qualified" step, because a funnel that can never qualify anyone produces
-nothing.
+questions, and where each answer leads — including the answer that never comes:
+a question says how many days to wait for a reply and where the silent number
+goes next. A stop step says what the number is finally left as, so "Not
+interested" and "No response" are counted rather than guessed. A funnel cannot
+go live until it has a "Mark qualified" step, because a funnel that can never
+qualify anyone produces nothing.
 
 **Step 2 — You upload numbers.**
 Paste a list, or load a CSV. Before anything is sent, the system shows you
@@ -76,16 +79,15 @@ CSV for the CRM team. Every export marks the rows it handed over, so the next
 
 ---
 
-## 5. The six screens
+## 5. The five screens
 
 | Screen | What it is for |
 |---|---|
-| **Batches** | What is running now, and where you upload numbers |
+| **Batches** | What is running now, where you upload numbers, and where every number has reached in the funnel |
 | **Qualified** | The output list and its CSV export |
 | **Funnels** | The library of conversations, and the builder |
 | **Templates** | The approved message wording |
-| **Inbox** | Conversations, for the replies a funnel could not interpret |
-| **Settings** | The business decisions still open, and the emergency stop |
+| **Settings** | The emergency stop, and the words that opt a number out |
 
 ---
 

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui";
 import { titleCase } from "@/lib/labels";
 import { notificationHref } from "@/lib/notifications";
+import { formatDateTime } from "@/lib/format";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/session";
 
@@ -76,7 +77,7 @@ export default async function NotificationsPage() {
                   <p className="text-[length:var(--text-small)] text-[color:var(--color-text-secondary)]">
                     {titleCase(n.eventType.replace(/\./g, "_"))} ·{" "}
                     <time dateTime={n.createdAt.toISOString()}>
-                      {n.createdAt.toLocaleString()}
+                      {formatDateTime(n.createdAt)}
                     </time>
                   </p>
                 </div>

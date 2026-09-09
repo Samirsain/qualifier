@@ -53,8 +53,9 @@ could be activated — and its no-response branch would have been inert. Doc 07
 §16 requires empty waits to be caught; the check covered WAIT steps but not
 branch timeouts.
 
-Fixed in `validate.ts`. That journey now correctly reports two blockers and
-cannot be activated until GAP-002 is decided.
+Fixed in `validate.ts`. The wait itself now lives on the question — "if there is
+no reply for N days, go to this step" — so the builder cannot save a funnel that
+parks a silent number forever, and no hidden setting has to be decided first.
 
 ### S3 — a database outage looked like a wrong password
 
@@ -89,18 +90,18 @@ rotate addresses, and limiting only by account lets them lock every user out.
 
 ## 3. What still blocks production
 
-### 3.1 Business decisions — 9 unresolved
-
-Visible on `/settings` with the consequence of each spelled out. The two that
-block launch outright:
+### 3.1 Business decisions
 
 | GAP | Decision | Consequence while unset |
 |---|---|---|
-| **GAP-002** | No-response wait | Any funnel with a no-response branch **cannot be activated** |
 | **GAP-022** | WhatsApp provider | No real messages can be sent. Production refuses to boot on `mock`. |
-| GAP-020 | Reporting timezone | Date boundaries use the server zone |
-| GAP-018 | Opt-out keywords | Nobody can opt out by replying STOP |
-| GAP-021 | Send window | Messages can go out at any hour |
+| GAP-018 | Opt-out words | Nobody can opt out by replying STOP. Set them on `/settings`. |
+
+The other decisions this file used to list — a no-response wait, a reporting
+timezone, a send window, a default country — were settings no code read. The
+no-response wait is now part of the question step, the analytics screens they
+served are gone, and the phone parser hardcodes India, so they are no longer
+open questions.
 
 ### 3.2 Infrastructure not built
 
@@ -144,8 +145,8 @@ block launch outright:
 
 ## 4. Shortest path to a safe launch
 
-1. Decide **GAP-002** and **GAP-022** — without these no funnel with a
-   no-response branch can run, and nothing real can be sent.
+1. Decide **GAP-022** — until a real provider is configured nothing real can
+   be sent, and production refuses to boot on `mock`.
 2. Point `/api/automation/tick` at a scheduler (platform cron, every minute).
    Nothing time-based works until this exists.
 3. Generate real secrets: `openssl rand -base64 32` for `AUTH_SECRET`,
