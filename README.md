@@ -46,6 +46,7 @@ cp .env.example .env          # then set DATABASE_URL and AUTH_SECRET
 npm install
 npm run db:deploy             # applies migrations
 npm run db:seed               # admin user, settings, starter funnel
+                              # SEED_DEMO=true also loads 102 demo numbers
 npm run dev
 ```
 
