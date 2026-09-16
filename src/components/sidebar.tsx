@@ -16,6 +16,13 @@ const ICONS: Record<NavIcon, React.ReactNode> = {
       <rect x="3" y="14" width="18" height="6" rx="2" />
     </>
   ),
+  tracking: (
+    <>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <path d="M3 9h18" />
+      <path d="M9 9v11" />
+    </>
+  ),
   qualified: <path d="M20 6 9 17l-5-5" />,
   funnels: (
     <>

@@ -15,7 +15,7 @@ import {
   cx,
 } from "@/components/ui";
 import { batchProgress } from "@/lib/batches/runner";
-import { formatDate, formatDateTime } from "@/lib/format";
+import { formatDateTime } from "@/lib/format";
 import { stepLabels } from "@/lib/funnels/step-labels";
 import type { EngineStepRow } from "@/lib/funnels/steps";
 import {
@@ -66,7 +66,6 @@ export default async function BatchPage({
     where: { id },
     include: {
       automation: { select: { id: true, name: true } },
-      createdBy: { select: { displayName: true } },
     },
   });
   if (!batch) notFound();
@@ -233,7 +232,6 @@ export default async function BatchPage({
 
       <PageHeader
         title={batch.name}
-        description={`${batch.automation.name} v${batch.automationVersion}, frozen at upload · uploaded by ${batch.createdBy.displayName} · ${formatDate(batch.createdAt)} · ${total} numbers`}
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <Badge tone={statusTone(batch.status)} dot>

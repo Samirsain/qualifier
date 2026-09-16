@@ -141,17 +141,23 @@ async function main() {
     });
   }
 
-  const demo = await seedDemoData(prisma, {
-    adminId: admin.id,
-    automationId: starter.id,
-    automationVersion: starter.version,
-  });
+  // Demo numbers are a development convenience, never something a real
+  // account should start with: 102 invented +9199… numbers would fail on every
+  // send. Opt in with SEED_DEMO=true.
+  const demo =
+    process.env.SEED_DEMO === "true"
+      ? await seedDemoData(prisma, {
+          adminId: admin.id,
+          automationId: starter.id,
+          automationVersion: starter.version,
+        })
+      : { created: 0 };
 
   console.log(
     `Seed complete. Admin: ${adminEmail} / ${adminPassword}` +
       (demo.created > 0
         ? ` — ${demo.created} demo numbers across ${3} batches.`
-        : " — batches already exist, demo data skipped."),
+        : " — no demo data (set SEED_DEMO=true for it)."),
   );
 }
 
